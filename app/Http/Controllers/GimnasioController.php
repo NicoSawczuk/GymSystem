@@ -28,12 +28,10 @@ class GimnasioController extends Controller
     public function index()
     {
 
-        $gimnasios = \App\User::find(1)->gimnasios;
+        $gimnasios = User::findOrFail(1)->gimnasios;
 
-        $estado = '';
         return view('gimnasios/administrarGimnasios')->with(array(
-            'gimnasios' => $gimnasios,
-            'estado' => $estado
+            'gimnasios' => $gimnasios
         ));
     }
 
@@ -90,7 +88,7 @@ class GimnasioController extends Controller
         $gym->especialidades()->sync($request->especialidades);
 
 
-        return redirect('/gimnasios/administrar')->with('status','Gimnasio cargado con éxito');
+        return redirect('/gimnasios/administrar')->with('success','Gimnasio cargado con éxito');
 
     }
 
@@ -152,7 +150,7 @@ class GimnasioController extends Controller
         $gimnasio->save();
         $gimnasio->especialidades()->sync($request->especialidades);
 
-        return redirect('/gimnasios/administrar')->with('status','Gimnasio modificado con éxito');
+        return redirect('/gimnasios/administrar')->with('success','Gimnasio modificado con éxito');
 
     }
 

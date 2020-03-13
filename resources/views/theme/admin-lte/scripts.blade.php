@@ -36,6 +36,10 @@
 <!-- Selectpicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js"></script>
 
+<!-- InputMask -->
+<script src="{{ asset("assets/admin-lte/plugins/moment/moment.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/inputmask/min/jquery.inputmask.bundle.min.js") }}"></script>
+
 <!-- Notiflix -->
 <script src="{{ asset("assets/notiflix/Minified/notiflix-2.1.2.min.js") }}"></script>
 <script>
@@ -52,4 +56,15 @@
      failure: {background:"rgba(255,85,73,0.947)",}, 
      warning: {background:"rgba(238,191,49,0.953)",}, 
      info: {background:"rgba(38,192,211,0.947)",}, }); 
+</script>
+<script>
+   Notiflix.Confirm.Init({ 
+     width:"400px",
+     position:"center-top",
+     titleFontSize:"20px",
+     distance:"20px",
+     messageFontSize:"16px",
+     useGoogleFont:false,
+     cancelButtonBackground:"#c7c7c7",
+     titleColor:"#2fbb7b", }); 
 </script>

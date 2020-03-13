@@ -19,9 +19,9 @@
                   </div>
                 </div>
                 <!-- /.card-header -->
-                
-                <div class="card-body table-responsive p-0 table-hover text-nowrap">
                 @isset($gimnasios)
+                <div class="card-body table-responsive p-0 table-hover text-nowrap">
+                
                   <table class="table table-head-fixed text-nowrap">
                     <thead>
                       <tr>
@@ -29,29 +29,51 @@
                         <th>Especialidad</th>
                         <th>Dirección</th>
                         <th>Inscriptos</th>
+                        <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
                     @foreach ($gimnasios as $gimnasio)
                       <tr>
-                        <td>{{ $gimnasio->nombre }}</td>
-                        <td>{{ $gimnasio->especialidad }}</td>
+                        <td><a href="/">{{ $gimnasio->nombre }}</a></td>
+                        <td>
+                            @foreach ($gimnasio->especialidades as $especialidad)
+                                <span class="badge badge-pill badge-light">{{ $especialidad->nombre }}</span>
+                            @endforeach
+                        </td>
                         <td>{{ $gimnasio->calle }} {{ $gimnasio->altura }}</td>
                         <td></td>
-                        <td >
-                            <a title="Editar gimnasio" href="/gimnasios/{{ $gimnasio->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
-                            <a title="Eliminar gimnasio" href=""><i  class="fal fa-trash-alt"></i></a>
+                        <td>
+                          @if ($gimnasio->estado === 1)
+                            <span class="badge badge-pill bg-teal">Activo</span>
+                          @else
+                            <span class="badge badge-pill bg-maroon">Inactivo</span>
+                          @endif
                         </td>
+                        <td>
+                            <a title="Editar gimnasio" href="/gimnasios/{{ $gimnasio->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
+                            @if ($gimnasio->estado == 1)
+                              <a title="Cambiar estado a inactivo" onclick="inactivo('{{ $gimnasio->nombre }}')" href="#"><i class="fal fa-eye"></i></a>
+                            @else
+                            <a title="Cambiar estado a activo" onclick="activo('{{ $gimnasio->nombre }}')" href="#"><i class="far fa-eye-slash"></i></a>
+                            @endif
+                        </td>
+
                       </tr>
                     @endforeach
                     </tbody>
                   </table>
                 @endisset
-                @empty($gimnasios)
-                <p>Aun no tienes gimnasios, por favor crea uno</p>
-                @endempty
+                
                 </div>
+                @empty($gimnasios)
+                <div class="callout callout-warning">
+                  <h5>Aún no tenes gimnasios</h5>
+
+                  <p>Por favor crea uno</p>
+                </div>
+                @endempty
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
@@ -71,11 +93,61 @@
 
 
 
-@if (session('status'))
+@if (session('success'))
 <script>
-    Notiflix.Notify.Success(String(' {{ session('status') }} '));
+    Notiflix.Notify.Success(String(' {{ session('success') }} '));
 </script>
 @endif
+@if (session('error'))
+<script>
+    Notiflix.Notify.Failure(String(' {{ session('error') }} '));
+</script>
+@endif
+
+<script>
+  function inactivo(gimnasio){
+    Notiflix.Confirm.Show(
+      'Cambio de estado',
+      'El estado de '+gimnasio+' pasará a estar inactivo, esta seguro que desea hacerlo?',
+      'Confirmar',
+      'Cancelar',
+
+      // ok button callback
+      function(){
+        // codes...
+        console.log('confirmado');
+      },
+
+      // cancel button callback
+      function(){
+        // codes...
+        console.log('cancelado');
+      },
+    );
+  }
+</script>
+<script>
+    function activo(gimnasio){
+    Notiflix.Confirm.Show(
+      'Cambio de estado',
+      'El estado de '+gimnasio+' pasará a estar activo, esta seguro que desea hacerlo?',
+      'Confirmar',
+      'Cancelar',
+
+      // ok button callback
+      function(){
+        // codes...
+        console.log('confirmado');
+      },
+
+      // cancel button callback
+      function(){
+        // codes...
+        console.log('cancelado');
+      },
+    );
+  }
+</script>
 
 
 

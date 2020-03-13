@@ -21,6 +21,12 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            //Agregados
+            $table->string('apellido')->before('email');
+            $table->date('fecha_nacimiento')->before('apellido');
+            $table->float('altura')->before('fecha_nacimiento');
+            $table->float('peso')->before('altura');
+            $table->boolean('estado')->default(1)->before('peso');
         });
     }
 
