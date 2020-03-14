@@ -3,14 +3,24 @@
 @section('title') Administrar especialidades @endsection
 
 @section('body')
-<body class="container">
-    <div class=" mt-4 row justify-content-center">
-        <div class="col-md-8">
+@parent
+@section('nombreGimnasio')
+    GymSystem
+@endsection
+
+@section('content')
+    
+@section('contentHeader') Administrar especialidades @endsection
+<body class="container-fluid">
+    <div class="">
+        <div class="">
 
 
             <div class="card card-teal card-outline">
                 <div class="card-header">
-                  <h3 class="card-title">Especialidades</h3>
+                  <h3 class="card-title">
+                      Especialidades
+                    </h3>
       
                   <div class="card-tools">
                     <div class="float-right">
@@ -27,7 +37,8 @@
                       <tr>
                         <th>Nombre</th>
                         <th>Descripcion</th>
-                        <th>Opciones</th>
+                        <th>Monto</th>
+                        <th class="text-right">Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -37,7 +48,10 @@
                         <td >
                             {{ $especialidad->descripcion }}
                         </td>
-                        <td>
+                        <td class="text-center">
+                          ${{ $especialidad->monto }}
+                      </td>
+                        <td class="text-right" style="">
                             <a title="Editar especialidad" href="/especialidades/{{ $especialidad->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
                             
                             <a title="Eliminar especialidad" href="#"><i class="fal fa-trash-alt"></i></a>
@@ -122,6 +136,7 @@
 @endif
 
 </body>
+@endsection
 
 
 @endsection

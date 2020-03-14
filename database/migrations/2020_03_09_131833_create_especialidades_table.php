@@ -17,6 +17,7 @@ class CreateEspecialidadesTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('descripcion');
+            $table->float('monto')->default(0);
             $table->timestamps();
         });
     }

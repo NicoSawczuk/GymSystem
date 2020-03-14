@@ -10,7 +10,10 @@
 
             <div class="card card-teal card-outline">
                 <div class="card-header">
-                  <h3 class="card-title">Mis gimnasios</h3>
+                  <h3 class="card-title">
+                    <a href="javascript:history.back()"><i class="fas fa-angle-left fa-lg" style="color: #495057;"></i></a>
+                    Mis gimnasios
+                  </h3>
       
                   <div class="card-tools">
                     <div class="float-right">
@@ -30,7 +33,7 @@
                         <th>Dirección</th>
                         <th>Inscriptos</th>
                         <th>Estado</th>
-                        <th>Opciones</th>
+                        <th class="text-right">Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -51,7 +54,7 @@
                             <span class="badge badge-pill bg-maroon">Inactivo</span>
                           @endif
                         </td>
-                        <td>
+                        <td class="text-right">
                             <a title="Editar gimnasio" href="/gimnasios/{{ $gimnasio->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
                             @if ($gimnasio->estado == 1)
                               <a title="Cambiar estado a inactivo" onclick="inactivo('{{ $gimnasio->nombre }}')" href="#"><i class="fal fa-eye"></i></a>

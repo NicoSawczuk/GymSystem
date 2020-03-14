@@ -24,6 +24,9 @@ class CreateClientesTable extends Migration
             $table->decimal('peso');
             $table->boolean('estado')->default(1);
             $table->boolean('inscripto')->default(0);
+
+            $table->unsignedBigInteger('especialidad_id');
+            $table->foreign('especialidad_id')->references('id')->on('especialidades')->onDelete('cascade');
         });
     }
 

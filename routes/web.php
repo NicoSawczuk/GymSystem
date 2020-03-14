@@ -54,4 +54,19 @@ Route::middleware(['auth'])->group(function () {
     //Especialidades
     Route::get('/especialidades/administrar', 'EspecialidadController@index')->name('especialidades.administrar')
     ->middleware('can:especialidades.index');
+
+    Route::get('/especialidades/create', 'EspecialidadController@create')->name('especialidades.create')
+    ->middleware('can:especialidades.create');
+
+    Route::post('/especialidades/create', 'EspecialidadController@store')->name('especialidades.create')
+    ->middleware('can:especialidades.create');
+
+    Route::get('/especialidades/{especialidad}/edit/', 'EspecialidadController@edit')->name('especialidades.edit')
+    ->middleware('can:especialidades.edit');
+
+    Route::patch('/especialidades/{especialidad}', 'EspecialidadController@update')->name('especialidades.update')
+    ->middleware('can:especialidades.edit');
+
+     
+
 });

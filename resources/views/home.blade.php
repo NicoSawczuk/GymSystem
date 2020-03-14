@@ -25,3 +25,4 @@
 
 @endsection
 
+@include('theme.admin-lte.scripts')
