@@ -33,6 +33,11 @@
 <script src="{{ asset("assets/admin-lte/dist/js/pages/dashboard.js") }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset("assets/admin-lte/dist/js/demo.js") }}"></script>
+<!-- DataTables -->
+<script src="{{ asset("assets/admin-lte/plugins/datatables/jquery.dataTables.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js") }}"></script>
 <!-- Selectpicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js"></script>
 

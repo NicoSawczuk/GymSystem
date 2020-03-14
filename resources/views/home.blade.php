@@ -5,6 +5,13 @@
 @section('body')
     @parent
 
+    @section('nombreGimnasio') <strong>{{ $gimnasio->nombre }}</strong> @endsection
+
+    @section('usuario')
+        {{ Auth::user()->name }} {{ Auth::user()->apellido }}
+    @endsection
+
+
     @section('contentHeader')
         Pagina principal
     @endsection

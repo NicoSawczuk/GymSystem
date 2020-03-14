@@ -20,9 +20,9 @@
                 </div>
                 <!-- /.card-header -->
                 @isset($gimnasios)
-                <div class="card-body table-responsive p-0 table-hover text-nowrap">
+                <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
                 
-                  <table class="table table-head-fixed text-nowrap">
+                  <table id="tabla" class="table table-head-fixed text-nowrap">
                     <thead>
                       <tr>
                         <th>Nombre</th>
@@ -36,7 +36,7 @@
                     <tbody>
                     @foreach ($gimnasios as $gimnasio)
                       <tr>
-                        <td><a href="/">{{ $gimnasio->nombre }}</a></td>
+                        <td ><a href="/home/{{$gimnasio->id}}">{{ $gimnasio->nombre }}</a></td>
                         <td>
                             @foreach ($gimnasio->especialidades as $especialidad)
                                 <span class="badge badge-pill badge-light">{{ $especialidad->nombre }}</span>
@@ -85,9 +85,42 @@
 
 
     <script>
-        $(document).ready(function() {
-            
-    });
+      $(function () {
+        $("#tabla").DataTable({
+          "responsive": true,
+          "autoWidth": false,
+          "lengthChange": false,
+          "ordering": false,
+          language: {
+                  "sProcessing":     "Procesando...",
+                  "sLengthMenu":     "Mostrar _MENU_",
+                  "sZeroRecords":    "No se encontraron resultados",
+                  "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                  "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",
+                  "sInfoEmpty":      "Mostrando  del 0 al 0 de de 0 ",
+                  "sInfoFiltered":   "(filtrado de _MAX_ registros)",
+                  "sInfoPostFix":    "",
+                  "sSearch":         "Buscar:",
+                  "sUrl":            "",
+                  "sInfoThousands":  ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst":    "Primero",
+                      "sLast":     "Último",
+                      "sNext":     "Sig",
+                      "sPrevious": "Ant"
+                  },
+                  "oAria": {
+                      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                  },
+                  "buttons": {
+                      "copy": "Copiar",
+                      "colvis": "Visibilidad"
+                  }
+      }
+        });
+      });
     </script>
 
 

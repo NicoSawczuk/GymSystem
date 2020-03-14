@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Gimnasio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,8 +23,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
+    public function index(Gimnasio $gimnasio)
+    {   
+        if (Gimnasio::where('user_id', Auth::id())->exists()){
+            return view('home', compact('gimnasio'));
+        }
+        
     }
 }

@@ -99,5 +99,36 @@ class PermissionsTableSeeder extends Seeder
             'description'   => 'Podría eliminar cualquier gimnasio del sistema',      
         ]);
 
+        //Especialidad
+        Permission::create([
+            'name'          => 'Navegar especialidades',
+            'slug'          => 'especialidades.index',
+            'description'   => 'Lista y navega todas las especialidades del sistema',
+        ]);
+
+        Permission::create([
+            'name'          => 'Ver detalle de una especialidad',
+            'slug'          => 'especialidades.show',
+            'description'   => 'Ve en detalle cada especialidad del sistema',            
+        ]);
+        
+        Permission::create([
+            'name'          => 'Creación de especialidades',
+            'slug'          => 'especialidades.create',
+            'description'   => 'Podría crear nuevas especialidades en el sistema',
+        ]);
+        
+        Permission::create([
+            'name'          => 'Edición de especialidades',
+            'slug'          => 'especialidades.edit',
+            'description'   => 'Podría editar cualquier dato de una especialidad del sistema',
+        ]);
+        
+        Permission::create([
+            'name'          => 'Eliminar especialidades',
+            'slug'          => 'especialidades.destroy',
+            'description'   => 'Podría eliminar cualquier especialidad del sistema',      
+        ]);
+
     }
 }

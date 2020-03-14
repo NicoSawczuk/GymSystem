@@ -46,6 +46,12 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/home', 'HomeController@index')->name('home')
+    //Home
+    Route::get('/home/{gimnasio}', 'HomeController@index')->name('home')
     ->middleware('can:gimnasios.index');
+
+
+    //Especialidades
+    Route::get('/especialidades/administrar', 'EspecialidadController@index')->name('especialidades.administrar')
+    ->middleware('can:especialidades.index');
 });

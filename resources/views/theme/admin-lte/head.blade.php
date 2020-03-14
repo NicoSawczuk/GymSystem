@@ -24,3 +24,6 @@
 <link rel="stylesheet" href="{{ asset("assets/notiflix/Minified/notiflix-2.1.2.min.css") }}">
 <!-- Selectpicker -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css" />
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css") }}">
+<link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css") }}">
