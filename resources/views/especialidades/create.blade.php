@@ -3,12 +3,18 @@
 @section('title') Agregar una especialidad @endsection
 
 @section('body')
-<body class="container">
-    <div class=" mt-4 row justify-content-center">
-        <div class="col-md-8">
+@parent
+
+
+@section('content')
+    
+@section('contentHeader') Agregar una especialidad @endsection
+<body class="container-fluid">
+    <div class="">
+        <div class="">
             <div class="card card-teal card-outline">
                 <div class="card-header">
-                    <h3 class="card-title">Agregar una especialidad</h3>
+                    <h3 class="card-title"><i class="fal fa-edit"></i> Datos de la especialidad</h3>
         
                     <div class="card-tools">
                       <div class="float-right">
@@ -25,7 +31,7 @@
                             <div class="form-group row">
                                 <div class="form-group col-md-3">
                                     <label for="nombre" class=" col-form-label text-md-right">Nombre</label>
-                                    <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" placeholder="Ingrese el nombre">
+                                    <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" placeholder="Ingrese el nombre" required>
                                     @error('nombre')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -35,7 +41,7 @@
 
                                 <div class="form-group col-md-5">
                                     <label for="descripcion" class=" col-form-label text-md-right">Descripción</label>
-                                    <input id="descripcion" type="textarea" class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion" value="{{ old('descripcion') }}" placeholder="Ingrese la descripción">
+                                    <textarea id="descripcion" class="form-control  @error('descripcion') is-invalid @enderror" rows="3" name="descripcion" value="{{ old('descripcion') }}" placeholder="Ingrese la descripción" required>{{ old('descripcion') }}</textarea>
                                     @error('descripcion')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -45,7 +51,7 @@
 
                                 <div class="form-group col-md-2">
                                     <label for="monto" class="col-form-label text-md-right">Monto</label>
-                                    <input id="monto" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" value="{{ old('monto') }}" placeholder="Ingrese el monto">
+                                    <input id="monto" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" value="{{ old('monto') }}" placeholder="Ingrese el monto" required>
     
                                     @error('monto')
                                         <span class="invalid-feedback" role="alert">
@@ -60,7 +66,7 @@
                     </div>
                     <div class="card-footer float">
                         <div class="float-right">
-                            <a href="/especialidades/administrar">
+                            <a href="/especialidades/{{ $gimnasio->id }}/administrar">
                                 <button type="button" class="btn btn-default"><i class="fal fa-times"></i> Cancelar</button>
                             </a>
                             <button type="submit" class="btn btn-primary "><i class="fal fa-check"></i> Guardar</button>
@@ -72,7 +78,7 @@
     
 </body>
 
-
+@endsection
 
 @endsection
 @include('theme.admin-lte.scripts')

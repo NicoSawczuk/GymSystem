@@ -29,6 +29,7 @@ class GimnasioController extends Controller
     {
 
         $gimnasios = User::findOrFail(1)->gimnasios;
+        
 
         return view('gimnasios/administrarGimnasios')->with(array(
             'gimnasios' => $gimnasios
@@ -48,7 +49,7 @@ class GimnasioController extends Controller
             $pais->nombre = strtoupper($pais->nombre);
         }
         $especialidades = Especialidad::all();
-        return view('gimnasios.create', compact('paises', 'especialidades'));
+        return view('gimnasios/create', compact('paises', 'especialidades'));
     }
 
     /**

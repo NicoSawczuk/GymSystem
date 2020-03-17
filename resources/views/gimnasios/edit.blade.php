@@ -8,7 +8,7 @@
         <div class="col-md-8">
             <div class="card card-teal card-outline">
                 <div class="card-header">
-                    <h3 class="card-title">Editar <strong>{{ $gimnasio->nombre }}</strong></h3>
+                    <h3 class="card-title"><i class="fal fa-edit"></i> Editar <strong>{{ $gimnasio->nombre }}</strong></h3>
         
                     <div class="card-tools">
                       <div class="float-right">
@@ -83,9 +83,10 @@
                                     @enderror
                                 </div>
 
+
                                 <div class="form-group col-md-4">
-                                    <label for="especialidades" class=" col-form-label text-md-right">Especialidad</label>
-                                    <select class="selectpicker" multiple data-actions-box="true" name="especialidades[]">
+                                    <label for="especialidades" class=" col-form-label text-md-right">Especialidades</label>
+                                    <select class="select2bs4 select2-hidden-accessible" multiple="" data-placeholder="Seleccione la especialidad" style="width: 100%;" aria-hidden="true" name="especialidades[]" required>
                                         @foreach ($especialidades as $especialidad)
                                             @if ($gimnasio->especialidades->contains('id',$especialidad->id))
                                             <option value="{{$especialidad->id}}" selected>{{ $especialidad->nombre }}</option> 
@@ -216,7 +217,16 @@
             }
         });
     </script>
+<script>
+    $(function () {
+  
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+    });
 
+</script>
     
 </body>
 

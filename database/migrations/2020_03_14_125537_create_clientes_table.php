@@ -20,13 +20,19 @@ class CreateClientesTable extends Migration
             $table->string('apellido');
             $table->string('email')->unique();
             $table->date('fecha_nacimiento');
-            $table->decimal('altura');
-            $table->decimal('peso');
-            $table->boolean('estado')->default(1);
-            $table->boolean('inscripto')->default(0);
+            $table->decimal('altura')->nullable();
+            $table->decimal('peso')->nullable();
+            $table->string('telefono')->nullable();
+            $table->boolean('activo')->default(1); //Se va a usar para saber si el usuario va o no al gym
+
+
+            $table->unsignedBigInteger('estado_id'); //Referencia de la tabla de estados
+            $table->foreign('estado_id')->references('id')->on('estados')->onDelete('cascade');
 
             $table->unsignedBigInteger('especialidad_id');
             $table->foreign('especialidad_id')->references('id')->on('especialidades')->onDelete('cascade');
+            $table->unsignedBigInteger('gimnasio_id');
+            $table->foreign('gimnasio_id')->references('id')->on('gimnasios')->onDelete('cascade');
         });
     }
 

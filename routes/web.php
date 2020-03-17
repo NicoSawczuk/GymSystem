@@ -52,21 +52,40 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Especialidades
-    Route::get('/especialidades/administrar', 'EspecialidadController@index')->name('especialidades.administrar')
+    Route::get('/especialidades/{gimnasio}/administrar', 'EspecialidadController@index')->name('especialidades.administrar')
     ->middleware('can:especialidades.index');
 
-    Route::get('/especialidades/create', 'EspecialidadController@create')->name('especialidades.create')
+    Route::get('/especialidades/{gimnasio}/create', 'EspecialidadController@create')->name('especialidades.create')
     ->middleware('can:especialidades.create');
 
     Route::post('/especialidades/create', 'EspecialidadController@store')->name('especialidades.create')
     ->middleware('can:especialidades.create');
 
-    Route::get('/especialidades/{especialidad}/edit/', 'EspecialidadController@edit')->name('especialidades.edit')
+    Route::get('/especialidades/{gimnasio}/{especialidad}/edit/', 'EspecialidadController@edit')->name('especialidades.edit')
     ->middleware('can:especialidades.edit');
 
     Route::patch('/especialidades/{especialidad}', 'EspecialidadController@update')->name('especialidades.update')
     ->middleware('can:especialidades.edit');
 
+    //Clientes
+    Route::get('/clientes/administrar/{gimnasio}', 'ClienteController@index')->name('clientes.administrar')
+    ->middleware('can:clientes.index');
+
+    Route::get('/clientes/create/{gimnasio}', 'ClienteController@create')->name('clientes.create')
+    ->middleware('can:clientes.create');
+
+    Route::post('/clientes/create/{gimnasio}', 'ClienteController@store')->name('clientes.create')
+    ->middleware('can:clientes.create');
+
+    Route::get('/clientes/{cliente}/edit/', 'ClienteController@edit')->name('clientes.edit')
+    ->middleware('can:clientes.edit');
+
+    Route::patch('/clientes/{cliente}', 'ClienteController@update')->name('clientes.update')
+    ->middleware('can:clientes.edit');
+
+
+    //Inscripcion
+    Route::post('/inscripcion/create/{cliente}', 'InscripcionController@store')->name('clientes.create');
      
 
 });

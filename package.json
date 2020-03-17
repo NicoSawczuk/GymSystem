@@ -23,6 +23,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@chenfengyuan/datepicker": "^1.0.9",
         "notiflix": "^2.1.2"
     }
 }

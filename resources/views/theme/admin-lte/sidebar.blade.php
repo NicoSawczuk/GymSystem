@@ -6,6 +6,9 @@
            style="opacity: .8">
       <span class="brand-text font-weight-light h3">
         @section('nombreGimnasio')
+          @isset($gimnasio)
+              <b>{{ $gimnasio->nombre }}</b>
+          @endisset
         @show
       </span>
     </a>
@@ -46,12 +49,14 @@
                   <p>Administración</p>
                 </a>
               </li>
+              @isset($gimnasio)
               <li class="nav-item">
-                <a href="/" class="nav-link">
+                <a href="/clientes/administrar/{{ $gimnasio->id }}" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
-                  <p>Inscriptos</p>
+                  <p>Clientes</p>
                 </a>
               </li>
+              @endisset
               
             </ul>
           </li>
@@ -65,7 +70,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/especialidades/administrar" class="nav-link">
+                <a href="/especialidades/{{ $gimnasio->id }}/administrar" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
                   <p>Administración</p>
                 </a>

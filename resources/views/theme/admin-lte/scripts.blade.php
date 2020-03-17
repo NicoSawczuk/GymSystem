@@ -13,16 +13,16 @@
 <script src="{{ asset("assets/admin-lte/plugins/chart.js/Chart.min.js") }}"></script>
 <!-- Sparkline -->
 <script src="{{ asset("assets/admin-lte/plugins/sparklines/sparkline.js") }}"></script>
-<!-- JQVMap -->
+{{-- <!-- JQVMap -->
 <script src="{{ asset("assets/admin-lte/plugins/jqvmap/jquery.vmap.min.js") }}"></script>
-<script src="{{ asset("assets/admin-lte/plugins/jqvmap/maps/jquery.vmap.usa.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/jqvmap/maps/jquery.vmap.usa.js") }}"></script> --}}
 <!-- jQuery Knob Chart -->
 <script src="{{ asset("assets/admin-lte/plugins/jquery-knob/jquery.knob.min.js") }}"></script>
-<!-- daterangepicker -->
+{{-- <!-- daterangepicker -->
 <script src="{{ asset("assets/admin-lte/plugins/moment/moment.min.js") }}"></script>
-<script src="{{ asset("assets/admin-lte/plugins/daterangepicker/daterangepicker.js") }}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{ asset("assets/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/daterangepicker/daterangepicker.js") }}"></script> --}}
+{{-- <!-- Tempusdominus Bootstrap 4 -->
+<script src="{{ asset("assets/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js") }}"></script> --}}
 <!-- Summernote -->
 <script src="{{ asset("assets/admin-lte/plugins/summernote/summernote-bs4.min.js") }}"></script>
 <!-- overlayScrollbars -->
@@ -38,12 +38,21 @@
 <script src="{{ asset("assets/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js") }}"></script>
 <script src="{{ asset("assets/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js") }}"></script>
 <script src="{{ asset("assets/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js") }}"></script>
-<!-- Selectpicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js"></script>
+{{-- <!-- Selectpicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js"></script> --}}
 
 <!-- InputMask -->
 <script src="{{ asset("assets/admin-lte/plugins/moment/moment.min.js") }}"></script>
 <script src="{{ asset("assets/admin-lte/plugins/inputmask/min/jquery.inputmask.bundle.min.js") }}"></script>
+
+<!-- PhoneMask -->
+<script src="{{ asset("assets/mask/jquery.mask.js") }}"></script>
+
+<!-- Select2 -->
+<script src="{{ asset("assets/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/select2/js/select2.full.min.js") }}"></script>
+
+
 
 <!-- Notiflix -->
 <script src="{{ asset("assets/notiflix/Minified/notiflix-2.1.2.min.js") }}"></script>
@@ -56,7 +65,7 @@
      fontAwesomeIconStyle:"fal",
      cssAnimation:true,
      cssAnimationStyle:"from-top",
-     timeout:5000,
+     timeout:300,
      success: {background:"rgba(50,198,130,0.959)", }, 
      failure: {background:"rgba(255,85,73,0.947)",}, 
      warning: {background:"rgba(238,191,49,0.953)",}, 
@@ -71,5 +80,19 @@
      messageFontSize:"16px",
      useGoogleFont:false,
      cancelButtonBackground:"#c7c7c7",
-     titleColor:"#2fbb7b", }); 
+     titleColor:"#e70505",
+     okButtonBackground:"#ec4d4d", }); 
 </script>
+
+
+<!-- bs-custom-file-input -->
+<script src="{{ asset("assets/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js") }}"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    bsCustomFileInput.init();
+  });
+  </script>
+
+
+

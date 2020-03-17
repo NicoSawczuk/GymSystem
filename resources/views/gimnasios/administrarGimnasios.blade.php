@@ -92,11 +92,11 @@
         $("#tabla").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "lengthChange": false,
+          "lengthChange": true,
           "ordering": false,
           language: {
                   "sProcessing":     "Procesando...",
-                  "sLengthMenu":     "Mostrar _MENU_",
+                  "sLengthMenu":     "Ver _MENU_",
                   "sZeroRecords":    "No se encontraron resultados",
                   "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
                   "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",

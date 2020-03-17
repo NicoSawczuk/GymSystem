@@ -1,0 +1,1 @@
+- [ ] Controlar las deudas en el controlador de inscripcion (osea cunado hay deudas y eso, seria el else del if)

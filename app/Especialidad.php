@@ -14,6 +14,16 @@ class Especialidad extends Model
     }
 
     public function clientes(){
-        return $this->belongsToMany(Cliente::class, 'cliente_id');
+        return $this->hasMany(Cliente::class);
+    }
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class);
+    }
+
+    public function cuotas()
+    {
+        return $this->hasMany(Cuota::class);
     }
 }

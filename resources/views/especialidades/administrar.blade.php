@@ -4,9 +4,7 @@
 
 @section('body')
 @parent
-@section('nombreGimnasio')
-    GymSystem
-@endsection
+
 
 @section('content')
     
@@ -24,7 +22,7 @@
       
                   <div class="card-tools">
                     <div class="float-right">
-                        <a title="Agregar una especialidad" class="fal fa-plus-circle fa-lg" href="/especialidades/create"></a>
+                    <a title="Agregar una especialidad" class="fal fa-plus-circle fa-lg" href="/especialidades/{{ $gimnasio->id }}/create"></a>
                     </div>
                   </div>
                 </div>
@@ -52,7 +50,7 @@
                           ${{ $especialidad->monto }}
                       </td>
                         <td class="text-right" style="">
-                            <a title="Editar especialidad" href="/especialidades/{{ $especialidad->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
+                            <a title="Editar especialidad" href="/especialidades/{{ $gimnasio->id }}/{{ $especialidad->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
                             
                             <a title="Eliminar especialidad" href="#"><i class="fal fa-trash-alt"></i></a>
                         </td>
@@ -87,11 +85,11 @@
       $("#tabla").DataTable({
         "responsive": true,
         "autoWidth": false,
-        "lengthChange": false,
+        "lengthChange": true,
         "ordering": false,
         language: {
                 "sProcessing":     "Procesando...",
-                "sLengthMenu":     "Mostrar _MENU_",
+                "sLengthMenu":     "Ver _MENU_",
                 "sZeroRecords":    "No se encontraron resultados",
                 "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
                 "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",

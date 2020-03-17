@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Especialidad;
+use App\Gimnasio;
 use Illuminate\Http\Request;
 
 class EspecialidadController extends Controller
@@ -12,10 +13,10 @@ class EspecialidadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Gimnasio $gimnasio)
     {
         $especialidades = Especialidad::all();
-        return view('/especialidades/administrar', compact('especialidades'));
+        return view('/especialidades/administrar', compact('especialidades', 'gimnasio'));
     }
 
     /**
@@ -23,9 +24,9 @@ class EspecialidadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Gimnasio $gimnasio)
     {
-        return view('especialidades.create');
+        return view('especialidades.create', compact('gimnasio'));
     }
 
     /**
@@ -63,9 +64,9 @@ class EspecialidadController extends Controller
      * @param  \App\Especialidad  $especialidad
      * @return \Illuminate\Http\Response
      */
-    public function edit(Especialidad $especialidad)
+    public function edit(Gimnasio $gimnasio, Especialidad $especialidad)
     {
-        return view('especialidades/edit', compact('especialidad'));
+        return view('especialidades/edit', compact('especialidad', 'gimnasio'));
     }
 
     /**
