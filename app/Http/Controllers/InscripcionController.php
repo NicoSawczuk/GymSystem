@@ -42,8 +42,7 @@ class InscripcionController extends Controller
     public function store(Request $request, Cliente $cliente)
     {
         $data = request()->validate([
-            'monto' => 'required',
-            'detalle' =>'required'
+            'monto' => 'required'
         ]);
 
         //Creamos la inscripcion
@@ -63,6 +62,9 @@ class InscripcionController extends Controller
 
         //Cambiamos el estado del cliente
         $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
+        //Le asociamos la especialidad al cliente
+        $cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
+        
         $cliente->save();
 
         if (request()->cuota == 1){
@@ -73,11 +75,16 @@ class InscripcionController extends Controller
             //Si lo pagado es menor a lo que debe pagar debo registrar esa deuda
             if (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') > request()->monto) {
                 $cuota->monto_deuda = (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto')) - (request()->monto);
+                $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+2)->value('id');
+                $cliente->save();
             }
 
             //Deuda saldada
             if (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') == request()->monto) {
                 $cuota->saldado = 1;
+                //Volvemos a cambiar el estado del cliente a "En regla"
+                $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
+                $cliente->save();
             }
 
             $cuota->fecha_pago = $inscripcion->fecha_inscripcion;
@@ -89,9 +96,7 @@ class InscripcionController extends Controller
 
             $cuota->save();
 
-            //Volvemos a cambiar el estado del cliente a "En regla"
-            $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
-            $cliente->save();
+            
         }
 
 

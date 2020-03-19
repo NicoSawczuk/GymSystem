@@ -1,6 +1,6 @@
 @extends('theme.admin-lte.template')
 
-@section('title') Agregar un cliente @endsection
+@section('title') Editar un cliente @endsection
 
 @section('body')
 @parent
@@ -9,10 +9,11 @@
 @endsection
 
 @section('content')
-@section('contentHeader') Agregar un nuevo cliente  @endsection
+@section('contentHeader') Editar {{ $cliente->nombre }} {{ $cliente->apellido }}  @endsection
 <body class="container">
-    <form method="POST" action="/clientes/create/{{ $gimnasio->id }}">
+    <form method="POST" action="/clientes/{{ $cliente->id }}">
     @csrf
+    @method('PATCH')
     <input type="hidden" name="gimnasio" value="{{ $gimnasio->id }}">
     <div class="">
         <div class="">
@@ -29,7 +30,7 @@
                             <div class="form-group row">
                                 <div class="form-group col-md-4">
                                     <label for="nombre" class=" col-form-label text-md-right">Nombre</label>
-                                    <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" placeholder="Ingrese el nombre">
+                                    <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ $cliente->nombre }}" placeholder="Ingrese el nombre">
                                     @error('nombre')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -39,7 +40,7 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="apellido" class=" col-form-label text-md-right">Apellido</label>
-                                    <input id="apellido" type="text" class="form-control  @error('apellido') is-invalid @enderror" name="apellido" value="{{ old('apellido') }}" placeholder="Ingrese el apellido">
+                                    <input id="apellido" type="text" class="form-control  @error('apellido') is-invalid @enderror" name="apellido" value="{{ $cliente->apellido }}" placeholder="Ingrese el apellido">
                                     @error('apellido')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -64,7 +65,7 @@
                             <div class="form-group row">
                                 <div class="form-group col-md-4">
                                     <label for="email" class="col-form-label text-md-right">Correo electrónico</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $cliente->email }}" required autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -75,7 +76,7 @@
 
                                 <div class="form-group col-md-3">
                                     <label for="telefono" class=" col-form-label text-md-right">Teléfono</label>
-                                    <input id="phone-mask" type="text" class="form-control  @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" placeholder="Ingrese el telefono" 
+                                    <input id="phone-mask" type="text" class="form-control  @error('telefono') is-invalid @enderror" name="telefono" value="{{ $cliente->telefono }}" placeholder="Ingrese el telefono" 
                                     data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
                                     <small class="form-text text-muted">Cod. de área + Número</small>
                                     @error('telefono')
@@ -87,7 +88,7 @@
 
                                 <div class="form-group col-md-3">
                                     <label for="cuil" class=" col-form-label text-md-right">CUIL</label>
-                                    <input id="cuil-mask" type="text" class="form-control  @error('cuil') is-invalid @enderror" name="cuil" value="{{ old('cuil') }}" placeholder="Ingrese el cuil" 
+                                    <input id="cuil-mask" type="text" class="form-control  @error('cuil') is-invalid @enderror" name="cuil" value="{{ $cliente->cuil }}" placeholder="Ingrese el cuil" 
                                     data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
                                     @error('cuil')
                                         <span class="invalid-feedback" role="alert">
@@ -99,7 +100,7 @@
                             <div class="form-group row">
                                 <div class="form-group col-md-4">
                                     <label for="fecha_nacimiento" class="col-form-label text-md-right">Fecha de nacimiento</label>
-                                    <input type="date" id="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" value="{{ old('fecha_nacimiento') }}" data-mask="" im-insert="false" placeholder="dd/mm/yyyy" name="fecha_nacimiento" required>
+                                    <input type="date" id="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" value="{{ $cliente->fecha_nacimiento }}" data-mask="" im-insert="false" placeholder="dd/mm/yyyy" name="fecha_nacimiento" required>
 
                                     @error('fecha_nacimiento')
                                         <span class="invalid-feedback" role="alert">
@@ -110,7 +111,7 @@
 
                                 <div class="form-group col-md-2">
                                     <label for="altura" class="col-form-label text-md-right">Altura</label>
-                                    <input id="altura" type="number" class="form-control @error('altura') is-invalid @enderror" name="altura" step="0.01" value="{{ old('altura') }}" placeholder="En m" min="1" pattern="^[0-9]+">
+                                    <input id="altura" type="number" class="form-control @error('altura') is-invalid @enderror" name="altura" step="0.01" value="{{ $cliente->altura }}" placeholder="En m" min="1" pattern="^[0-9]+">
     
                                     @error('altura')
                                         <span class="invalid-feedback" role="alert">
@@ -122,7 +123,7 @@
 
                                 <div class="form-group col-md-2">
                                     <label for="peso" class="col-form-label text-md-right">Peso</label>
-                                    <input id="peso" type="number" class="form-control @error('peso') is-invalid @enderror" name="peso" step="0.01" value="{{ old('peso') }}" placeholder="En Kg" min="1" pattern="^[0-9]+">
+                                    <input id="peso" type="number" class="form-control @error('peso') is-invalid @enderror" name="peso" step="0.01" value="{{ $cliente->peso }}" placeholder="En Kg" min="1" pattern="^[0-9]+">
     
                                     @error('peso')
                                         <span class="invalid-feedback" role="alert">
@@ -134,7 +135,7 @@
                             <div class="form-group row">
                                 <div class="form-group col-md-4">
                                     <label for="ocupacion" class=" col-form-label text-md-right">Ocupación</label>
-                                    <input id="ocupacion" type="text" class="form-control  @error('ocupacion') is-invalid @enderror" name="ocupacion" value="{{ old('ocupacion') }}" placeholder="Ingrese la ocupación">
+                                    <input id="ocupacion" type="text" class="form-control  @error('ocupacion') is-invalid @enderror" name="ocupacion" value="{{ $cliente->ocupacion }}" placeholder="Ingrese la ocupación">
                                     @error('ocupacion')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

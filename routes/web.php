@@ -77,15 +77,24 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/clientes/create/{gimnasio}', 'ClienteController@store')->name('clientes.create')
     ->middleware('can:clientes.create');
 
-    Route::get('/clientes/{cliente}/edit/', 'ClienteController@edit')->name('clientes.edit')
+    Route::get('/clientes/{cliente}/edit/{gimasio}', 'ClienteController@edit')->name('clientes.edit')
     ->middleware('can:clientes.edit');
 
     Route::patch('/clientes/{cliente}', 'ClienteController@update')->name('clientes.update')
     ->middleware('can:clientes.edit');
+    
+    Route::get('/clientes/deuda/consultar', 'ClienteController@consultarDeuda')->name('clientes.deuda');
+
 
 
     //Inscripcion
-    Route::post('/inscripcion/create/{cliente}', 'InscripcionController@store')->name('clientes.create');
+    Route::post('/inscripcion/create/{cliente}', 'InscripcionController@store')->name('inscripcion.create');
+
+
+
+    //Cuota
+    Route::post('/cuota/create/{cliente}', 'CuotaController@store')->name('cuota.create');
+    Route::post('/cuota/pagar_deuda/{cliente}', 'CuotaController@update')->name('cuota.update');
      
 
 });

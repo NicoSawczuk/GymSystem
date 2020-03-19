@@ -66,6 +66,8 @@
      cssAnimation:true,
      cssAnimationStyle:"from-top",
      timeout:300,
+     messageMaxLength:1000,
+     width:'300px',
      success: {background:"rgba(50,198,130,0.959)", }, 
      failure: {background:"rgba(255,85,73,0.947)",}, 
      warning: {background:"rgba(238,191,49,0.953)",}, 

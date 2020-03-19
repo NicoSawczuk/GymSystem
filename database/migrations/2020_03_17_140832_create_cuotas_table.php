@@ -21,6 +21,7 @@ class CreateCuotasTable extends Migration
             $table->float('monto_deuda')->default(0);
             $table->date('fecha_pago');
             $table->date('fecha_pago_realizado');
+            $table->date('fecha_pago_deuda')->nullable();
             $table->boolean('saldado')->default(1);
 
             $table->unsignedBigInteger('gimnasio_id');

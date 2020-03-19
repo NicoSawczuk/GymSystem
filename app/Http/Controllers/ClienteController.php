@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\Cuota;
 use App\Especialidad;
 use App\Estado;
 use App\Gimnasio;
@@ -45,27 +46,32 @@ class ClienteController extends Controller
         $data = request()->validate([
             'nombre' => 'required',
             'apellido' => 'required',
-            'email' => 'required|email',
+            'sexo' => 'required',
+            'cuil' => 'required|unique:clientes',
+            'ocupacion' => 'required',
+            'email' => 'required|email|unique:clientes',
             'telefono' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'fecha_nacimiento' => 'required|date',
             'altura' => 'required|numeric',
             'peso' => 'required|numeric',
-            'especialidad' => 'required',
         ]);
 
         $cliente = new Cliente();
         
         $cliente->nombre = request()->nombre;
         $cliente->apellido = request()->apellido;
+        $cliente->cuil = request()->cuil;
         $cliente->email = request()->email;
         $cliente->telefono = request()->telefono;
         $cliente->fecha_nacimiento = request()->fecha_nacimiento;
         $cliente->altura = request()->altura;
         $cliente->peso = request()->peso;
+        $cliente->sexo = request()->sexo;
+        $cliente->ocupacion = request()->ocupacion;
 
         $cliente->estado_id = Estado::where('orden', 1)->value('id');
 
-        $cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
+        //$cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
 
         $cliente->gimnasio_id = $gimnasio->id;
 
@@ -91,9 +97,9 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente)
+    public function edit(Cliente $cliente, Gimnasio $gimnasio)
     {
-        //
+        return view('/clientes/edit', compact('gimnasio', 'cliente'));
     }
 
     /**
@@ -105,7 +111,21 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        $data = request()->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'sexo' => 'required',
+            'cuil' => 'required|unique:clientes,cuil,'.$cliente->id,
+            'ocupacion' => 'required',
+            'email' => 'required|email|unique:clientes,email,'.$cliente->id,
+            'telefono' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'fecha_nacimiento' => 'required|date',
+            'altura' => 'required|numeric',
+            'peso' => 'required|numeric',
+        ]);
+
+        $cliente->update($data);
+        return redirect('clientes/administrar/'.$cliente->gimnasio->id)->with('success','Cliente modificado con éxito');
     }
 
     /**
@@ -117,5 +137,11 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         //
+    }
+
+    public function consultarDeuda(Request $request){
+        $id = $request->get('id');
+        $monto = Cuota::where('cliente_id', $id)->orderBy('fecha_pago_realizado', 'desc')->value('monto_deuda');
+        return $monto;
     }
 }

@@ -27,7 +27,7 @@
                                 
                                 <div class="form-group col-md-3">
                                     <label for="pais">Pais</label>
-                                    <select class="form-control @error('pais') is-invalid @enderror" id="pais" name="pais">
+                                    <select class="form-control @error('pais') is-invalid @enderror" id="pais" name="pais" required>
                                         <option value="{{ \App\Pais::where('nombre',$gimnasio->pais)->value('id') }}">{{ $gimnasio->pais }}</option>
                                         @forelse ($paises as $pais)
                                         @if ($pais->nombre != $gimnasio->pais)
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="provincia">Provincia</label>
-                                    <select class="form-control @error('provincia') is-invalid @enderror" id="provincia" name="provincia">
+                                    <select class="form-control @error('provincia') is-invalid @enderror" id="provincia" name="provincia" required>
                                         <option value="{{ \App\Provincia::where('nombre',$gimnasio->provincia)->value('id') }}">{{ $gimnasio->provincia }}</option>
                                     </select>
                                     @error('provincia')
@@ -59,7 +59,7 @@
 
                                 <div class="form-group col-md-3">
                                     <label for="ciudad">Ciudad</label>
-                                    <select class="form-control @error('ciudad') is-invalid @enderror" id="ciudad" name="ciudad">
+                                    <select class="form-control @error('ciudad') is-invalid @enderror" id="ciudad" name="ciudad" required>
                                         <option value="{{ \App\Ciudad::where('nombre',$gimnasio->ciudad)->value('id') }}">{{ $gimnasio->ciudad }}</option>
                                     </select>
                                     @error('ciudad')
@@ -75,7 +75,7 @@
                             <div class="form-group row">
                                 <div class="form-group col-md-4">
                                     <label for="nombre" class=" col-form-label text-md-right">Nombre</label>
-                                    <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ $gimnasio->nombre }}" placeholder="Ingrese el nombre">
+                                    <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ $gimnasio->nombre }}" placeholder="Ingrese el nombre" required>
                                     @error('nombre')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -107,7 +107,7 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="calle" class="col-form-label text-md-right">Calle</label>
-                                    <input id="calle" type="text" class="form-control  @error('calle') is-invalid @enderror" name="calle" value="{{ $gimnasio->calle }}" placeholder="Ingrese la calle">
+                                    <input id="calle" type="text" class="form-control  @error('calle') is-invalid @enderror" name="calle" value="{{ $gimnasio->calle }}" placeholder="Ingrese la calle" required>
                                     @error('calle')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -117,7 +117,7 @@
 
                                 <div class="form-group col-md-2">
                                     <label for="altura" class="col-form-label text-md-right">Altura</label>
-                                    <input id="altura" type="number" class="form-control @error('altura') is-invalid @enderror" name="altura" value="{{ $gimnasio->altura }}" placeholder="Ingrese la altura">
+                                    <input id="altura" type="number" class="form-control @error('altura') is-invalid @enderror" name="altura" value="{{ $gimnasio->altura }}" placeholder="Ingrese la altura" min="1" pattern="^[0-9]+" required>
     
                                     @error('altura')
                                         <span class="invalid-feedback" role="alert">

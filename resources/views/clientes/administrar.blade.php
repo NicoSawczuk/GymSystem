@@ -9,6 +9,49 @@
 @endsection
 
 @section('content')
+{{-- Las dos funciones siguientes se utilizan para mostrar el monto de la especialidad (segun corresponda) en el modal para inscribir a un alumno --}}
+<script>
+  var valido = false;
+  function obtenerMonto(id){
+    valido = !valido;
+    if (valido == true){
+      document.getElementById("montoEspecialidad"+id).style.display = 'block';
+    }else{
+      document.getElementById("montoEspecialidad"+id).style.display = 'none';
+    }
+  }
+</script>
+<script>
+  function actualizarMonto(id){
+    const especialidad = $('#especialidad'+id).val();
+    const monto = $('#optionEspecialidad'+especialidad).val();
+    const html = '<p class="text-muted" style="margin-top:40;"><h5>Monto <b><span class="badge bg-warning"> $'+monto+'</span></b></h5></p>'
+    $('#montoEspecialidad'+id).html(html);
+  }
+</script>
+
+{{-- La funcion siguiente se utiliza para consultar la deuda de un cliente al intentar registrar un pago de su cuota --}}
+{{-- <script>
+  function consultarDeuda(id){
+    $.ajax({
+      url:"/clientes/deuda/consultar",
+      method:"GET",
+      data:{id:id,},
+      success:function(result)
+      {
+        console.log(result);
+        if (result > 0){
+          const html = '<p><h5>El cliente registra una deuda de </b><span class="badge bg-danger">$'+result+'</span></h5></p>';
+          $('#montoDeudaCliente'+id).html(html);
+        }else{
+          const html = '<pc lass="text-muted">El cliente no registra deudas</p>';
+          $('#montoDeudaCliente'+id).html(html);
+        }
+      }
+  })
+  }
+
+</script> --}}
     
 @section('contentHeader') Administrar clientes @endsection
 <body class="container-fluid">
@@ -50,7 +93,11 @@
                             {{ $cliente->getEdad() }}
                         </td>
                         <td>
+                          @isset($cliente->especialidad)
                           <span class="badge badge-pill badge-light">{{ $cliente->especialidad->nombre }}</span>
+                          @else
+                          <span class="badge badge-pill bg-pink">Sin especialidad</span>
+                          @endisset
                         </td>
                         <td>
                             <span class="badge badge-pill" style="background-color: {{$cliente->estado->color}}; color: white;">{{ $cliente->estado->nombre }}</span>
@@ -66,7 +113,12 @@
                               <i class="fal fa-money-check-alt"></i>
                             </a>
                             @endif
-                            <a title="Editar inscripto" href="/clientes/{{ $cliente->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
+                            @if ($cliente->estado->id === 4)
+                            <a role="button" class="" data-toggle="modal" href="#" data-target="#modal-default-pagarDeuda-{{ $cliente->id }}" title="Saldar deuda">
+                              <i class="fal fa-badge-dollar"></i>
+                            </a>
+                            @endif
+                            <a title="Editar inscripto" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="fal fa-pencil-alt"></i></a>
                             
                             <a title="Eliminar inscripto" href="#"><i class="fal fa-trash-alt"></i></a>
                         </td>
@@ -78,7 +130,6 @@
                               @csrf
                               <input type="hidden" name="gimnasio" value="{{ $gimnasio->id }}">
                               <input type="hidden" name="cliente" value="{{ $cliente->id }}">
-                              <input type="hidden" name="especialidad" value="{{ $cliente->especialidad->id }}">
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h4 class="modal-title">Realizar inscripción de <b>{{ $cliente->nombre }} {{ $cliente->apellido }}</b></h4>
@@ -88,12 +139,38 @@
                               </div>
                             
                               <div class="modal-body">
+                                <div class="form-group row">
+                                  <div class="form-group col-md-6">
+                                    <label for="especialidad" class="col-form-label text-md-right">Especialidad</label>
+                                    <select onchange="actualizarMonto('{{ $cliente->id }}')" name="especialidad" id="especialidad{{ $cliente->id }}" class="form-control select2 select2-hidden-accessible @error('especialidad') is-invalid @enderror" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                      <option>Seleccione especialidad</option>
+                                      @foreach ($gimnasio->especialidades as $especialidad)
+                                          <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
+                                      @endforeach
+                                      @foreach ($gimnasio->especialidades as $especialidad)
+                                      <input type="hidden" id="optionEspecialidad{{$especialidad->id}}" value="{{ $especialidad->monto }}">
+                                      @endforeach
+                                    </select>
+                                    @error('especialidad')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                  <label class="col-form-label text-md-right"></label>
+                                  <div class="" style="display:none;" id="montoEspecialidad{{ $cliente->id }}">
+                                    
+                                  </div>
+                              </div>
                                 
+                                </div>
+
                                 <div class="form-group row">
                                   <div class="form-group col-md-3">
                                     <label for="monto" class="col-form-label text-md-right">Monto</label>
-                                    <input id="monto{{$cliente->id}}" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" required>
-    
+                                    <input id="monto{{$cliente->id}}" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" min="1" pattern="^[0-9]+" required>
                                     @error('monto')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -104,7 +181,7 @@
                                 <div class="form-group row">
                                   <div class="form-group col-md-7">
                                     <label for="detalle" class=" col-form-label text-md-right">Detalle</label>
-                                    <textarea id="detalle{{$cliente->id}}" class="form-control  @error('detalle') is-invalid @enderror" cols="45" rows="2" name="detalle" value="{{ old('detalle') }}" placeholder="Ingrese la descripción" required>{{ old('detalle') }}</textarea>
+                                    <textarea id="detalle{{$cliente->id}}" class="form-control  @error('detalle') is-invalid @enderror" cols="45" rows="2" name="detalle" value="{{ old('detalle') }}" placeholder="Ingrese la descripción">{{ old('detalle') }}</textarea>
                                     @error('detalle')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -113,7 +190,7 @@
                                   </div>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                  <input type="checkbox" name="cuota" class="custom-control-input" id="customSwitch1{{$cliente->id}}" value="1">
+                                  <input type="checkbox" name="cuota" class="custom-control-input" id="customSwitch1{{$cliente->id}}" value="1" onchange="obtenerMonto('{{ $cliente->id }}')" id="toggle{{ $cliente->id }}">
                                   <label class="custom-control-label" for="customSwitch1{{$cliente->id}}">La inscripción forma parte de la cuota</label>
                                 </div>
 
@@ -138,7 +215,9 @@
                             @csrf
                             <input type="hidden" name="gimnasio" value="{{ $gimnasio->id }}">
                             <input type="hidden" name="cliente" value="{{ $cliente->id }}">
+                            @isset($cliente->especialidad)
                             <input type="hidden" name="especialidad" value="{{ $cliente->especialidad->id }}">
+                            @endisset
                           <div class="modal-content">
                             <div class="modal-header">
                               <h4 class="modal-title">Agregar pago de cuota de <b>{{ $cliente->nombre }} {{ $cliente->apellido }}</b></h4>
@@ -148,14 +227,137 @@
                             </div>
                           
                             <div class="modal-body">
-                              
-                              <div class="form-group row">
-                                <p>Monto de especialidad <b>{{ $cliente->especialidad->nombre }}</b><h5><span class="badge bg-info">${{ $cliente->especialidad->monto }}</span></h5></p>
+                              @isset($cliente->especialidad)
+                              {{-- <div class="form-group row">
+                                <p><h5>Monto de <b>{{ $cliente->especialidad->nombre }} </b><span class="badge bg-warning">${{ $cliente->especialidad->monto }}</span></h5></p>
+                              </div> --}}
+                              <div class="row">
+                              <div class="col-md-6">
+                                <div class="card card-warning">
+                                  <div class="card-header">
+                                    <h3 class="card-title">Monto</h3>
+                    
+                                    <div class="card-tools">
+                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                      </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                  </div>
+                                  <!-- /.card-header -->
+                                  <div class="card-body">
+                                    <p>Monto de <b>{{ $cliente->especialidad->nombre }} </b><span class="badge bg-warning">${{ $cliente->especialidad->monto }}</span></p>
+                                  </div>
+                                  <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
                               </div>
+                              <div class="col-md-6">
+                                <div class="card card-danger">
+                                  <div class="card-header">
+                                    <h3 class="card-title">Deuda</h3>
+                    
+                                    <div class="card-tools">
+                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                      </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                  </div>
+                                  <!-- /.card-header -->
+                                  <div class="card-body " id="montoDeudaCliente{{ $cliente->id }}">
+                                    @if ($cliente->getDeuda() > 0)
+                                      <p>
+                                        <h5>
+                                          El cliente registra una deuda de </b><span class="badge bg-danger"> {{ $cliente->getDeuda() }}</span>
+                                        </h5>
+                                      </p>
+                                    @else
+                                      <p class="text-muted">El cliente no registra deudas</p>
+                                    @endif
+                                  </div>
+                                  <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                              </div>
+                              </div>
+                              @endisset
                               <div class="form-group row">
                                 <div class="form-group col-md-3">
                                   <label for="monto_pagar" class="col-form-label text-md-right">Monto a pagar</label>
-                                  <input id="monto_pagar{{$cliente->id}}" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" required>
+                                  <input id="monto_pagar{{$cliente->id}}" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" min="1" pattern="^[0-9]+" required>
+  
+                                  @error('monto')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                              </div>
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> Cancelar</button>
+                              <button type="submit" class="btn btn-primary"><i class="fal fa-check"></i> Confirmar</button>
+                            </div>
+                          
+                          </div>
+                          <!-- /.modal-content -->
+                        </form>
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
+
+                      {{-- MODAL DEUDA --}}
+                      <div class="modal fade" id="modal-default-pagarDeuda-{{ $cliente->id }}">
+                        <div class="modal-dialog">
+                          <form method="POST" action="/cuota/pagar_deuda/{{ $cliente->id }}" id="DeudaForm-{{ $cliente->id }}">
+                            @csrf
+                            <input type="hidden" name="gimnasio" value="{{ $gimnasio->id }}">
+                            <input type="hidden" name="cliente" value="{{ $cliente->id }}">
+                            @isset($cliente->especialidad)
+                            <input type="hidden" name="especialidad" value="{{ $cliente->especialidad->id }}">
+                            @endisset
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Agregar pago de deuda de <b>{{ $cliente->nombre }} {{ $cliente->apellido }}</b></h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                          
+                            <div class="modal-body">
+                              @isset($cliente->especialidad)
+                              <div class="row">
+                              <div class="">
+                                <div class="card card-danger">
+                                  <div class="card-header">
+                                    <h3 class="card-title">Deuda</h3>
+                    
+                                    <div class="card-tools">
+                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                      </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                  </div>
+                                  <!-- /.card-header -->
+                                  <div class="card-body " id="montoDeudaCliente{{ $cliente->id }}">
+                                    @if ($cliente->getDeuda() > 0)
+                                      <p>
+                                          El cliente registra una deuda de </b><span class="badge bg-danger">${{ $cliente->getDeuda() }}</span>
+                                      </p>
+                                    @else
+                                      <p class="text-muted">El cliente no registra deudas</p>
+                                    @endif
+                                  </div>
+                                  <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                              </div>
+                              </div>
+                              @endisset
+                              <div class="form-group row">
+                                <div class="form-group col-md-3">
+                                  <label for="monto_pagar" class="col-form-label text-md-right">Monto a pagar</label>
+                                  <input id="monto_pagar{{$cliente->id}}" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" min="1" pattern="^[0-9]+" required>
   
                                   @error('monto')
                                       <span class="invalid-feedback" role="alert">
@@ -208,7 +410,7 @@
         "responsive": true,
         "autoWidth": false,
         "lengthChange": true,
-        "ordering": false,
+        "ordering": true,
         language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Ver _MENU_",
@@ -241,6 +443,19 @@
     });
   </script>
 
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2({
+        theme: 'bootstrap4'
+    })
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+  });
+</script>
 
 
 

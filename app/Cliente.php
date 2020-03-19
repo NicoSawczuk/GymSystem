@@ -40,4 +40,8 @@ class Cliente extends Model
         return Carbon::parse($this->fecha_nacimiento)->age;
     }
 
+    public function getDeuda(){
+        return Cuota::where('cliente_id', $this->id)->orderBy('fecha_pago_realizado', 'desc')->value('monto_deuda');
+    }
+
 }

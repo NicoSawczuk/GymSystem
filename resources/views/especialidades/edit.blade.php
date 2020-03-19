@@ -52,7 +52,7 @@
 
                                 <div class="form-group col-md-2">
                                     <label for="monto" class="col-form-label text-md-right">Monto</label>
-                                    <input id="monto" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" value="{{ $especialidad->monto }}" placeholder="Ingrese el monto" required>
+                                    <input id="monto" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" value="{{ $especialidad->monto }}" placeholder="Ingrese el monto" min="1" pattern="^[0-9]+" required>
     
                                     @error('monto')
                                         <span class="invalid-feedback" role="alert">
