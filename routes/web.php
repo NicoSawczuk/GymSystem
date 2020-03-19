@@ -88,13 +88,13 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Inscripcion
-    Route::post('/inscripcion/create/{cliente}', 'InscripcionController@store')->name('inscripcion.create');
+    Route::post('/inscripcion/create/{cliente}', 'InscripcionController@store')->name('inscripcion.create')->middleware('can:inscripciones.edit');
 
 
 
     //Cuota
-    Route::post('/cuota/create/{cliente}', 'CuotaController@store')->name('cuota.create');
-    Route::post('/cuota/pagar_deuda/{cliente}', 'CuotaController@update')->name('cuota.update');
+    Route::post('/cuota/create/{cliente}', 'CuotaController@store')->name('cuota.create')->middleware('can:cuotas.edit');
+    Route::post('/cuota/pagar_deuda/{cliente}', 'CuotaController@update')->name('cuota.update')->middleware('can:cuotas.edit');
      
 
 });

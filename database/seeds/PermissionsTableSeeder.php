@@ -161,5 +161,68 @@ class PermissionsTableSeeder extends Seeder
             'description'   => 'Podría eliminar cualquier cliente del sistema',      
         ]);
 
+        //Inscripcion
+        Permission::create([
+            'name'          => 'Navegar inscripciones',
+            'slug'          => 'inscripciones.index',
+            'description'   => 'Lista y navega todos las inscripciones del sistema',
+        ]);
+
+        Permission::create([
+            'name'          => 'Ver detalle de una inscripcion',
+            'slug'          => 'inscripciones.show',
+            'description'   => 'Ve en detalle cada inscripcion del sistema',            
+        ]);
+        
+        Permission::create([
+            'name'          => 'Creación de inscripciones',
+            'slug'          => 'inscripciones.create',
+            'description'   => 'Podría crear nuevas inscripciones en el sistema',
+        ]);
+        
+        Permission::create([
+            'name'          => 'Edición de inscripciones',
+            'slug'          => 'inscripciones.edit',
+            'description'   => 'Podría editar cualquier dato de una inscripcion del sistema',
+        ]);
+        
+        Permission::create([
+            'name'          => 'Eliminar inscripciones',
+            'slug'          => 'inscripciones.destroy',
+            'description'   => 'Podría eliminar cualquier inscripcion del sistema',      
+        ]);
+
+
+        //Cuota
+        Permission::create([
+            'name'          => 'Navegar cuotas',
+            'slug'          => 'cuotas.index',
+            'description'   => 'Lista y navega todas las cuotas del sistema',
+        ]);
+
+        Permission::create([
+            'name'          => 'Ver detalle de una cuota',
+            'slug'          => 'cuotas.show',
+            'description'   => 'Ve en detalle cada cuota del sistema',            
+        ]);
+        
+        Permission::create([
+            'name'          => 'Creación de cuotas',
+            'slug'          => 'cuotas.create',
+            'description'   => 'Podría crear nuevas cuotas en el sistema',
+        ]);
+        
+        Permission::create([
+            'name'          => 'Edición de cuotas',
+            'slug'          => 'cuotas.edit',
+            'description'   => 'Podría editar cualquier dato de una cuota del sistema',
+        ]);
+        
+        Permission::create([
+            'name'          => 'Eliminar cuotas',
+            'slug'          => 'cuotas.destroy',
+            'description'   => 'Podría eliminar cualquier cuota del sistema',      
+        ]);
+
     }
 }
