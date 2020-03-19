@@ -30,4 +30,9 @@ class Gimnasio extends Model
     {
         return $this->hasMany(Cuota::class);
     }
+
+    //Metodos
+    public function getInscriptos(){
+        return Cliente::where('gimnasio_id', $this->id)->count();
+    }
 }

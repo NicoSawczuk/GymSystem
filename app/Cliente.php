@@ -35,7 +35,7 @@ class Cliente extends Model
     }
 
 
-
+    //Metodos
     public function getEdad(){
         return Carbon::parse($this->fecha_nacimiento)->age;
     }

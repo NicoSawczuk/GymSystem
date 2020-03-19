@@ -17,7 +17,7 @@
             <div class="card card-teal card-outline">
                 <div class="card-header">
                   <h3 class="card-title">
-                      Especialidades
+                      Especialidades ofrecidas
                     </h3>
       
                   <div class="card-tools">
@@ -46,7 +46,7 @@
                         <td >
                             {{ $especialidad->descripcion }}
                         </td>
-                        <td class="text-center">
+                        <td class="text-right">
                           ${{ $especialidad->monto }}
                       </td>
                         <td class="text-right" style="">

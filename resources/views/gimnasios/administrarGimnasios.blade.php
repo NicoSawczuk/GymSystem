@@ -25,7 +25,7 @@
                 @isset($gimnasios)
                 <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
                 
-                  <table id="tabla" class="table table-head-fixed text-nowrap">
+                  <table id="tabla" class="table table-head-fixed text-nowrap ">
                     <thead>
                       <tr>
                         <th>Nombre</th>
@@ -46,7 +46,7 @@
                             @endforeach
                         </td>
                         <td>{{ $gimnasio->calle }} {{ $gimnasio->altura }}</td>
-                        <td></td>
+                        <td class="text-right">{{ $gimnasio->getInscriptos() }}</td>
                         <td>
                           @if ($gimnasio->estado === 1)
                             <span class="badge badge-pill bg-teal">Activo</span>

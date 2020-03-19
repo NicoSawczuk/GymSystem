@@ -75,7 +75,7 @@
                 @isset($clientes)
                 <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
                 
-                  <table id="tabla"class="table table-head-fixed text-nowrap dataTable dtr-inline">
+                  <table id="tabla"class="table table-head-fixed text-nowrap dataTable dtr-inline ">
                     <thead>
                       <tr>
                         <th>Nombre, Apellido</th>
@@ -89,7 +89,7 @@
                     @foreach ($clientes as $cliente)
                       <tr>
                         <td >{{ $cliente->nombre }} {{ $cliente->apellido }}</td>
-                        <td >
+                        <td class="text-right">
                             {{ $cliente->getEdad() }}
                         </td>
                         <td>
