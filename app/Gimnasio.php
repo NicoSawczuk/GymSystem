@@ -32,7 +32,24 @@ class Gimnasio extends Model
     }
 
     //Metodos
-    public function getInscriptos(){
+    public function getClientes(){
         return Cliente::where('gimnasio_id', $this->id)->count();
     }
+
+    public function getNoInscriptos(){
+        return Cliente::where(['gimnasio_id'=> $this->id, 'estado_id' => Estado::where('orden',1)->value('id')])->count();
+    }
+
+    public function getInscriptos(){
+        return Cliente::where(['gimnasio_id'=> $this->id, 'estado_id' => Estado::where('orden',2)->value('id')])->count();
+    }
+
+    public function getEnRegla(){
+        return Cliente::where(['gimnasio_id'=> $this->id, 'estado_id' => Estado::where('orden',3)->value('id')])->count();
+    }
+
+    public function getEnDeuda(){
+        return Cliente::where(['gimnasio_id'=> $this->id, 'estado_id' => Estado::where('orden',4)->value('id')])->count();
+    }
+
 }

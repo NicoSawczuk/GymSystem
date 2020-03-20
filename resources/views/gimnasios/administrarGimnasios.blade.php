@@ -31,7 +31,7 @@
                         <th>Nombre</th>
                         <th>Especialidad</th>
                         <th>Dirección</th>
-                        <th>Inscriptos</th>
+                        <th>Clientes</th>
                         <th>Estado</th>
                         <th class="text-right">Opciones</th>
                       </tr>
@@ -46,7 +46,7 @@
                             @endforeach
                         </td>
                         <td>{{ $gimnasio->calle }} {{ $gimnasio->altura }}</td>
-                        <td class="text-right">{{ $gimnasio->getInscriptos() }}</td>
+                        <td class="text-right">{{ $gimnasio->getClientes() }}</td>
                         <td>
                           @if ($gimnasio->estado === 1)
                             <span class="badge badge-pill bg-teal">Activo</span>
