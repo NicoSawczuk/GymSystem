@@ -44,6 +44,12 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/gimnasios/{gimnasio}', 'GimnasioController@update')->name('gimnasios.update')
     ->middleware('can:gimnasios.edit');
 
+    Route::get('/gimnasios/ocultar', 'GimnasioController@ocultar')->name('gimnasios.administrar')
+    ->middleware('can:gimnasios.create');
+
+    Route::get('/gimnasios/mostrar', 'GimnasioController@mostrar')->name('gimnasios.administrar')
+    ->middleware('can:gimnasios.create');
+
 
 
     //Home
@@ -66,6 +72,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::patch('/especialidades/{especialidad}', 'EspecialidadController@update')->name('especialidades.update')
     ->middleware('can:especialidades.edit');
+
+    Route::get('/especialidades/borrar', 'EspecialidadController@destroy')->name('especialidades.destroy')
+    ->middleware('can:especialidades.destroy');
+
+    
 
     //Clientes
     Route::get('/clientes/administrar/{gimnasio}', 'ClienteController@index')->name('clientes.administrar')

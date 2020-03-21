@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <form method="POST" action="/especialidades/create">
                             @csrf
-                            
+                            <input type="hidden" value="{{ $gimnasio->id }}" name="gimnasio">
                             <div class="form-group row">
                                 <div class="form-group col-md-3">
                                     <label for="nombre" class=" col-form-label text-md-right">Nombre</label>

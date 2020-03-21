@@ -28,7 +28,7 @@
                         <form method="POST" action="/especialidades/{{ $especialidad->id }}">
                             @csrf
                             @method('PATCH')
-                            
+                            <input type="hidden" value="{{ $gimnasio->id }}" name="gimnasio">
                             <div class="form-group row">
                                 <div class="form-group col-md-3">
                                     <label for="nombre" class=" col-form-label text-md-right">Nombre</label>

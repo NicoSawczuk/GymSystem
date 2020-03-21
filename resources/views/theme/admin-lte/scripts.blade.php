@@ -96,5 +96,8 @@
   });
   </script>
 
+<!-- Sweetalert2 -->
+<script src="{{ asset("assets/sweetalert2/sweetalert2@9.js") }}"></script>
+
 
 

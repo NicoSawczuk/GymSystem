@@ -52,7 +52,7 @@
                         <td class="text-right" style="">
                             <a title="Editar especialidad" href="/especialidades/{{ $gimnasio->id }}/{{ $especialidad->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
                             
-                            <a title="Eliminar especialidad" href="#"><i class="fal fa-trash-alt"></i></a>
+                            <a title="Eliminar especialidad" onclick="borrar('{{ $especialidad->nombre }}','{{ $especialidad->id }}')" href="#"><i class="fal fa-trash-alt"></i></a>
                         </td>
 
                       </tr>
@@ -132,6 +132,81 @@
     Notiflix.Notify.Failure(String(' {{ session('error') }} '));
 </script>
 @endif
+
+
+<script>
+  function ajaxBorrar(id){
+    $.ajax({
+      url:"/especialidades/borrar",
+      method:"GET",
+      data:{id:id,},
+      success:function(result){
+        if (result === '1'){
+          Swal.fire({
+          icon: 'success',
+          title: 'Especialidad eliminada',
+          text: 'La especialidad se eliminó con éxito',
+          confirmButtonColor: '#3085d6',
+          timer: 3500,
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.value) {
+            location.reload();
+          }else{
+            location.reload();
+          }
+          })
+        }else{
+          Swal.fire({
+          icon: 'error',
+          title: 'Fallo en eliminar especialidad',
+          text: 'La especialidad no pudo ser eliminada, ya que la misma esta asociada a algún gimnasio',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok'
+        })
+        }
+      }
+    })
+  }
+</script>
+
+
+
+<script>
+  function borrar(especialidad, id){
+    const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: true
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: 'Eliminar especialidad',
+    text: 'La especialidad '+especialidad+' se borrará del sistema, está seguro que desea hacerlo?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Confirmar',
+    cancelButtonText: 'Cancelar',
+    reverseButtons: true
+}).then((result) => {
+  if (result.value) {
+    ajaxBorrar(id);
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelado',
+      'No se eliminará la especialidad',
+      'error'
+    )
+  }
+})
+  }
+</script>
+
 
 </body>
 @endsection

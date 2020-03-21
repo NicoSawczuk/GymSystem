@@ -213,4 +213,26 @@ class GimnasioController extends Controller
 
     }
 
+    public function ocultar(Request $request){
+        $id = $request->get('id');
+        $gimnasio = Gimnasio::where('id', $id)->first();
+
+        if ($gimnasio->getClientes() === 0){
+            $gimnasio->estado = 0;
+            $gimnasio->save();
+            return '1';
+        }else{
+            return '0';
+        }
+
+    }
+
+    public function mostrar(Request $request){
+        $id = $request->get('id');
+        $gimnasio = Gimnasio::where('id', $id)->first();
+        $gimnasio->estado = 1;
+        $gimnasio->save();
+        return '1';
+    }
+
 }

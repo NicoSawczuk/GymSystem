@@ -10,7 +10,7 @@ class Especialidad extends Model
     public $table = "especialidades";
 
     public function gimnasios(){
-        return $this->belongsToMany(Gimnasio::class, 'gimnasio_id');
+        return $this->belongsToMany(Gimnasio::class, 'gimnasios_especialidades');
     }
 
     public function clientes(){
@@ -26,4 +26,6 @@ class Especialidad extends Model
     {
         return $this->hasMany(Cuota::class);
     }
+
+    //Metodos
 }

@@ -72,19 +72,24 @@ class InscripcionController extends Controller
             $cuota->monto_cuota = Especialidad::where('id', $inscripcion->especialidad_id)->value('monto');
             $cuota->monto_pagado = request()->monto;
 
-            //Si lo pagado es menor a lo que debe pagar debo registrar esa deuda
-            if (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') > request()->monto) {
-                $cuota->monto_deuda = (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto')) - (request()->monto);
-                $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+2)->value('id');
-                $cliente->save();
-            }
+            //Controlamos si el cliente tiene deudas
+            if ($cliente->getDeuda() > 0 ){
+                //
+            }else{
+                //Si lo pagado es menor a lo que debe pagar debo registrar esa deuda
+                if (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') > request()->monto) {
+                    $cuota->monto_deuda = (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto')) - (request()->monto);
+                    $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+2)->value('id');
+                    $cliente->save();
+                }
 
-            //Deuda saldada
-            if (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') == request()->monto) {
-                $cuota->saldado = 1;
-                //Volvemos a cambiar el estado del cliente a "En regla"
-                $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
-                $cliente->save();
+                //Deuda saldada
+                if (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') == request()->monto) {
+                    $cuota->saldado = 1;
+                    //Volvemos a cambiar el estado del cliente a "En regla"
+                    $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
+                    $cliente->save();
+                }
             }
 
             $cuota->fecha_pago = $inscripcion->fecha_inscripcion;

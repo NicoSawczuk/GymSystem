@@ -44,7 +44,7 @@ class EspecialidadController extends Controller
         ]);
 
         Especialidad::create($data);
-        return redirect('/especialidades/administrar')->with('success','Especialidad agregada con éxito');
+        return redirect('/especialidades/'.request()->gimnasio.'/administrar')->with('success','Especialidad agregada con éxito');
     }
 
     /**
@@ -86,7 +86,7 @@ class EspecialidadController extends Controller
 
         $especialidad->update($data);
 
-        return redirect('especialidades/administrar')->with('success', 'Especialidad modificada con éxito');
+        return redirect('/especialidades/'.request()->gimnasio.'/administrar')->with('success', 'Especialidad modificada con éxito');
     }
 
     /**
@@ -95,8 +95,16 @@ class EspecialidadController extends Controller
      * @param  \App\Especialidad  $especialidad
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Especialidad $especialidad)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $especialidad = Especialidad::where('id', $id)->first();
+
+        if ($especialidad->gimnasios->count() > 0){
+            return '0';
+        }else{
+            $especialidad->delete();
+            return '1';
+        }
     }
 }

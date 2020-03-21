@@ -47,7 +47,7 @@
                     <div class="icon">
                       <i class="fas fa-calendar-check"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/clientes/administrar/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <!-- ./col -->
@@ -62,7 +62,7 @@
                     <div class="icon">
                       <i class="fas fa-calendar-exclamation"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/clientes/administrar/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <!-- ./col -->
@@ -77,7 +77,7 @@
                     <div class="icon">
                       <i class="fas fa-calendar-times"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/clientes/administrar/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <!-- ./col -->

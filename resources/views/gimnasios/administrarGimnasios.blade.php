@@ -3,9 +3,9 @@
 @section('title') Administrar gimnasios @endsection
 
 @section('body')
-<body class="container">
+<body class="container-fluid">
     <div class=" mt-4 row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
 
 
             <div class="card card-teal card-outline">
@@ -57,9 +57,9 @@
                         <td class="text-right">
                             <a title="Editar gimnasio" href="/gimnasios/{{ $gimnasio->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
                             @if ($gimnasio->estado == 1)
-                              <a title="Cambiar estado a inactivo" onclick="inactivo('{{ $gimnasio->nombre }}')" href="#"><i class="fal fa-eye"></i></a>
+                              <a title="Cambiar estado a inactivo" onclick="inactivo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="fal fa-eye"></i></a>
                             @else
-                            <a title="Cambiar estado a activo" onclick="activo('{{ $gimnasio->nombre }}')" href="#"><i class="far fa-eye-slash"></i></a>
+                            <a title="Cambiar estado a activo" onclick="activo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="far fa-eye-slash"></i></a>
                             @endif
                         </td>
 
@@ -141,49 +141,138 @@
 @endif
 
 <script>
-  function inactivo(gimnasio){
-    Notiflix.Confirm.Show(
-      'Cambio de estado',
-      'El estado de '+gimnasio+' pasará a estar inactivo, esta seguro que desea hacerlo?',
-      'Confirmar',
-      'Cancelar',
+  function ajaxInactivo(id){
+    $.ajax({
+      url:"/gimnasios/ocultar",
+      method:"GET",
+      data:{id:id,},
+      success:function(result){
+        if ( result === '1'){
+          Swal.fire({
+          title: 'Cambio de estado',
+          text: 'Cambio de estado con éxito',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          timer: 3500,
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.value) {
+            location.reload();
+          }else{
+            location.reload();
+          }
+        })
+        }else{
+          Swal.fire({
+          title: 'Cambio de estado',
+          text: 'No se pudo realizar el cambio de estado porque el gimnasio contiene clientes asociados',
+          icon: 'error',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok'
+        })
+        }
+      }
+    })
+  }
+</script>
 
-      // ok button callback
-      function(){
-        // codes...
-        console.log('confirmado');
-      },
+<script>
+  function ajaxActivo(id){
+    $.ajax({
+      url:"/gimnasios/mostrar",
+      method:"GET",
+      data:{id:id,},
+      success:function(result){
+        Swal.fire({
+          title: 'Cambio de estado',
+          text: 'Cambio de estado con éxito',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          timer: 3500,
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.value) {
+            location.reload();
+          }else{
+            location.reload();
+          }
+        })
+      }
+    })
+  }
+</script>
 
-      // cancel button callback
-      function(){
-        // codes...
-        console.log('cancelado');
-      },
-    );
+
+
+<script>
+  function inactivo(gimnasio, id){
+    const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: true
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: 'Cambio de estado',
+    text: 'El estado de '+gimnasio+' pasará a estar inactivo, esta seguro que desea hacerlo?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Confirmar',
+    cancelButtonText: 'Cancelar',
+    reverseButtons: true
+}).then((result) => {
+  if (result.value) {
+    ajaxInactivo(id);
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelado',
+      'El gimnasio permanecerá activo',
+      'error'
+    )
+  }
+})
   }
 </script>
 <script>
-    function activo(gimnasio){
-    Notiflix.Confirm.Show(
-      'Cambio de estado',
-      'El estado de '+gimnasio+' pasará a estar activo, esta seguro que desea hacerlo?',
-      'Confirmar',
-      'Cancelar',
+  function activo(gimnasio, id){
+    const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: true
+  })
 
-      // ok button callback
-      function(){
-        // codes...
-        console.log('confirmado');
-      },
-
-      // cancel button callback
-      function(){
-        // codes...
-        console.log('cancelado');
-      },
-    );
+  swalWithBootstrapButtons.fire({
+    title: 'Cambio de estado',
+    text: 'El estado de '+gimnasio+' pasará a estar activo, esta seguro que desea hacerlo?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Confirmar',
+    cancelButtonText: 'Cancelar',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.value) {
+      ajaxActivo(id);
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelado',
+        'El gimnasio permanecerá inactivo',
+        'error'
+      )
+    }
+  })
   }
 </script>
+
 
 
 

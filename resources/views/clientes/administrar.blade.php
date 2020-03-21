@@ -4,9 +4,7 @@
 
 @section('body')
 @parent
-@section('nombreGimnasio')
-    <strong>{{ $gimnasio->nombre }}</strong>
-@endsection
+
 
 @section('content')
 {{-- Las dos funciones siguientes se utilizan para mostrar el monto de la especialidad (segun corresponda) en el modal para inscribir a un alumno --}}
