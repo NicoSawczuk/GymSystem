@@ -86,7 +86,7 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="especialidades" class=" col-form-label text-md-right">Especialidades</label>
-                                    <select class="select2bs4 select2-hidden-accessible" multiple="" data-placeholder="Seleccione la especialidad" style="width: 100%;" aria-hidden="true" name="especialidades[]" required>
+                                    <select class="select2bs4 select2-hidden-accessible  @error('especialidades') is-invalid @enderror @if (session('error_espe')) is-invalid @endif" multiple="" data-placeholder="Seleccione la especialidad" style="width: 100%;" aria-hidden="true" name="especialidades[]" required>
                                         @foreach ($especialidades as $especialidad)
                                             @if ($gimnasio->especialidades->contains('id',$especialidad->id))
                                             <option value="{{$especialidad->id}}" selected>{{ $especialidad->nombre }}</option> 
@@ -100,7 +100,14 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    @if (session('error_espe'))
+                                        <span class="" style="width: 100%; margin-top: .25rem; font-size: 80%; color: #dc3545" role="alert">
+                                            <strong>{{ session('error_espe') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
+                                
+                                        
 
                             </div>
                             <div class="form-group row">

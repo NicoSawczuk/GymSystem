@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
-
+use App\Cliente;
 use App\Gimnasio;
 use App\Especialidad;
 use App\Pais;
@@ -149,7 +148,24 @@ class GimnasioController extends Controller
         $gimnasio->ciudad = \App\Ciudad::where('id', $request->ciudad)->value('nombre');
         
         $gimnasio->save();
+
+        $especGim = []; //Los datos anteriores
+        $especReq = $request->especialidades; //Los datos de edicion
+
+        //Cargo el array de gym con los id
+        foreach ($gimnasio->especialidades as $espe){
+            array_push($especGim, $espe->id);
+        }
+            
+        foreach ($especGim as $eG){
+            if (!in_array($eG, $especReq)){
+                if (Cliente::where('especialidad_id', $eG)->exists()){
+                    return redirect('gimnasios/'.$gimnasio->id.'/edit')->with('error_espe' , 'La especialidad '.Especialidad::where('id', $eG)->value('nombre').' no se puede quitar del gimnasio porque existen clientes inscriptos a la misma');
+                }
+            }
+        }
         $gimnasio->especialidades()->sync($request->especialidades);
+
 
         return redirect('/gimnasios/administrar')->with('success','Gimnasio modificado con éxito');
 

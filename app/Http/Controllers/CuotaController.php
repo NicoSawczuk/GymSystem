@@ -189,7 +189,7 @@ class CuotaController extends Controller
 
             $cuota->save();
             return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('success','Pago registrado con éxito');
-        } 
+        }
     }
 
     /**
