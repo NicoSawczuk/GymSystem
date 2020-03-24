@@ -29,7 +29,7 @@ class GimnasioController extends Controller
 
         $gimnasios = User::findOrFail(1)->gimnasios;
         
-
+        Log::info('HOLA');
         return view('gimnasios/administrarGimnasios')->with(array(
             'gimnasios' => $gimnasios
         ));
@@ -116,6 +116,7 @@ class GimnasioController extends Controller
             $pais->nombre = strtoupper($pais->nombre);
         }
         $especialidades = Especialidad::all();
+
         return view('gimnasios.edit', compact('gimnasio','paises','especialidades'));
     }
 
@@ -156,7 +157,6 @@ class GimnasioController extends Controller
         foreach ($gimnasio->especialidades as $espe){
             array_push($especGim, $espe->id);
         }
-            
         foreach ($especGim as $eG){
             if (!in_array($eG, $especReq)){
                 if (Cliente::where('especialidad_id', $eG)->exists()){

@@ -64,7 +64,7 @@ class CuotaController extends Controller
 
                 $cuota->fecha_pago_realizado = $fecha;
 
-                if (request()->monto == ($cliente->especialidad->monto + $cliente->getDeuda())){
+                if (request()->monto === ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //Saldado
                     $cuota->saldado = 1;
                     $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
@@ -107,7 +107,7 @@ class CuotaController extends Controller
 
                 $cuota->fecha_pago_realizado = $fecha;
 
-                if (request()->monto == ($cliente->especialidad->monto + $cliente->getDeuda())){
+                if (request()->monto === ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //Saldado
                     $cuota->saldado = 1;
                     $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
@@ -172,7 +172,7 @@ class CuotaController extends Controller
             //Puedo pagar cuanto sea
             $cuota = Cuota::where('cliente_id', $cliente->id)->orderBy('fecha_pago_realizado', 'desc')->first();
 
-            if (request()->monto == $cliente->getDeuda()){
+            if (request()->monto === $cliente->getDeuda()){
                 //Saldado
                 $cuota->saldado = 1;
                 $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
