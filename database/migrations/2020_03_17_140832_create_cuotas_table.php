@@ -23,6 +23,7 @@ class CreateCuotasTable extends Migration
             $table->date('fecha_pago_realizado');
             $table->date('fecha_pago_deuda')->nullable();
             $table->boolean('saldado')->default(1);
+            $table->boolean('vencido')->default(0); //Utilizo para saber porqué el cliente esta en deuda (Es decir, si la cuota esta vencida es porque se debe crear otra porque ya paso el mes)
 
             $table->unsignedBigInteger('gimnasio_id');
             $table->unsignedBigInteger('cliente_id');

@@ -44,4 +44,9 @@ class Cliente extends Model
         return Cuota::where('cliente_id', $this->id)->orderBy('fecha_pago_realizado', 'desc')->value('monto_deuda');
     }
 
+    public function getCuotaVencida(){
+        //Este metodo se usa para saber qué tipo de deuda tiene el cliente
+        return Cuota::where('cliente_id', $this->id)->orderBy('fecha_pago_realizado', 'desc')->value('vencido');
+    }
+
 }

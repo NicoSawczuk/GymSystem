@@ -44,6 +44,7 @@ class CuotaController extends Controller
 
         //Si el cliente no tiene deudas controlo que no puedan ingresar mas de lo necesario
         if ($cliente->getDeuda() > 0){
+            return 'entra primer if';
             if (request()->monto > ($cliente->especialidad->monto + $cliente->getDeuda())){
                 //Tiene deuda, pero no debe excederse del monto + la deduda
                 return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('error','No se pudo registrar el pago de la cuota, debido a que el monto ingresado es mayor que el monto que el cliente debe pagar');
@@ -164,32 +165,38 @@ class CuotaController extends Controller
         $data = request()->validate([
             'monto' => 'required'
         ]);
-
-        if (request()->monto > $cliente->getDeuda()){
-            //Tiene deuda, pero no debe pagar mas que la deuda
-            return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('error','No se pudo registrar el pago de la deuda, debido a que el monto ingresado es mayor que la deuda del cliente');
-        }else{
-            //Puedo pagar cuanto sea
-            $cuota = Cuota::where('cliente_id', $cliente->id)->orderBy('fecha_pago_realizado', 'desc')->first();
-
-            if (request()->monto === $cliente->getDeuda()){
-                //Saldado
-                $cuota->saldado = 1;
-                $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
-                $fecha = date ( 'Y-m-d');
-                $cuota->fecha_pago_deuda = $fecha;
-                $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
-                
-            }elseif(request()->monto < $cliente->getDeuda()){
-                //No saldado
-                $cuota->saldado = 0;
-                $cuota->monto_deuda -= request()->monto;
-                $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
+        if ($cliente->getCuotaVencida() === 0){
+            //Si la cuota no esta vencida quiere decir que el cliente tiene una deuda que no es una deuda del vencimiento de una cuota
+            if (request()->monto > $cliente->getDeuda()){
+                //Tiene deuda, pero no debe pagar mas que la deuda
+                return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('error','No se pudo registrar el pago de la deuda, debido a que el monto ingresado es mayor que la deuda del cliente');
+            }else{
+                //Puedo pagar cuanto sea
+                $cuota = Cuota::where('cliente_id', $cliente->id)->orderBy('fecha_pago_realizado', 'desc')->first();
+    
+                if (request()->monto == $cliente->getDeuda()){
+                    //Saldado
+                    $cuota->saldado = 1;
+                    $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
+                    $fecha = date ( 'Y-m-d');
+                    $cuota->fecha_pago_deuda = $fecha;
+                    $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
+                    
+                }elseif(request()->monto < $cliente->getDeuda()){
+                    //No saldado
+                    $cuota->saldado = 0;
+                    $cuota->monto_deuda -= request()->monto;
+                    $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
+                }
+    
+                $cuota->save();
+                return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('success','Pago registrado con éxito');
             }
-
-            $cuota->save();
-            return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('success','Pago registrado con éxito');
+        }else{
+            //El cliente tiene una deuda porque paso el el mes y debe crearse una cuota nueva
+            return "cuota vencida";
         }
+        
     }
 
     /**

@@ -79,6 +79,7 @@ class InscripcionController extends Controller
                 //Si lo pagado es menor a lo que debe pagar debo registrar esa deuda
                 if (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') > request()->monto) {
                     $cuota->monto_deuda = (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto')) - (request()->monto);
+                    $cuota->saldado = 0;
                     $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+2)->value('id');
                     $cliente->save();
                 }
