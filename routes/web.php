@@ -100,7 +100,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/clientes/create/{gimnasio}', 'ClienteController@store')->name('clientes.create')
     ->middleware('can:clientes.create');
 
-    Route::get('/clientes/{cliente}/edit/{gimasio}', 'ClienteController@edit')->name('clientes.edit')
+    Route::get('/clientes/{cliente}/edit/{gimnasio}', 'ClienteController@edit')->name('clientes.edit')
     ->middleware('can:clientes.edit');
 
     Route::patch('/clientes/{cliente}', 'ClienteController@update')->name('clientes.update')

@@ -165,7 +165,7 @@ class ClienteController extends Controller
         ]);
 
         $cliente->update($data);
-        return redirect('clientes/administrar/'.$cliente->gimnasio->id)->with('success','Cliente modificado con éxito');
+        return redirect('clientes/administrar/'.$cliente->gimnasio->id)->with('success','Información del cliente '.$cliente->nombre.' '.$cliente->apellido.' modificada con éxito');
     }
 
     /**
