@@ -117,7 +117,7 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        return redirect('clientes/administrar/'.$gimnasio->id)->with('success','Cliente creado con éxito');
+        return redirect('clientes/administrar/'.$gimnasio->id)->with('success','Cliente '.$cliente->nombre.' '.$cliente->apellido.' creado con éxito');
     }
 
     /**

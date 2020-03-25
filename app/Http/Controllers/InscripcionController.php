@@ -72,6 +72,13 @@ class InscripcionController extends Controller
             $cuota->monto_cuota = Especialidad::where('id', $inscripcion->especialidad_id)->value('monto');
             $cuota->monto_pagado = request()->monto;
 
+            $cuota->fecha_pago = $inscripcion->fecha_inscripcion;
+            $cuota->fecha_pago_realizado = $fecha->format('Y-m-d H:i:s');
+
+            $cuota->gimnasio_id = request()->gimnasio;
+            $cuota->especialidad_id = request()->especialidad;
+            $cuota->cliente_id = request()->cliente;
+
             //Controlamos si el cliente tiene deudas
             if ($cliente->getDeuda() > 0 ){
                 //
@@ -82,6 +89,9 @@ class InscripcionController extends Controller
                     $cuota->saldado = 0;
                     $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+2)->value('id');
                     $cliente->save();
+
+                    $cuota->save();
+                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
                 }
 
                 //Deuda saldada
@@ -90,23 +100,19 @@ class InscripcionController extends Controller
                     //Volvemos a cambiar el estado del cliente a "En regla"
                     $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
                     $cliente->save();
+
+                    $cuota->save();
+                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
                 }
             }
 
-            $cuota->fecha_pago = $inscripcion->fecha_inscripcion;
-            $cuota->fecha_pago_realizado = $fecha->format('Y-m-d H:i:s');
 
-            $cuota->gimnasio_id = request()->gimnasio;
-            $cuota->especialidad_id = request()->especialidad;
-            $cuota->cliente_id = request()->cliente;
-
-            $cuota->save();
 
             
+        }else{
+            return redirect('/clientes/administrar/inscripto/'.request()->gimnasio)->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
         }
 
-
-        return redirect()->back()->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
 
     }
 
