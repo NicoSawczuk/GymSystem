@@ -17,7 +17,7 @@ class CreateEmailConfiguracionTable extends Migration
         Schema::create('email_configuracion', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('destinatario');
+            $table->string('destinatario')->nullable();
             $table->string('remitente');
             $table->string('asunto');
             $table->string('contenido');

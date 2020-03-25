@@ -31,6 +31,12 @@ class Gimnasio extends Model
         return $this->hasMany(Cuota::class);
     }
 
+    public function email_configuracion()
+    {
+        return $this->hasOne(EmailConfiguracion::class);
+    }
+
+
     //Metodos
     public function getClientes(){
         return Cliente::where('gimnasio_id', $this->id)->count();
