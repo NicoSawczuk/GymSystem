@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\EmailConfiguracion;
+use App\Gimnasio;
 use Illuminate\Http\Request;
 
 class EmailConfiguracionController extends Controller
@@ -55,9 +56,9 @@ class EmailConfiguracionController extends Controller
      * @param  \App\EmailConfiguracion  $emailConfiguracion
      * @return \Illuminate\Http\Response
      */
-    public function edit(EmailConfiguracion $emailConfiguracion)
+    public function edit(Gimnasio $gimnasio)
     {
-        //
+        return view('email_configuracion/configurar', compact('gimnasio'));
     }
 
     /**

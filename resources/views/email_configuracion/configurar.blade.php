@@ -1,0 +1,135 @@
+@extends('theme.admin-lte.template')
+
+@section('title') Configurar Email @endsection
+
+@section('body')
+@parent
+
+
+@section('content')
+    
+@section('contentHeader') Configurar los correos automáticos @endsection
+<body class="container">
+    <div class="">
+        <div class="">
+            <div class="card card-teal card-outline">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fal fa-edit"></i> Esquema del correo</strong></h3>
+        
+                    <div class="card-tools">
+                      <div class="float-right">
+                          <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                      </div>
+                    </div>
+                  </div>
+
+                    
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header text-center">Previsualización</div>
+                            <div class="card-body p-0">
+                                <div class="mailbox-read-info">
+                                <h5 id="asunto"></h5>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h6 id="remitente">
+                                            
+                                        </h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <span class="mailbox-read-time float-right" id="fecha"></span>
+                                    </div>
+                                </div>
+                                </div>
+                                <!-- /.mailbox-read-info -->
+
+                                <!-- /.mailbox-controls -->
+                                <div class="mailbox-read-message">
+                                <p id="contenido"></p>
+                                    
+                                </div>
+                                <!-- /.mailbox-read-message -->
+                            </div>
+                        </div>
+                        <br>
+
+                        <form method="POST" action="/email_configuracion/{{ $gimnasio->id }}">
+                            @csrf
+                            @method('PATCH')
+                            <div class="form-group row">
+                                <label for="asunto" class="col-md-1 col-form-label">Asunto</label>
+                                <div class="col-md-5">
+                                  <input type="text" name="asunto" class="form-control @error('asunto') is-invalid @enderror" id="asuntoInput" placeholder="Ingrese el asunto" onkeyup=cambiarAsunto() value="{{ $gimnasio->email_configuracion->asunto }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="remitente" class="col-md-1 col-form-label">Remitente</label>
+                                <div class="col-md-2">
+                                  <input type="email" maxlength="128" name="remitente" class="form-control @error('remitente') is-invalid @enderror" id="remitenteInput" placeholder="Ingrese el email" onkeyup=cambiarRemitente() value="{{ $gimnasio->email_configuracion->remitente }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="contenido" class="col-md-1 col-form-label">Contenido</label>
+                                <div class="col-md-6">
+                                  <textarea rows="5" name="contenido" class="form-control @error('contenido') is-invalid @enderror" id="contenidoInput" placeholder="Ingrese el contenido del email" onkeyup=cambiarContenido() required>{{ $gimnasio->email_configuracion->contenido }}</textarea>
+
+                                  
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="card-footer float">
+                        <div class="float-right">
+                            <a href="javascript: history.go(-1)">
+                                <button type="button" class="btn btn-default"><i class="fal fa-times"></i> Cancelar</button>
+                            </a>
+                            <button type="submit" class="btn btn-primary "><i class="fal fa-check"></i> Guardar</button>
+                        </div>
+                    </div>
+        </div>
+    </form>
+    </div>
+
+
+<script>
+    function cambiarAsunto(){
+
+        $('#asunto').html($('#asuntoInput').val());
+    };
+    function cambiarRemitente(){
+
+        $('#remitente').html($('#remitenteInput').val());
+    };
+    function cambiarContenido(){
+
+        $('#contenido').html($('#contenidoInput').val());
+    };
+</script>
+
+<script>
+    $(document).ready(function(){
+        
+
+        $('#asunto').html($('#asuntoInput').val());
+        $('#remitente').html($('#remitenteInput').val());
+        $('#contenido').html($('#contenidoInput').val());
+
+    })
+</script>
+<script>
+    $(document).ready(function(){
+        const fecha = new moment().format('DD/MM/Y');
+        const hora = new moment().format('HH:mm');
+        const html = fecha +' a las '+ hora+'hs';
+        $('#fecha').html(String(html));
+        console.log(html);
+    })
+</script>
+
+    
+</body>
+
+@endsection
+
+@endsection
+@include('theme.admin-lte.scripts')

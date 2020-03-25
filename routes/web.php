@@ -118,6 +118,13 @@ Route::middleware(['auth'])->group(function () {
     //Cuota
     Route::post('/cuota/create/{cliente}', 'CuotaController@store')->name('cuota.create')->middleware('can:cuotas.edit');
     Route::post('/cuota/pagar_deuda/{cliente}', 'CuotaController@update')->name('cuota.update')->middleware('can:cuotas.edit');
+
+    //EmailConfiguracion
+    Route::get('/email_configuracion/{gimnasio}/edit/', 'EmailConfiguracionController@edit')->name('email_configuracion.edit')
+    ->middleware('can:gimnasios.edit');
+
+    Route::patch('/email_configuracion/{gimnasio}', 'EmailConfiguracionController@update')->name('email_configuracion.update')
+    ->middleware('can:gimnasios.edit');
      
 
 });
