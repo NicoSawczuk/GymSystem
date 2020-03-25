@@ -53,7 +53,10 @@
               <li class="nav-item">
                 <a href="/clientes/administrar/{{ $gimnasio->id }}" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
-                  <p>Clientes</p>
+                  <p>
+                    Clientes
+                    <span class="badge badge-secondary right">{{ $gimnasio->getClientes() }}</span>
+                  </p>
                 </a>
               </li>
               @endisset

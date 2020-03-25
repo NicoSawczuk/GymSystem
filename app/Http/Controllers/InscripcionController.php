@@ -106,7 +106,7 @@ class InscripcionController extends Controller
         }
 
 
-        return redirect('/clientes/administrar/'.request()->gimnasio)->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
+        return redirect()->back()->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
 
     }
 

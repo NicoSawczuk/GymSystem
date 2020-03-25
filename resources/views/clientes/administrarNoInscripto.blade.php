@@ -1,6 +1,6 @@
 @extends('theme.admin-lte.template')
 
-@section('title') Administrar Inscriptos @endsection
+@section('title') Clientes no inscriptos @endsection
 
 @section('body')
 @parent
@@ -28,8 +28,30 @@
   }
 </script>
 
+{{-- La funcion siguiente se utiliza para consultar la deuda de un cliente al intentar registrar un pago de su cuota --}}
+{{-- <script>
+  function consultarDeuda(id){
+    $.ajax({
+      url:"/clientes/deuda/consultar",
+      method:"GET",
+      data:{id:id,},
+      success:function(result)
+      {
+        console.log(result);
+        if (result > 0){
+          const html = '<p><h5>El cliente registra una deuda de </b><span class="badge bg-danger">$'+result+'</span></h5></p>';
+          $('#montoDeudaCliente'+id).html(html);
+        }else{
+          const html = '<pc lass="text-muted">El cliente no registra deudas</p>';
+          $('#montoDeudaCliente'+id).html(html);
+        }
+      }
+  })
+  }
+
+</script> --}}
     
-@section('contentHeader') Administrar clientes @endsection
+@section('contentHeader') Administrar clientes no inscriptos @endsection
 <body class="container-fluid">
     <div class="">
         <div class="">
@@ -173,6 +195,178 @@
                           </div>
                           <!-- /.modal-dialog -->
                         </div>
+
+                      {{-- MODAL CUOTA --}}
+                      <div class="modal fade" id="modal-default-cuota-{{ $cliente->id }}">
+                        <div class="modal-dialog">
+                          <form method="POST" action="/cuota/create/{{ $cliente->id }}" id="CuotaForm-{{ $cliente->id }}">
+                            @csrf
+                            <input type="hidden" name="gimnasio" value="{{ $gimnasio->id }}">
+                            <input type="hidden" name="cliente" value="{{ $cliente->id }}">
+                            @isset($cliente->especialidad)
+                            <input type="hidden" name="especialidad" value="{{ $cliente->especialidad->id }}">
+                            @endisset
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Agregar pago de cuota de <b>{{ $cliente->nombre }} {{ $cliente->apellido }}</b></h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                          
+                            <div class="modal-body">
+                              @isset($cliente->especialidad)
+                              {{-- <div class="form-group row">
+                                <p><h5>Monto de <b>{{ $cliente->especialidad->nombre }} </b><span class="badge bg-warning">${{ $cliente->especialidad->monto }}</span></h5></p>
+                              </div> --}}
+                              <div class="row">
+                              <div class="col-md-6">
+                                <div class="card card-warning">
+                                  <div class="card-header">
+                                    <h3 class="card-title">Monto</h3>
+                    
+                                    <div class="card-tools">
+                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                      </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                  </div>
+                                  <!-- /.card-header -->
+                                  <div class="card-body">
+                                    <p>Monto de <b>{{ $cliente->especialidad->nombre }} </b><span class="badge bg-warning">${{ $cliente->especialidad->monto }}</span></p>
+                                  </div>
+                                  <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                              </div>
+                              <div class="col-md-6">
+                                <div class="card card-danger">
+                                  <div class="card-header">
+                                    <h3 class="card-title">Deuda</h3>
+                    
+                                    <div class="card-tools">
+                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                      </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                  </div>
+                                  <!-- /.card-header -->
+                                  <div class="card-body " id="montoDeudaCliente{{ $cliente->id }}">
+                                    @if ($cliente->getDeuda() > 0)
+                                      <p>
+                                        <h5>
+                                          El cliente registra una deuda de </b><span class="badge bg-danger"> {{ $cliente->getDeuda() }}</span>
+                                        </h5>
+                                      </p>
+                                    @else
+                                      <p class="text-muted">El cliente no registra deudas</p>
+                                    @endif
+                                  </div>
+                                  <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                              </div>
+                              </div>
+                              @endisset
+                              <div class="form-group row">
+                                <div class="form-group col-md-3">
+                                  <label for="monto_pagar" class="col-form-label text-md-right">Monto a pagar</label>
+                                  <input id="monto_pagar{{$cliente->id}}" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" min="1" pattern="^[0-9]+" required>
+  
+                                  @error('monto')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                              </div>
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> Cancelar</button>
+                              <button type="submit" class="btn btn-primary"><i class="fal fa-check"></i> Confirmar</button>
+                            </div>
+                          
+                          </div>
+                          <!-- /.modal-content -->
+                        </form>
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
+
+                      {{-- MODAL DEUDA --}}
+                      <div class="modal fade" id="modal-default-pagarDeuda-{{ $cliente->id }}">
+                        <div class="modal-dialog">
+                          <form method="POST" action="/cuota/pagar_deuda/{{ $cliente->id }}" id="DeudaForm-{{ $cliente->id }}">
+                            @csrf
+                            <input type="hidden" name="gimnasio" value="{{ $gimnasio->id }}">
+                            <input type="hidden" name="cliente" value="{{ $cliente->id }}">
+                            @isset($cliente->especialidad)
+                            <input type="hidden" name="especialidad" value="{{ $cliente->especialidad->id }}">
+                            @endisset
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Agregar pago de deuda de <b>{{ $cliente->nombre }} {{ $cliente->apellido }}</b></h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                          
+                            <div class="modal-body">
+                              @isset($cliente->especialidad)
+                              <div class="row">
+                              <div class="">
+                                <div class="card card-danger">
+                                  <div class="card-header">
+                                    <h3 class="card-title">Deuda</h3>
+                    
+                                    <div class="card-tools">
+                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                      </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                  </div>
+                                  <!-- /.card-header -->
+                                  <div class="card-body " id="montoDeudaCliente{{ $cliente->id }}">
+                                    @if ($cliente->getDeuda() > 0)
+                                      <p>
+                                          El cliente registra una deuda de </b><span class="badge bg-danger">${{ $cliente->getDeuda() }}</span>
+                                      </p>
+                                    @else
+                                      <p class="text-muted">El cliente no registra deudas</p>
+                                    @endif
+                                  </div>
+                                  <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                              </div>
+                              </div>
+                              @endisset
+                              <div class="form-group row">
+                                <div class="form-group col-md-3">
+                                  <label for="monto_pagar" class="col-form-label text-md-right">Monto a pagar</label>
+                                  <input id="monto_pagar{{$cliente->id}}" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" min="1" pattern="^[0-9]+" required>
+  
+                                  @error('monto')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                              </div>
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> Cancelar</button>
+                              <button type="submit" class="btn btn-primary"><i class="fal fa-check"></i> Confirmar</button>
+                            </div>
+                          
+                          </div>
+                          <!-- /.modal-content -->
+                        </form>
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
                       
                     @endforeach
                     </tbody>
@@ -209,7 +403,7 @@
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Ver _MENU_",
                 "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Todavia no tiene clientes en su gimnasio, por agregue uno",
+                "sEmptyTable":     "Nada que mostrar, todos tus clientes están inscriptos",
                 "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",
                 "sInfoEmpty":      "Mostrando  del 0 al 0 de de 0 ",
                 "sInfoFiltered":   "(filtrado de _MAX_ registros)",

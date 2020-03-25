@@ -24,6 +24,46 @@ class ClienteController extends Controller
         return view('/clientes/administrar', compact('clientes', 'gimnasio'));
     }
 
+    public function indexEnDeuda(Gimnasio $gimnasio)
+    {
+        $clientes = Cliente::where([
+                                    'gimnasio_id'=> $gimnasio->id,
+                                    'estado_id' =>Estado::where('orden', 4)->value('id')
+                                    ])->get();
+
+        return view('/clientes/administrarEnDeuda', compact('clientes', 'gimnasio'));
+    }
+
+    public function indexEnRegla(Gimnasio $gimnasio)
+    {
+        $clientes = Cliente::where([
+                                    'gimnasio_id'=> $gimnasio->id,
+                                    'estado_id' =>Estado::where('orden', 3)->value('id')
+                                    ])->get();
+
+        return view('/clientes/administrarEnRegla', compact('clientes', 'gimnasio'));
+    }
+
+    public function indexNoInscripto(Gimnasio $gimnasio)
+    {
+        $clientes = Cliente::where([
+                                    'gimnasio_id'=> $gimnasio->id,
+                                    'estado_id' =>Estado::where('orden', 1)->value('id')
+                                    ])->get();
+
+        return view('/clientes/administrarNoInscripto', compact('clientes', 'gimnasio'));
+    }
+
+    public function indexInscripto(Gimnasio $gimnasio)
+    {
+        $clientes = Cliente::where([
+                                    'gimnasio_id'=> $gimnasio->id,
+                                    'estado_id' =>Estado::where('orden', 2)->value('id')
+                                    ])->get();
+
+        return view('/clientes/administrarInscripto', compact('clientes', 'gimnasio'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -25,14 +25,14 @@
                   <!-- small box -->
                   <div class="small-box bg-info">
                     <div class="inner">
-                      <h3>{{ $gimnasio->getClientes() }}</h3>
+                      <h3>{{ $gimnasio->getInscriptos() }}</h3>
       
-                      <h4>Clientes</h4>
+                      <h4>Inscriptos</h4>
                     </div>
                     <div class="icon">
                       <i class="fas fa-users"></i>
                     </div>
-                    <a href="/clientes/administrar/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/clientes/administrar/inscripto/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <!-- ./col -->
@@ -47,7 +47,7 @@
                     <div class="icon">
                       <i class="fas fa-calendar-check"></i>
                     </div>
-                    <a href="/clientes/administrar/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/clientes/administrar/en_regla/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <!-- ./col -->
@@ -62,7 +62,7 @@
                     <div class="icon">
                       <i class="fas fa-calendar-exclamation"></i>
                     </div>
-                    <a href="/clientes/administrar/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/clientes/administrar/no_inscripto/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <!-- ./col -->
@@ -77,7 +77,7 @@
                     <div class="icon">
                       <i class="fas fa-calendar-times"></i>
                     </div>
-                    <a href="/clientes/administrar/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/clientes/administrar/en_deuda/{{ $gimnasio->id }}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
                 <!-- ./col -->

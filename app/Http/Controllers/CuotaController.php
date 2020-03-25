@@ -44,10 +44,9 @@ class CuotaController extends Controller
 
         //Si el cliente no tiene deudas controlo que no puedan ingresar mas de lo necesario
         if ($cliente->getDeuda() > 0){
-            return 'entra primer if';
             if (request()->monto > ($cliente->especialidad->monto + $cliente->getDeuda())){
                 //Tiene deuda, pero no debe excederse del monto + la deduda
-                return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('error','No se pudo registrar el pago de la cuota, debido a que el monto ingresado es mayor que el monto que el cliente debe pagar');
+                return redirect()->back()->with('error','No se pudo registrar el pago de la cuota, debido a que el monto ingresado es mayor que el monto que el cliente debe pagar');
             }else{
                 //Puedo pagar cuanto sea
                 $cuota = new Cuota();
@@ -61,7 +60,7 @@ class CuotaController extends Controller
                 $nuevafecha = strtotime ( '+1 month' , strtotime ( $fecha ) ) ;
                 $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
-                $cuota->fecha_pago = $nuevafecha;
+                $cuota->fecha_pago = $fecha;
 
                 $cuota->fecha_pago_realizado = $fecha;
 
@@ -71,26 +70,36 @@ class CuotaController extends Controller
                     $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
                     $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
 
+                    $cuota->gimnasio_id = request()->gimnasio;
+                    $cuota->especialidad_id = $cliente->especialidad->id;
+                    $cuota->cliente_id = $cliente->id;
+
+                    $cuota->save();
+                    
+                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+
                 }elseif(request()->monto < ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //No saldado
                     $cuota->saldado = 0;
                     $cuota->monto_deuda += $cliente->especialidad->monto - request()->monto;
                     $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
+
+                    $cuota->gimnasio_id = request()->gimnasio;
+                    $cuota->especialidad_id = $cliente->especialidad->id;
+                    $cuota->cliente_id = $cliente->id;
+
+                    $cuota->save();
+                    
+                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                 }
 
-                $cuota->gimnasio_id = request()->gimnasio;
-                $cuota->especialidad_id = $cliente->especialidad->id;
-                $cuota->cliente_id = $cliente->id;
-
-                $cuota->save();
-                return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('succes','Pago registrado con éxito');
             }
         }
         else{
             //No tiene deudas
             if (request()->monto > $cliente->especialidad->monto){
                 //No puede pagar mas que lo que esta la especialidad
-                return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('error','No se pudo registrar el pago de la cuota, debido a que el monto ingresado es mayor que el monto de la especialidad');
+                return redirect()->back()->with('error','No se pudo registrar el pago de la cuota, debido a que el monto ingresado es mayor que el monto de la especialidad');
             }else{
                 //Puedo pagar cuanto sea
                 $cuota = new Cuota();
@@ -104,7 +113,7 @@ class CuotaController extends Controller
                 $nuevafecha = strtotime ( '+1 month' , strtotime ( $fecha ) ) ;
                 $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
-                $cuota->fecha_pago = $nuevafecha;
+                $cuota->fecha_pago = $fecha;
 
                 $cuota->fecha_pago_realizado = $fecha;
 
@@ -114,19 +123,29 @@ class CuotaController extends Controller
                     $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
                     $cliente->update(['estado_id'=> Estado::where('orden',3)->value('id')]);
 
+                    $cuota->gimnasio_id = request()->gimnasio;
+                    $cuota->especialidad_id = $cliente->especialidad->id;
+                    $cuota->cliente_id = $cliente->id;
+
+                    $cuota->save();
+                    
+                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+
                 }elseif(request()->monto < ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //No saldado
                     $cuota->saldado = 0;
                     $cuota->monto_deuda += $cliente->especialidad->monto - request()->monto;
                     $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
+
+                    $cuota->gimnasio_id = request()->gimnasio;
+                    $cuota->especialidad_id = $cliente->especialidad->id;
+                    $cuota->cliente_id = $cliente->id;
+
+                    $cuota->save();
+                    
+                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                 }
 
-                $cuota->gimnasio_id = request()->gimnasio;
-                $cuota->especialidad_id = $cliente->especialidad->id;
-                $cuota->cliente_id = $cliente->id;
-
-                $cuota->save();
-                return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('succes','Pago registrado con éxito');
             }
         }
     }
@@ -169,7 +188,7 @@ class CuotaController extends Controller
             //Si la cuota no esta vencida quiere decir que el cliente tiene una deuda que no es una deuda del vencimiento de una cuota
             if (request()->monto > $cliente->getDeuda()){
                 //Tiene deuda, pero no debe pagar mas que la deuda
-                return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('error','No se pudo registrar el pago de la deuda, debido a que el monto ingresado es mayor que la deuda del cliente');
+                return redirect()->back()->with('error','No se pudo registrar el pago de la deuda, debido a que el monto ingresado es mayor que la deuda del cliente');
             }else{
                 //Puedo pagar cuanto sea
                 $cuota = Cuota::where('cliente_id', $cliente->id)->orderBy('fecha_pago_realizado', 'desc')->first();
@@ -181,20 +200,76 @@ class CuotaController extends Controller
                     $fecha = date ( 'Y-m-d');
                     $cuota->fecha_pago_deuda = $fecha;
                     $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
+                    $cuota->save();
+                    
+                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                     
                 }elseif(request()->monto < $cliente->getDeuda()){
                     //No saldado
                     $cuota->saldado = 0;
                     $cuota->monto_deuda -= request()->monto;
                     $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
+                    $cuota->save();
+
+                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                 }
     
-                $cuota->save();
-                return redirect('clientes/administrar/'.$cliente->gimnasio_id)->with('success','Pago registrado con éxito');
             }
         }else{
             //El cliente tiene una deuda porque paso el el mes y debe crearse una cuota nueva
-            return "cuota vencida";
+            
+            //Primero controlo que no pueda pagar mas que la deuda
+            if (request()->monto > $cliente->getDeuda()){
+                //Tiene deuda, pero no debe pagar mas que la deuda
+                return redirect()->back()->with('error','No se pudo registrar el pago de la deuda, debido a que el monto ingresado es mayor que la deuda del cliente');
+            }else{
+                $cuota = new Cuota();
+
+                $cuota->monto_cuota = $cliente->especialidad->monto;
+                $cuota->monto_pagado = request()->monto;
+
+                
+                $fecha = date ( 'Y-m-d');
+                $fecha_pago = Cuota::where('cliente_id', $cliente->id)->orderBy('fecha_pago', 'desc')->first()->value('fecha_pago');
+
+                //Le sumamos un mes
+                $nuevafecha = strtotime ( '+1 month' , strtotime ( $fecha_pago ) ) ;
+                $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+
+                $cuota->fecha_pago = $nuevafecha;
+
+                $cuota->fecha_pago_realizado = $fecha;
+
+                if (request()->monto == $cliente->getDeuda()){
+                    //Saldado
+                    $cuota->saldado = 1;
+                    $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
+                    $fecha = date ( 'Y-m-d');
+                    $cuota->fecha_pago_deuda = $fecha;
+                    $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
+
+                    $cuota->gimnasio_id = request()->gimnasio;
+                    $cuota->especialidad_id = $cliente->especialidad->id;
+                    $cuota->cliente_id = $cliente->id;
+                    $cuota->save();
+                    
+                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    
+                }elseif(request()->monto < $cliente->getDeuda()){
+                    //No saldado
+                    $cuota->saldado = 0;
+                    $cuota->monto_deuda = $cliente->getDeuda() - request()->monto;
+                    $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
+
+                    $cuota->gimnasio_id = request()->gimnasio;
+                    $cuota->especialidad_id = $cliente->especialidad->id;
+                    $cuota->cliente_id = $cliente->id;
+                    $cuota->save();
+
+                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                }
+            }
+
         }
         
     }
