@@ -20,7 +20,7 @@ class CreateEmailConfiguracionTable extends Migration
             $table->string('destinatario')->nullable();
             $table->string('remitente');
             $table->string('asunto');
-            $table->string('contenido');
+            $table->longText('contenido');
 
             $table->unsignedBigInteger('gimnasio_id');
             $table->foreign('gimnasio_id')->references('id')->on('gimnasios')->onDelete('cascade');

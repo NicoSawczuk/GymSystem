@@ -14,7 +14,44 @@
         <div class="">
             <div class="card card-teal card-outline">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fal fa-edit"></i> Esquema del correo</strong></h3>
+                    <h3 class="card-title text-center"><i class="fal fa-images"></i> Previsualizacion</h3>
+                  </div>
+
+                    
+                    <div class="card-body">
+                        <div class="card-body p-0">
+                            <div class="mailbox-read-info">
+                            <h5 id="asunto"></h5>
+                            <div class="row">
+                                <div class="col-10">
+                                    <h6 id="remitente">
+                                        
+                                    </h6>
+                                </div>
+                                <div class="col-2">
+                                    <span class="mailbox-read-time float-right" id="fecha"></span>
+                                </div>
+                            </div>
+                            </div>
+                            <!-- /.mailbox-read-info -->
+
+                            <!-- /.mailbox-controls -->
+                            <div class="mailbox-read-message">
+                            <p id="contenido"></p>
+                                
+                            </div>
+                            <!-- /.mailbox-read-message -->
+                        </div>
+                    </div>
+            </div>
+
+
+
+
+        </div>
+            <div class="card card-teal card-outline">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fal fa-edit"></i> Modificar el correo</strong></h3>
         
                     <div class="card-tools">
                       <div class="float-right">
@@ -25,33 +62,6 @@
 
                     
                     <div class="card-body">
-                        <div class="card">
-                            <div class="card-header text-center">Previsualización</div>
-                            <div class="card-body p-0">
-                                <div class="mailbox-read-info">
-                                <h5 id="asunto"></h5>
-                                <div class="row">
-                                    <div class="col-10">
-                                        <h6 id="remitente">
-                                            
-                                        </h6>
-                                    </div>
-                                    <div class="col-2">
-                                        <span class="mailbox-read-time float-right" id="fecha"></span>
-                                    </div>
-                                </div>
-                                </div>
-                                <!-- /.mailbox-read-info -->
-
-                                <!-- /.mailbox-controls -->
-                                <div class="mailbox-read-message">
-                                <p id="contenido"></p>
-                                    
-                                </div>
-                                <!-- /.mailbox-read-message -->
-                            </div>
-                        </div>
-                        <br>
 
                         <form method="POST" action="/email_configuracion/{{ $gimnasio->id }}">
                             @csrf
