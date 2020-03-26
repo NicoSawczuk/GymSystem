@@ -69,19 +69,20 @@
                             <div class="form-group row">
                                 <label for="asunto" class="col-md-1 col-form-label">Asunto</label>
                                 <div class="col-md-5">
-                                  <input type="text" name="asunto" class="form-control @error('asunto') is-invalid @enderror" id="asuntoInput" placeholder="Ingrese el asunto" onkeyup=cambiarAsunto() value="{{ $gimnasio->email_configuracion->asunto }}" required>
+                                  <input type="text" name="asunto" class="form-control @error('asunto') is-invalid @enderror" id="asuntoInput" placeholder="Ingrese el asunto" onkeyup=cambiarAsunto() value="@isset($gimnasio->email_configuracion){{ $gimnasio->email_configuracion->asunto }}@endisset" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="remitente" class="col-md-1 col-form-label">Remitente</label>
-                                <div class="col-md-2">
-                                  <input type="email" maxlength="128" name="remitente" class="form-control @error('remitente') is-invalid @enderror" id="remitenteInput" placeholder="Ingrese el email" onkeyup=cambiarRemitente() value="{{ $gimnasio->email_configuracion->remitente }}" required>
+                                <div class="col-md-3">
+                                  <input type="email" maxlength="128" name="remitente" class="form-control @error('remitente') is-invalid @enderror" id="remitenteInput" placeholder="Ingrese el email" onkeyup=cambiarRemitente() value="{{ $gimnasio->email }}" required>
+                                  <small class="form-text text-muted">Por defecto es el correo asociado al gimnasio</small>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="contenido" class="col-md-1 col-form-label">Contenido</label>
                                 <div class="col-md-6">
-                                  <textarea rows="5" name="contenido" class="form-control @error('contenido') is-invalid @enderror" id="contenidoInput" placeholder="Ingrese el contenido del email" onkeyup=cambiarContenido() required>{{ $gimnasio->email_configuracion->contenido }}</textarea>
+                                  <textarea rows="5" name="contenido" class="form-control @error('contenido') is-invalid @enderror" id="contenidoInput" placeholder="Ingrese el contenido del email" onkeyup=cambiarContenido() required>@isset($gimnasio->email_configuracion){{ $gimnasio->email_configuracion->contenido }}@endisset</textarea>
 
                                   
                                 </div>
