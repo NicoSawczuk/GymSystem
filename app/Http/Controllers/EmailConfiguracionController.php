@@ -68,9 +68,30 @@ class EmailConfiguracionController extends Controller
      * @param  \App\EmailConfiguracion  $emailConfiguracion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EmailConfiguracion $emailConfiguracion)
+    public function update(Request $request, Gimnasio $gimnasio)
     {
-        //
+        $data = request()->validate([
+            'asunto' => 'required',
+            'contenido' => 'required',
+            'remitente' => 'required',
+        ]);
+
+        if (EmailConfiguracion::where('gimnasio_id', $gimnasio->id)->exists()){
+            $email = EmailConfiguracion::where('gimnasio_id', $gimnasio->id)->update($data);
+        }else{
+            $email = new EmailConfiguracion();
+
+            if (request()->remitente != $gimnasio->email){
+                $email->remitente = request()->remitente;
+            }else{
+                $email->remitente = $gimnasio->email;
+            }
+            $email->asunto = request()->asunto;
+            $email->contenido = request()->contenido;
+            $email->gimnasio_id = $gimnasio->id;
+            $email->save();
+        }
+        return redirect('/email_configuracion/'.$gimnasio->id.'/edit/')->with('success','Configración de email automático actualizada con éxito');
     }
 
     /**

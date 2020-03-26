@@ -44,11 +44,8 @@
                         </div>
                     </div>
             </div>
-
-
-
-
         </div>
+
             <div class="card card-teal card-outline">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fal fa-edit"></i> Modificar el correo</strong></h3>
@@ -75,7 +72,11 @@
                             <div class="form-group row">
                                 <label for="remitente" class="col-md-1 col-form-label">Remitente</label>
                                 <div class="col-md-3">
-                                  <input type="email" maxlength="128" name="remitente" class="form-control @error('remitente') is-invalid @enderror" id="remitenteInput" placeholder="Ingrese el email" onkeyup=cambiarRemitente() value="{{ $gimnasio->email }}" required>
+                                  <input type="email" maxlength="128" name="remitente" class="form-control @error('remitente') is-invalid @enderror" id="remitenteInput" placeholder="Ingrese el email" onkeyup=cambiarRemitente() value="@if (isset($gimnasio->email_configuracion))
+                                                                        {{ $gimnasio->email_configuracion->remitente }} 
+                                                                    @else 
+                                                                        {{ $gimnasio->email }} 
+                                                                    @endif" required>
                                   <small class="form-text text-muted">Por defecto es el correo asociado al gimnasio</small>
                                 </div>
                             </div>
@@ -101,6 +102,16 @@
     </form>
     </div>
 
+@if (session('success'))
+<script>
+    Notiflix.Notify.Success(String(' {{ session('success') }} '));
+</script>
+@endif
+@if (session('error'))
+<script>
+    Notiflix.Notify.Failure(String(' {{ session('error') }} '));
+</script>
+@endif
 
 <script>
     function cambiarAsunto(){
@@ -133,9 +144,10 @@
         const hora = new moment().format('HH:mm');
         const html = fecha +' a las '+ hora+'hs';
         $('#fecha').html(String(html));
-        console.log(html);
     })
 </script>
+
+
 
     
 </body>
