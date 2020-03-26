@@ -77,7 +77,7 @@
                                     <label for="telefono" class=" col-form-label text-md-right">Teléfono</label>
                                     <input id="phone-mask" type="text" class="form-control  @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" placeholder="Ingrese el telefono" 
                                     data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
-                                    <small class="form-text text-muted">Cod. de área + Número</small>
+                                    <small class="form-text text-muted">Cod. de área + Número empezando con 15</small>
                                     @error('telefono')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
