@@ -4,7 +4,6 @@
 
 @section('body')
     @parent
-
     @section('nombreGimnasio') <strong>{{ $gimnasio->nombre }}</strong> @endsection
 
     @section('usuario')

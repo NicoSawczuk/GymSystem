@@ -33,7 +33,6 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           @section('sidebarNenu')
-  
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fal fa-dumbbell"></i>
@@ -77,6 +76,25 @@
                 <a href="/especialidades/{{ $gimnasio->id }}/administrar" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
                   <p>Administración</p>
+                </a>
+              </li>
+              @endisset
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fad fa-cog"></i>
+              <p>
+                Configuración
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @isset($gimnasio)
+              <li class="nav-item">
+                <a href="/email_configuracion/{{ $gimnasio->id }}/edit" class="nav-link">
+                  <i class="fal fa-circle nav-icon"></i>
+                  <p>Correos automáticos</p>
                 </a>
               </li>
               @endisset
