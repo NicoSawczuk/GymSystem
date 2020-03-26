@@ -100,6 +100,16 @@
                             <div class="form-group row">
 
                                 <div class="form-group col-md-4">
+                                    <label for="email" class="col-form-label text-md-right">Correo electrónico</label>
+                                    <input id="email" type="email" class="form-control  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Ingrese el email" required>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-3">
                                     <label for="calle" class="col-form-label text-md-right">Calle</label>
                                     <input id="calle" type="text" class="form-control  @error('calle') is-invalid @enderror" name="calle" value="{{ old('calle') }}" placeholder="Ingrese la calle" required>
                                     @error('calle')

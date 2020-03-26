@@ -61,6 +61,7 @@ class GimnasioController extends Controller
     {
         $data = request()->validate([
             'nombre' => 'required|unique:gimnasios',
+            'email' => 'required|email|unique:gimnasios',
             'calle' => 'required|regex:/^[a-zA-Z\s]*$/',
             'altura' => 'required',
             'pais' => 'required',
@@ -73,6 +74,7 @@ class GimnasioController extends Controller
 
 
         $gym->nombre = $request->nombre;
+        $gym->email = $request->email;
         $gym->calle = $request->calle;
         $gym->altura = $request->altura;
         
@@ -131,6 +133,7 @@ class GimnasioController extends Controller
     {
         $data = request()->validate([
             'nombre' => 'required|unique:gimnasios,nombre,'.$gimnasio->id,
+            'email' => 'required|email|unique:gimnasios,email,'.$gimnasio->id,
             'calle' => 'required|regex:/^[a-zA-Z\s]*$/',
             'altura' => 'required',
             'pais' => 'required',
@@ -140,6 +143,7 @@ class GimnasioController extends Controller
 
 
         $gimnasio->nombre = $request->nombre;
+        $gimnasio->email = $request->email;
         $gimnasio->calle = $request->calle;
         $gimnasio->altura = $request->altura;
         
