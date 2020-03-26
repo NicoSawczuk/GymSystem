@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\EmailConfiguracion;
 use App\Gimnasio;
+use App\Mail\CuotasUpdateMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EmailConfiguracionController extends Controller
 {
@@ -58,6 +60,8 @@ class EmailConfiguracionController extends Controller
      */
     public function edit(Gimnasio $gimnasio)
     {
+        
+
         return view('email_configuracion/configurar', compact('gimnasio'));
     }
 

@@ -24,8 +24,8 @@
                             <h5 id="asunto"></h5>
                             <div class="row">
                                 <div class="col-10">
-                                    <h6 id="remitente">
-                                        
+                                    <h6 id="">
+                                        gymsystemcorreos@gmail.com
                                     </h6>
                                 </div>
                                 <div class="col-2">
@@ -37,7 +37,13 @@
 
                             <!-- /.mailbox-controls -->
                             <div class="mailbox-read-message">
-                            <p id="contenido"></p>
+                                <p id="contenido"></p>
+                                <br>
+                                <p style="color:rgb(130, 128, 128)">Si necesita mayor informacion puede enviar un email a la siguiente direccion 
+                                    <p id="remitente" style="color:#15c; cursor: pointer;
+                                    text-decoration: underline;"></p>
+                            </p>
+                            
                                 
                             </div>
                             <!-- /.mailbox-read-message -->
