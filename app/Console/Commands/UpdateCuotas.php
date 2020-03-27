@@ -4,9 +4,12 @@ namespace App\Console\Commands;
 
 use App\Cliente;
 use App\Cuota;
+use App\EmailConfiguracion;
 use App\Estado;
+use App\Mail\CuotasUpdateMail;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Client;
 
 class UpdateCuotas extends Command
@@ -59,6 +62,23 @@ class UpdateCuotas extends Command
 
                 $cliente->save();
                 $cuota->save();
+
+                //Enviamos el Mail
+                if (EmailConfiguracion::where('gimnasio_id', $cliente->gimnasio->id)->exists()){
+                    $gimnasio = $cliente->gimnasio;
+                    $data = array(
+                        'remitente'          =>   $gimnasio->email_configuracion->remitente,
+                        'asunto'             =>   $gimnasio->email_configuracion->asunto,
+                        'contenido'          =>   $gimnasio->email_configuracion->contenido,
+                        'nombre_remitente'   =>   $gimnasio->nombre,
+                        'detalle_monto'      =>   $gimnasio->email_configuracion->detalle_monto,
+                        'monto_especialidad' =>   $cliente->especialidad->monto,
+                        'monto_deuda'        =>   $cliente->getDeuda() - $cliente->especialidad->monto,
+                        'monto_total'        =>   $cliente->getDeuda()
+                    );
+                
+                    Mail::to($cliente->email)->send(new CuotasUpdateMail($data));
+                }
             }
         }
 

@@ -7,8 +7,23 @@
 
 
 @section('content')
+
+<script>
+    var valido = false;
+    function mostrar_ocultar(){
+      valido = !valido;
+      if (valido == true){
+        document.getElementById("detalle").style.display = 'block';
+        customSwitch1.checked = true;
+      }else{
+        document.getElementById("detalle").style.display = 'none';
+        customSwitch1.checked = false;
+      }
+    }
+  </script>
     
 @section('contentHeader') Configurar los correos automáticos @endsection
+
 <body class="container">
     <div class="">
         <div class="">
@@ -37,7 +52,30 @@
 
                             <!-- /.mailbox-controls -->
                             <div class="mailbox-read-message">
-                                <p id="contenido"></p>
+                                <h5 id="contenido"></h5>
+
+                                <div class="col-6" id="detalle" style="display: block;">
+                                    <br>
+                                    <p class="lead">Detalles</p>
+                                
+                                    <div class="table-responsive">
+                                      <table class="table" style="width: 350px">
+                                        <tbody><tr>
+                                          <th style="width:70%; text-align: left;" class="text-left">Monto de especialidad:</th>
+                                          <td id="montoEspecialidad">$$$</td>
+                                        </tr>
+                                        <tr>
+                                          <th style="width:70%; text-align: left;" class="text-left">Monto de deuda</th>
+                                          <td id="montoDeuda">$$$</td>
+                                        </tr>
+                                        <tr>
+                                          <th style="width:70%; text-align: left;" class="text-left">Monto total:</th>
+                                          <td id="montoTotal">$$$</td>
+                                        </tr>
+                                      </tbody></table>
+                                    </div>
+                                  </div>
+
                                 <br>
                                 <p style="color:rgb(130, 128, 128)">Si necesita mayor informacion puede enviar un email a la siguiente direccion 
                                     <p id="remitente" style="color:#15c; cursor: pointer;
@@ -94,6 +132,10 @@
                                   
                                 </div>
                             </div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" name="detalle_monto" class="custom-control-input" id="customSwitch1" value="1"  onchange="mostrar_ocultar()" id="toggleDetalleMonto">
+                                <label class="custom-control-label" for="customSwitch1">Añadir detalle de montos al correo</label>
+                            </div>
 
                     </div>
                     <div class="card-footer float">
@@ -136,12 +178,18 @@
 
 <script>
     $(document).ready(function(){
-        
-
         $('#asunto').html($('#asuntoInput').val());
         $('#remitente').html($('#remitenteInput').val());
         $('#contenido').html($('#contenidoInput').val());
 
+        const detalle_monto = " {{ $gimnasio->email_configuracion->detalle_monto }} ";
+        if (detalle_monto == 1){
+            $("#detalle").css("display", "block");
+            customSwitch1.checked = true;
+        }else{
+            $("#detalle").css("display", "none");
+            customSwitch1.checked = false;
+        }
     })
 </script>
 <script>

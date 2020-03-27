@@ -60,7 +60,7 @@ class EmailConfiguracionController extends Controller
      */
     public function edit(Gimnasio $gimnasio)
     {
-        
+
 
         return view('email_configuracion/configurar', compact('gimnasio'));
     }
@@ -78,10 +78,20 @@ class EmailConfiguracionController extends Controller
             'asunto' => 'required',
             'contenido' => 'required',
             'remitente' => 'required',
+            'detalle_monto' => 'numeric',
         ]);
 
         if (EmailConfiguracion::where('gimnasio_id', $gimnasio->id)->exists()){
             $email = EmailConfiguracion::where('gimnasio_id', $gimnasio->id)->update($data);
+            if (request()->detalle_monto == 1){
+                $email = EmailConfiguracion::where('gimnasio_id', $gimnasio->id)->first();
+                $email->detalle_monto = 1;
+                $email->save();
+            }else{
+                $email = EmailConfiguracion::where('gimnasio_id', $gimnasio->id)->first();
+                $email->detalle_monto = 0;
+                $email->save();
+            }
         }else{
             $email = new EmailConfiguracion();
 
@@ -93,6 +103,10 @@ class EmailConfiguracionController extends Controller
             $email->asunto = request()->asunto;
             $email->contenido = request()->contenido;
             $email->gimnasio_id = $gimnasio->id;
+
+            if (request()->detalle_monto == 1){
+                $email->detalle_monto = 1;
+            }
             $email->save();
         }
         return redirect('/email_configuracion/'.$gimnasio->id.'/edit/')->with('success','Configración de email automático actualizada con éxito');

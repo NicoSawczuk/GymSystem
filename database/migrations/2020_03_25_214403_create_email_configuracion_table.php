@@ -21,6 +21,7 @@ class CreateEmailConfiguracionTable extends Migration
             $table->string('remitente');
             $table->string('asunto');
             $table->longText('contenido');
+            $table->boolean('detalle_monto')->default(0);
 
             $table->unsignedBigInteger('gimnasio_id');
             $table->foreign('gimnasio_id')->references('id')->on('gimnasios')->onDelete('cascade');

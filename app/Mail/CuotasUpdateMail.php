@@ -13,10 +13,11 @@ class CuotasUpdateMail extends Mailable
     use Queueable, SerializesModels;
     public $data;
     // $data = array(
-    //     'contenido'   =>   $gimnasio->email_configuracion->contenido,
-    //     'remitente'   =>   $gimnasio->email_configuracion->remitente,
-    //     'asunto'      =>   $gimnasio->email_configuracion->asunto,
-    //     'nombre'      =>   $gimnasio->nombre
+    //     'remitente'         =>   $gimnasio->email_configuracion->remitente,
+    //     'asunto'            =>   $gimnasio->email_configuracion->asunto,
+    //     'contenido'         =>   $gimnasio->email_configuracion->contenido,
+    //     'nombre_remitente'            =>   $gimnasio->nombre,
+    //     'detalle_monto'     =>   $gimnasio->email_configuracion->detalle_monto
     // );
 
     // Mail::to('nico.290698@gmail.com')->send(new CuotasUpdateMail($data));
@@ -39,6 +40,6 @@ class CuotasUpdateMail extends Mailable
     public function build()
     {
 
-        return $this->subject($this->data['asunto'])->from($this->data['remitente'], $this->data['nombre'])->view('email_configuracion.email');
+        return $this->subject($this->data['asunto'])->from($this->data['remitente'], $this->data['nombre_remitente'])->view('email_configuracion.email');
     }
 }
