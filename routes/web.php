@@ -108,6 +108,9 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/clientes/deuda/consultar', 'ClienteController@consultarDeuda')->name('clientes.deuda');
 
+    Route::get('/clientes/{cliente}/perfil', 'ClienteController@perfil')->name('clientes.perfil')
+    ->middleware('can:clientes.show');
+
 
 
     //Inscripcion

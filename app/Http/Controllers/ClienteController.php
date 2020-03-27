@@ -184,4 +184,9 @@ class ClienteController extends Controller
         $monto = Cuota::where('cliente_id', $id)->orderBy('fecha_pago_realizado', 'desc')->value('monto_deuda');
         return $monto;
     }
+
+    public function perfil(Cliente $cliente){
+        $gimnasio = $cliente->gimnasio;
+        return view('clientes/perfil', compact('cliente', 'gimnasio'));
+    }
 }
