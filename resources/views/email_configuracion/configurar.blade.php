@@ -54,7 +54,7 @@
                             <div class="mailbox-read-message">
                                 <h5 id="contenido"></h5>
 
-                                <div class="col-6" id="detalle" style="display: block;">
+                                <div class="col-6" id="detalle" style="display: none;">
                                     <br>
                                     <p class="lead">Detalles</p>
                                 
@@ -181,8 +181,13 @@
         $('#asunto').html($('#asuntoInput').val());
         $('#remitente').html($('#remitenteInput').val());
         $('#contenido').html($('#contenidoInput').val());
-
+    })
+</script>
+@isset($gimnasio->email_configuracion)
+<script>
+    $(document).ready(function(){
         const detalle_monto = " {{ $gimnasio->email_configuracion->detalle_monto }} ";
+        console.log(detalle_monto);
         if (detalle_monto == 1){
             $("#detalle").css("display", "block");
             customSwitch1.checked = true;
@@ -192,6 +197,7 @@
         }
     })
 </script>
+@endisset
 <script>
     $(document).ready(function(){
         const fecha = new moment().format('DD/MM/Y');
