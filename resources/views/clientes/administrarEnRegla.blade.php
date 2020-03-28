@@ -60,7 +60,7 @@
                         </td>
                         <td class="text-right" style="">
 
-                            <a title="Editar inscripto" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt"></i></a>
+                            <a title="Editar cliente" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt"></i></a>
                             
                             <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus"></i></a>
                         </td>

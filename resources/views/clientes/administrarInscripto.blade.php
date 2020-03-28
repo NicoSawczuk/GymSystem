@@ -64,7 +64,7 @@
                               <i class="far fa-money-check-alt"></i>
                             </a>
                             @endif
-                            <a title="Editar inscripto" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt"></i></a>
+                            <a title="Editar cliente" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt"></i></a>
                             
                             <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus"></i></a>
                         </td>
@@ -201,7 +201,7 @@
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Ver _MENU_",
                 "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable":     "No existen clientes que solo estén inscriptos",
                 "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",
                 "sInfoEmpty":      "Mostrando  del 0 al 0 de de 0 ",
                 "sInfoFiltered":   "(filtrado de _MAX_ registros)",
