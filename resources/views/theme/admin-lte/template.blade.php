@@ -6,8 +6,11 @@
         <title>@section('title')@show</title>
         @include('theme.admin-lte.head')
       </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
+  
 @section('body')
+
 <div class="wrapper">
 
 @include('theme.admin-lte.navbar')

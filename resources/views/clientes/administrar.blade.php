@@ -77,6 +77,9 @@
                         </td>
                         <td>
                             <span class="badge badge-pill" style="background-color: {{$cliente->estado->color}}; color: white;">{{ $cliente->estado->nombre }}</span>
+                            @if ($cliente->getCuotaVencida() == '1')
+                            <span class="badge badge-pill bg-Lightblue" >Cuota vencida</span>
+                            @endif
                         </td>
                         <td class="text-right" style="">
                             @if ($cliente->estado->id === 1)

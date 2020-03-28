@@ -49,4 +49,16 @@ class Cliente extends Model
         return Cuota::where('cliente_id', $this->id)->orderBy('fecha_pago_realizado', 'desc')->value('vencido');
     }
 
+    public function getUltimasTresCuotas(){
+        //Este metodo devuleve informacion sobre las ultimas tres cuotas que pago el cliente
+        return Cuota::where('cliente_id', $this->id)->orderBy('fecha_pago', 'desc')->take(3)->get();
+        
+    }
+
+    public function getUltimaInscripcion(){
+        //Este metodo devuleve la ultima inscripcion del cliente
+        return Inscripcion::where('cliente_id', $this->id)->orderBy('fecha_inscripcion', 'desc')->take(1)->first();
+        
+    }
+
 }
