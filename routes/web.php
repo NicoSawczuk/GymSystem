@@ -111,6 +111,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/clientes/{cliente}/perfil', 'ClienteController@perfil')->name('clientes.perfil')
     ->middleware('can:clientes.show');
 
+    Route::get('/clientes/{cliente}/enviar_email', 'ClienteController@email')->name('clientes.email')
+    ->middleware('can:clientes.show');
+
+    Route::post('/clientes/{cliente}/enviar_email', 'ClienteController@sendEmail')->name('clientes.sendEmail')
+    ->middleware('can:clientes.show');
+
 
 
     //Inscripcion

@@ -7,7 +7,9 @@ use App\Cuota;
 use App\Especialidad;
 use App\Estado;
 use App\Gimnasio;
+use App\Mail\EnviarMailCliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Client;
 
 class ClienteController extends Controller
@@ -188,5 +190,33 @@ class ClienteController extends Controller
     public function perfil(Cliente $cliente){
         $gimnasio = $cliente->gimnasio;
         return view('clientes/perfil', compact('cliente', 'gimnasio'));
+    }
+
+    public function email(Cliente $cliente){
+        $gimnasio = $cliente->gimnasio;
+        return view('clientes/enviarEmail', compact('cliente', 'gimnasio'));
+    }
+
+    public function sendEmail(Request $request, Cliente $cliente){
+        $gimnasio = $cliente->gimnasio;
+
+        $data = request()->validate([
+            'asunto'      => 'required',
+            'contenido'      => 'required',
+
+        ]);
+
+
+        $dataMail = array(
+        'remitente'         =>   $gimnasio->email_configuracion->remitente,
+        'asunto'            =>   $data['asunto'],
+        'contenido'         =>   $data['contenido'],
+        'nombre_remitente'  =>   $gimnasio->nombre
+        );
+
+
+        Mail::to($cliente->email)->send(new EnviarMailCliente($dataMail));
+
+        return redirect('/clientes/'.$cliente->id.'/perfil')->with('success', 'Correo electrónico enviado con éxito');
     }
 }

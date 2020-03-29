@@ -53,7 +53,7 @@
                         </li>
                       </ul>
       
-                      <a href="#" class="btn bg-teal btn-block"><b>Enviar E-mail</b></a>
+                      <a href="/clientes/{{ $cliente->id }}/enviar_email" class="btn bg-teal btn-block"><b>Enviar E-mail</b></a>
                     </div>
                     <!-- /.card-body -->
                   </div>
