@@ -3,3 +3,5 @@
 - [ ] Hacer grafico que me muestre los inscriptos de cada especialidad
 - [ ] Hacer grafico que me muestre la cantidad de inscriptos de cada mes
 
+
+

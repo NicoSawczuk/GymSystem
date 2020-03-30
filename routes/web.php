@@ -53,6 +53,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gimnasios/{gimnasio}/estadistica', 'GimnasioController@estadistica')->name('gimnasios.estadistica')
     ->middleware('can:gimnasios.index');
 
+    Route::get('/gimnasios/actualizar_chart', 'GimnasioController@actualizarChart')->name('gimnasios.actualizarChart')
+    ->middleware('can:gimnasios.index');
+
 
 
     //Home

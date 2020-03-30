@@ -265,4 +265,22 @@ class GimnasioController extends Controller
         return view('gimnasios/estadistica', compact('gimnasio', 'especialidades'));
     }
 
+    public function actualizarChart(Request $request){
+        $gimnasio = Gimnasio::where('id', $request->get('id'))->first();
+        $dataClie = [];
+        $labelsClie = [];
+        $labelsClieAux = [ "",
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",  
+        ];
+
+        $i = 1;
+        while ($i <= date('m')){
+            array_push($dataClie, $gimnasio->getInscriptosPorMes($i, $request->get('año')));
+            array_push($labelsClie, $labelsClieAux[$i]);
+            $i++;
+        }
+
+        return array($labelsClie, $dataClie);
+    }
+
 }
