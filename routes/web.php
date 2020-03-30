@@ -50,6 +50,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gimnasios/mostrar', 'GimnasioController@mostrar')->name('gimnasios.administrar')
     ->middleware('can:gimnasios.create');
 
+    Route::get('/gimnasios/{gimnasio}/estadistica', 'GimnasioController@estadistica')->name('gimnasios.estadistica')
+    ->middleware('can:gimnasios.index');
+
 
 
     //Home
@@ -75,6 +78,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/especialidades/borrar', 'EspecialidadController@destroy')->name('especialidades.destroy')
     ->middleware('can:especialidades.destroy');
+
+
 
     
 

@@ -255,4 +255,14 @@ class GimnasioController extends Controller
         return '1';
     }
 
+    public function estadistica (Gimnasio $gimnasio){
+
+        $especialidades = [];
+        foreach ($gimnasio->especialidades as $especialidad){
+            $especialidades[$especialidad->nombre] = Cliente::where(['gimnasio_id' => $gimnasio->id, 'especialidad_id' => $especialidad->id])->count();
+        }
+
+        return view('gimnasios/estadistica', compact('gimnasio', 'especialidades'));
+    }
+
 }

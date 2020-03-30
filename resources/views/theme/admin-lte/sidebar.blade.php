@@ -58,8 +58,13 @@
                   </p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/gimnasios/{{ $gimnasio->id }}/estadistica" class="nav-link">
+                  <i class="fal fa-circle nav-icon"></i>
+                  <p>Estadística</p>
+                </a>
+              </li>
               @endisset
-              
             </ul>
           </li>
           <li class="nav-item has-treeview">
