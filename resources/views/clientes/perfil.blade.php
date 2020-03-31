@@ -40,9 +40,11 @@
                         <li class="list-group-item">
                           <b>Gimnasio</b> <a class="float-right"><span class="badge badge-pill bg-light">{{ $cliente->gimnasio->nombre }}</span></a>
                         </li>
+                        @isset($cliente->especialidad)
                         <li class="list-group-item">
                           <b>Especialidad</b> <a class="float-right"><span class="badge badge-pill bg-light">{{ $cliente->especialidad->nombre }}</span></a>
                         </li>
+                        @endisset
                         <li class="list-group-item">
                           <b>Estado</b> <a class="float-right">
                             <span class="badge badge-pill" style="background-color: {{$cliente->estado->color}}; color: white;">{{ $cliente->estado->nombre }}</span>
@@ -151,6 +153,7 @@
                                 <dd class="col-sm-8 text-muted">{{ $cliente->peso }}Kg</dd>
                             </dl>
 
+                            @isset($cliente->especialidad)
                             <div class="text-muted" style="font-family: 'Open Sans', serif;">INSCRIPCIÓN</div>
                             <hr style="margin-bottom: 1%; margin-top: 0%">
                             <dl class="row" style="margin-left: 1%">
@@ -171,7 +174,7 @@
                                 <dd class="col-sm-8 text-muted">{{ $cliente->getUltimaInscripcion()->detalle }}</dd>
                             </dl>
                             @endisset
-
+                            @endisset
                             <div class="text-muted" style="font-family: 'Open Sans', serif;">CONTACTO</div>
                             <hr style="margin-bottom: 1%; margin-top: 0%">
                             <dl class="row" style="margin-left: 1%">
@@ -182,6 +185,7 @@
                                 <dt class="col-sm-3">Correo electrónico</dt>
                                 <dd class="col-sm-8 text-muted">{{ $cliente->email }}</dd>
                             </dl>
+                            
 
                         </div>
                         <!-- /.tab-pane -->
