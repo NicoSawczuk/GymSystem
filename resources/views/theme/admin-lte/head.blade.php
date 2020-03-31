@@ -14,8 +14,8 @@
 <link rel="stylesheet" href="{{ asset("assets/admin-lte/dist/css/adminlte.min.css") }}">
 <!-- overlayScrollbars -->
 <link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css") }}">
-{{-- <!-- Daterange picker -->
-<link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/daterangepicker/daterangepicker.css") }}"> --}}
+<!-- Daterange picker -->
+<link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/daterangepicker/daterangepicker.css") }}">
 <!-- summernote -->
 <link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/summernote/summernote-bs4.css") }}">
 <!-- Google Font: Source Sans Pro -->

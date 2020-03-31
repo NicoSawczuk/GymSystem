@@ -18,9 +18,9 @@
 <script src="{{ asset("assets/admin-lte/plugins/jqvmap/maps/jquery.vmap.usa.js") }}"></script> --}}
 <!-- jQuery Knob Chart -->
 <script src="{{ asset("assets/admin-lte/plugins/jquery-knob/jquery.knob.min.js") }}"></script>
-{{-- <!-- daterangepicker -->
+<!-- daterangepicker -->
 <script src="{{ asset("assets/admin-lte/plugins/moment/moment.min.js") }}"></script>
-<script src="{{ asset("assets/admin-lte/plugins/daterangepicker/daterangepicker.js") }}"></script> --}}
+<script src="{{ asset("assets/admin-lte/plugins/daterangepicker/daterangepicker.js") }}"></script>
 {{-- <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{ asset("assets/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js") }}"></script> --}}
 <!-- Summernote -->

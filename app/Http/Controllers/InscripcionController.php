@@ -45,29 +45,54 @@ class InscripcionController extends Controller
             'monto' => 'required'
         ]);
 
-        //Creamos la inscripcion
-        $inscripcion = new Inscripcion();
+        if (request()->cuota != 1){
+            //Creamos la inscripcion
+            $inscripcion = new Inscripcion();
 
-        $inscripcion->monto = request()->monto;
-        $inscripcion->detalle = request()->detalle;
 
-        $fecha = new DateTime();
-        $inscripcion->fecha_inscripcion = $fecha->format('Y-m-d H:i:s');
+            $inscripcion->monto = request()->monto;
+            $inscripcion->detalle = request()->detalle;
 
-        $inscripcion->gimnasio_id = request()->gimnasio;
-        $inscripcion->especialidad_id = request()->especialidad;
-        $inscripcion->cliente_id = request()->cliente;
+            $fecha = new DateTime();
+            $inscripcion->fecha_inscripcion = $fecha->format('Y-m-d H:i:s');
 
-        $inscripcion->save();
+            $inscripcion->gimnasio_id = request()->gimnasio;
+            $inscripcion->especialidad_id = request()->especialidad;
+            $inscripcion->cliente_id = request()->cliente;
 
-        //Cambiamos el estado del cliente
-        $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
-        //Le asociamos la especialidad al cliente
-        $cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
-        
-        $cliente->save();
+            $inscripcion->save();
 
-        if (request()->cuota == 1){
+            //Cambiamos el estado del cliente
+            $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
+            //Le asociamos la especialidad al cliente
+            $cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
+            
+            $cliente->save();
+        }elseif(request()->cuota == 1 && request()->monto <= Especialidad::where('id', request()->especialidad)->value('monto')){
+            //Creamos la inscripcion
+            $inscripcion = new Inscripcion();
+
+
+            $inscripcion->monto = request()->monto;
+            $inscripcion->detalle = request()->detalle;
+
+            $fecha = new DateTime();
+            $inscripcion->fecha_inscripcion = $fecha->format('Y-m-d H:i:s');
+
+            $inscripcion->gimnasio_id = request()->gimnasio;
+            $inscripcion->especialidad_id = request()->especialidad;
+            $inscripcion->cliente_id = request()->cliente;
+
+            $inscripcion->save();
+
+            //Cambiamos el estado del cliente
+            $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
+            //Le asociamos la especialidad al cliente
+            $cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
+            
+            $cliente->save();
+
+
             $cuota = new Cuota();
             $cuota->monto_cuota = Especialidad::where('id', $inscripcion->especialidad_id)->value('monto');
             $cuota->monto_pagado = request()->monto;
@@ -105,12 +130,8 @@ class InscripcionController extends Controller
                     return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
                 }
             }
-
-
-
-            
         }else{
-            return redirect('/clientes/administrar/inscripto/'.request()->gimnasio)->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
+            return redirect()->back()->with('error','No se pudo realizar la inscripción debido a que el monto ingresado es mayor al monto de la especialidad');
         }
 
 
