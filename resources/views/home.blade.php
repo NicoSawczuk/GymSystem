@@ -81,9 +81,83 @@
                 </div>
                 <!-- ./col -->
               </div>
+              <!-- THE CALENDAR -->
+              <div class="card card-teal card-outline">
+                <div class="card-body">
+                  <div id="calendar"></div>
+                </div>
+              </div>
     
         
     @endsection
+
+    <script>
+      var date = new Date()
+      var d    = date.getDate(),
+          m    = date.getMonth(),
+          y    = date.getFullYear()
+
+      var Calendar = FullCalendar.Calendar;
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new Calendar(calendarEl, {
+        plugins: [ 'list', 'bootstrap', 'interaction', 'dayGrid', 'timeGrid' ],  
+        header    : {
+          left  : 'title',
+          center: '',
+          right : 'prev,next today,dayGridMonth,timeGridWeek,listMonth'
+        },
+        locale: 'es',
+        buttonText: {
+                    //Here I make the button show French date instead of a text.
+                    today: 'Hoy',
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Dia',
+                    
+            },
+        'themeSystem': 'standard',
+        //Random default events
+        events    : [
+          {
+            title       : 'event2',
+            start       : '2020-03-05 10:00',
+            color       : '#F1C4FF',
+            borderColor : '#F251FF',
+            allDay      : false
+          },
+          
+        ],
+        firstDay: 0,
+        selectable: true,
+        editable  : true,
+        droppable : true, // this allows things to be dropped onto the calendar !!!
+        drop      : function(info) {
+          // is the "remove after drop" checkbox checked?
+          if (checkbox.checked) {
+            // if so, remove the element from the "Draggable Events" list
+            info.draggedEl.parentNode.removeChild(info.draggedEl);
+          }
+        },
+        
+        eventClick: function(info) {
+          alert('Event: ' + info.event.title);
+        }
+
+      });
+      calendar.render();
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        calendar.addEvent({
+              title       : 'Nuevo evento',
+              start       : '2020-04-01 10:00',
+              color       : '#FF73A7',
+              borderColor : '#FF2164',
+              allDay      : true
+            });
+      });
+    </script>
 
 @endsection
 

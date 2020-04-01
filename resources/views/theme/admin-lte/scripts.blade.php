@@ -99,5 +99,13 @@
 <!-- Sweetalert2 -->
 <script src="{{ asset("assets/sweetalert2/sweetalert2@9.js") }}"></script>
 
+<!-- fullCalendar 2.2.5 -->
+<script src="{{ asset("assets/admin-lte/plugins/moment/moment.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/moment/locale/es.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/fullcalendar/main.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/fullcalendar-daygrid/main.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/fullcalendar-timegrid/main.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/fullcalendar-interaction/main.min.js") }}"></script>
+<script src="{{ asset("assets/admin-lte/plugins/fullcalendar-bootstrap/main.min.js") }}"></script>
 
 
