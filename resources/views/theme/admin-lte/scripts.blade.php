@@ -107,5 +107,4 @@
 <script src="{{ asset("assets/admin-lte/plugins/fullcalendar-timegrid/main.min.js") }}"></script>
 <script src="{{ asset("assets/admin-lte/plugins/fullcalendar-interaction/main.min.js") }}"></script>
 <script src="{{ asset("assets/admin-lte/plugins/fullcalendar-bootstrap/main.min.js") }}"></script>
-
-
+<script src="{{ asset("assets/admin-lte/plugins/fullcalendar-list/main.min.js") }}"></script>

@@ -219,4 +219,24 @@ class ClienteController extends Controller
 
         return redirect('/clientes/'.$cliente->id.'/perfil')->with('success', 'Correo electrónico enviado con éxito');
     }
+
+    public function getCliente(Request $request){
+
+        $clieId = $request->get('clieId');
+        $cliente = Cliente::where('id', $clieId)->first();
+        if ($cliente->getCuotaVencida() == 1){
+            return array($cliente,
+                        ['espe'  => $cliente->especialidad->monto,
+                        'deuda' =>$cliente->getDeuda() - $cliente->especialidad->monto,
+                        'total' =>$cliente->getDeuda(),
+                        'cuotaVencida' => $cliente->getCuotaVencida()]);
+        }else{
+            return array($cliente,
+                        ['espe'  => $cliente->especialidad->monto,
+                        'deuda' =>$cliente->getDeuda(),
+                        'total' =>$cliente->getDeuda(),
+                        'cuotaVencida' => $cliente->getCuotaVencida()]);
+        }
+            
+    }
 }

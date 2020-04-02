@@ -56,11 +56,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gimnasios/actualizar_chart', 'GimnasioController@actualizarChart')->name('gimnasios.actualizarChart')
     ->middleware('can:gimnasios.index');
 
+    Route::get('/gimnasios/cargar_tareas', 'GimnasioController@cargarTareas')->name('home.cargarTareas')
+    ->middleware('can:gimnasios.index');
 
 
     //Home
     Route::get('/home/{gimnasio}', 'HomeController@index')->name('home')
     ->middleware('can:gimnasios.index');
+
+    Route::get('/home/cargar_tareas', 'HomeController@cargarTareas')->name('home.cargarTareas');
 
 
     //Especialidades
@@ -123,6 +127,9 @@ Route::middleware(['auth'])->group(function () {
     ->middleware('can:clientes.show');
 
     Route::post('/clientes/{cliente}/enviar_email', 'ClienteController@sendEmail')->name('clientes.sendEmail')
+    ->middleware('can:clientes.show');
+
+    Route::get('/clientes/obtener_cliente/ajax/', 'ClienteController@getCliente')->name('clientes.getCliente')
     ->middleware('can:clientes.show');
 
 

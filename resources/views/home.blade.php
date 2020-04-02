@@ -18,6 +18,45 @@
 
 
     @section('content')
+<style>
+  .fc h2 {
+   font-size: 45px;
+   text-align: center;
+}
+</style>
+
+<script>
+  const fechas = [];
+  function cargarTareas(fecha, gymId){
+    if (!fechas.includes(fecha)){
+      $.ajax({
+        url:"/gimnasios/cargar_tareas",
+        method:"GET",
+        data:{fecha:fecha,gymId:gymId,},
+        contentType: "application/json",
+        success:function(result)
+        {
+          result.forEach(element => {
+            calendar.addEvent({
+                id          : 'No te olvides de cobrarle la cuota a '+element.cliente_id[0],
+                title       : 'Cobro a '+element.cliente_id[0],
+                start       : element.fecha_pago,
+                color       : '#FF73A7',
+                borderColor : '#FF2164',
+                allDay      : true
+              });
+              
+          });
+          
+          
+
+
+        }
+      })
+    }
+    fechas.push(fecha);
+  }
+</script>
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-lg-3 col-6">
@@ -103,8 +142,8 @@
         plugins: [ 'list', 'bootstrap', 'interaction', 'dayGrid', 'timeGrid' ],  
         header    : {
           left  : 'title',
-          center: '',
-          right : 'prev,next today,dayGridMonth,timeGridWeek,listMonth'
+          center: 'dayGridMonth,timeGridWeek,listMonth,listWeek',
+          right : 'prev,next today,'
         },
         locale: 'es',
         buttonText: {
@@ -113,20 +152,42 @@
                     month: 'Mes',
                     week: 'Semana',
                     day: 'Dia',
+                    listMonth: 'Mes (lista)',
+                    listWeek: 'Semana (lista)',
                     
             },
         'themeSystem': 'standard',
         //Random default events
-        events    : [
-          {
-            title       : 'event2',
-            start       : '2020-03-05 10:00',
-            color       : '#F1C4FF',
-            borderColor : '#F251FF',
-            allDay      : false
-          },
-          
+        events    : [          
         ],
+        eventRender: function(info) {
+            var start = info.event.start;
+            var end = info.event.end;
+            var startTime;
+            var endTime;
+
+            if (!start) {
+                startTime = '';
+            } else {
+                startTime = start;
+            }
+
+            if (!end) {
+                endDate = '';
+            } else {
+                endTime = end;
+            }
+
+            var title = info.event.title;
+
+            $(info.el).popover({
+                title: title,
+                placement:'top',
+                trigger : 'hover',
+                content: info.event.id,
+                container:'body'
+            }).popover('show');
+        },
         firstDay: 0,
         selectable: true,
         editable  : true,
@@ -139,15 +200,51 @@
           }
         },
         
-        eventClick: function(info) {
-          alert('Event: ' + info.event.title);
-        }
 
       });
       calendar.render();
+      $('.fc-prev-button').click(function(){
+        var fecha = calendar.getDate();
+        var dd = fecha.getDate();
+
+        var mm = fecha.getMonth()+1; 
+        var yyyy = fecha.getFullYear();
+        if(dd<10) 
+        {
+            dd='0'+dd;
+        } 
+
+        if(mm<10) 
+        {
+            mm='0'+mm;
+        } 
+        fecha = yyyy+'-'+mm+'-'+dd;
+        var gymId = ' {{$gimnasio->id}} ';
+        cargarTareas(fecha, gymId);
+      });
+
+      $('.fc-next-button').click(function(){
+        var fecha = calendar.getDate();
+        var dd = fecha.getDate();
+
+        var mm = fecha.getMonth()+1; 
+        var yyyy = fecha.getFullYear();
+        if(dd<10) 
+        {
+            dd='0'+dd;
+        } 
+
+        if(mm<10) 
+        {
+            mm='0'+mm;
+        } 
+        fecha = yyyy+'-'+mm+'-'+dd;
+        var gymId = ' {{$gimnasio->id}} ';
+        cargarTareas(fecha, gymId);
+      });
     </script>
 
-    <script>
+    {{-- <script>
       $(document).ready(function(){
         calendar.addEvent({
               title       : 'Nuevo evento',
@@ -157,7 +254,30 @@
               allDay      : true
             });
       });
+    </script> --}}
+    <script>
+      $(document).ready(function(){
+        var fecha = calendar.getDate();
+        var dd = fecha.getDate();
+
+        var mm = fecha.getMonth()+1; 
+        var yyyy = fecha.getFullYear();
+        if(dd<10) 
+        {
+            dd='0'+dd;
+        } 
+
+        if(mm<10) 
+        {
+            mm='0'+mm;
+        } 
+        fecha = yyyy+'-'+mm+'-01';
+        var gymId = ' {{$gimnasio->id}} ';
+        cargarTareas(fecha, gymId);
+      })
     </script>
+
+
 
 @endsection
 

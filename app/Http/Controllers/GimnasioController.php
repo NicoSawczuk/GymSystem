@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\Cuota;
 use App\Gimnasio;
 use App\Especialidad;
 use App\Pais;
@@ -281,6 +282,40 @@ class GimnasioController extends Controller
         }
 
         return array($labelsClie, $dataClie);
+    }
+
+    //Esta funcion carga las tareas de un determinado mes
+    public function cargarTareas(Request $request)
+    {   
+        $gymId = $request->get('gymId');
+        $timestamp = strtotime($request->get('fecha'));
+        //Contiene la fecha en el formato que uno quiera
+        $fecha = date( 'Y-m-d', $timestamp);
+
+        $nuevafecha = strtotime ( '-1 month' , strtotime ( $fecha ) ) ;
+        $nuevafecha = date ( 'Y-m' , $nuevafecha );
+        
+        if (Cuota::where(['gimnasio_id' => $gymId, 'vencido' => 0])->exists()){
+            $cuotas = Cuota::where(['gimnasio_id' => $gymId, 'vencido' => 0])->get();
+            $cuotasMes = [];
+            foreach ($cuotas as $cuota){
+                //Lo que se hace aca es guardar esa fecha porque despues hay que compararla en formato Y-m (no esta en date el formato sino en string), y de paso ya la vuelvo al formato Y-m-d con un mes adelantado, ya que esa fecha voy a usar en el calendar
+                $auxFecha = $cuota->fecha_pago;
+                $auxFecha = strtotime ( '+1 month' , strtotime ( $auxFecha ) ) ;
+                $auxFecha = date ( 'Y-m-d' , $auxFecha );   
+                $cuota->fecha_pago = date ( 'Y-m' , strtotime($cuota->fecha_pago) );
+                
+                if ($cuota->fecha_pago == $nuevafecha){
+                    //Le ponemos la fecha con un mes adelantado para tener la fecha correcta en el calendario
+                    $cuota->fecha_pago = $auxFecha;
+                    //Le cambiamos el id por el nombre del cliente
+                    $cuota->cliente_id = array($cuota->cliente->nombre.' '.$cuota->cliente->apellido, $cuota->cliente_id);
+                    array_push($cuotasMes, $cuota);
+                }
+            }
+        }
+
+        return $cuotasMes;
     }
 
 }
