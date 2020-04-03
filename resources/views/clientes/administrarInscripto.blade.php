@@ -31,6 +31,100 @@
                 @isset($clientes)
                 <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
                 
+                  {{-- MODAL CUOTA --}}
+                  <div class="modal fade" id="modal-default-cuota">
+                    <div class="modal-dialog">
+                      <form method="POST" action="" id="CuotaForm">
+                        @csrf
+                        <input type="hidden" name="gimnasio" id="gimnasio" value="">
+                        <input type="hidden" name="cliente" id ="cliente" value="">
+                        <input type="hidden" name="especialidad" id="especialidad" value="">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="tituloModal"></h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      
+                        <div class="modal-body">
+
+                          <div class="row">
+                          <div class="col-md-6">
+                            <div class="card card-warning">
+                              <div class="card-header">
+                                <h3 class="card-title">Monto</h3>
+                
+                                <div class="card-tools">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                  </button>
+                                </div>
+                                <!-- /.card-tools -->
+                              </div>
+                              <!-- /.card-header -->
+                              <div class="card-body">
+                                <p>Monto de <b id="nombreEspe"></b><span class="badge bg-warning" id="montoEspe"></span></p>
+                              </div>
+                              <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                          </div>
+                          <div class="col-md-6">
+                            <div class="card card-danger">
+                              <div class="card-header">
+                                <h3 class="card-title">Deuda</h3>
+                
+                                <div class="card-tools">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                  </button>
+                                </div>
+                                <!-- /.card-tools -->
+                              </div>
+                              <!-- /.card-header -->
+                              <div class="card-body " id="montoDeudaCliente">
+                                <div id="deudaSi" style="display: none;">
+                                  <p>
+                                    <h5>
+                                      El cliente registra una deuda de </b><span class="badge bg-danger" id="montoDeuda"></span>
+                                    </h5>
+                                  </p>
+                                </div>
+                                <div id="deudaNo" style="display: none;">
+                                  <p class="text-muted" >El cliente no registra deudas</p>
+                                </div>
+                              </div>
+                              <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                          </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <div class="form-group col-md-3">
+                              <label for="monto_pagar" class="col-form-label text-md-right">Monto a pagar</label>
+                              <input id="monto_pagar" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" min="1" pattern="^[0-9]+" required>
+
+                              @error('monto')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> Cancelar</button>
+                          <button type="submit" class="btn btn-primary"><i class="fal fa-check"></i> Confirmar</button>
+                        </div>
+                      
+                      </div>
+                      <!-- /.modal-content -->
+                    </form>
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div> 
+
                   <table id="tabla"class="table table-head-fixed text-nowrap dataTable dtr-inline ">
                     <thead>
                       <tr>
@@ -60,7 +154,7 @@
                         </td>
                         <td class="text-right" style="">
                             @if ($cliente->estado->id === 2)
-                            <a role="button" class="" data-toggle="modal" href="#" data-target="#modal-default-cuota-{{ $cliente->id }}" title="Agregar pago">
+                            <a role="button" class="" data-toggle="modal" href="#" onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->especialidad->id}}','{{$cliente->especialidad->nombre}}','{{$cliente->especialidad->monto}}','{{$cliente->getDeuda()}}','{{$cliente->nombre}}','{{$cliente->apellido}}')" title="Agregar pago">
                               <i class="far fa-money-check-alt"></i>
                             </a>
                             @endif
@@ -69,7 +163,7 @@
                             <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus"></i></a>
                         </td>
                       </tr>
-                      {{-- MODAL CUOTA --}}
+                      {{-- MODAL CUOTA
                       <div class="modal fade" id="modal-default-cuota-{{ $cliente->id }}">
                         <div class="modal-dialog">
                           <form method="POST" action="/cuota/create/{{ $cliente->id }}" id="CuotaForm-{{ $cliente->id }}">
@@ -89,9 +183,6 @@
                           
                             <div class="modal-body">
                               @isset($cliente->especialidad)
-                              {{-- <div class="form-group row">
-                                <p><h5>Monto de <b>{{ $cliente->especialidad->nombre }} </b><span class="badge bg-warning">${{ $cliente->especialidad->monto }}</span></h5></p>
-                              </div> --}}
                               <div class="row">
                               <div class="col-md-6">
                                 <div class="card card-warning">
@@ -165,7 +256,7 @@
                         </form>
                         </div>
                         <!-- /.modal-dialog -->
-                      </div>                      
+                      </div> --}}
                     @endforeach
                     </tbody>
                   </table>
@@ -255,6 +346,36 @@
     Notiflix.Notify.Failure(String(' {{ session('error') }} '));
 </script>
 @endif
+
+
+<script>
+  function modal(gimId, clieId, espeId, espeNombre, espeMonto, deuda, clieNombre, clieApellido){
+    $('#modal-default-cuota').modal({
+          show: true
+      });
+      $("#CuotaForm").attr('action', '/cuota/create/'+clieId+'');
+      $('#gimnasio').val(gimId);
+      $('#cliente').val(clieId);
+      $('#especialidad').val(espeId);
+  
+      var title = 'Agregar pago de cuota de <b>'+clieNombre+' '+clieApellido+'</b>'
+      $('#tituloModal').html(title);
+
+      $('#nombreEspe').html(espeNombre);
+      $('#montoEspe').html(espeMonto);
+
+      if (deuda == '0'){
+        console.log('entra en deuda + cero');
+        $('#deudaSi').css('style', 'display : block;');
+        $('#montoDeuda').html('$'+deuda);
+      }else{
+        console.log('entra en deuda - cero');
+        $('#deudaNo').attr('style', 'display : block;');
+      }
+  
+  
+  }
+  </script>
 
 
 </body>

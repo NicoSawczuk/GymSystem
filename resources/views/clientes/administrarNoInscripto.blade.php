@@ -181,7 +181,7 @@
                             <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus"></i></a>
                         </td>
                       </tr>
-                      {{-- MODAL CUOTA --}}
+                      {{-- MODAL CUOTA
                       <div class="modal fade" id="modal-default-cuota-{{ $cliente->id }}">
                         <div class="modal-dialog">
                           <form method="POST" action="/cuota/create/{{ $cliente->id }}" id="CuotaForm-{{ $cliente->id }}">
@@ -201,9 +201,6 @@
                           
                             <div class="modal-body">
                               @isset($cliente->especialidad)
-                              {{-- <div class="form-group row">
-                                <p><h5>Monto de <b>{{ $cliente->especialidad->nombre }} </b><span class="badge bg-warning">${{ $cliente->especialidad->monto }}</span></h5></p>
-                              </div> --}}
                               <div class="row">
                               <div class="col-md-6">
                                 <div class="card card-warning">
@@ -277,7 +274,7 @@
                         </form>
                         </div>
                         <!-- /.modal-dialog -->
-                      </div>
+                      </div> --}}
 
                       {{-- MODAL DEUDA --}}
                       <div class="modal fade" id="modal-default-pagarDeuda-{{ $cliente->id }}">
