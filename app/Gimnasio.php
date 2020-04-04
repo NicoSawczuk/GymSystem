@@ -70,4 +70,16 @@ class Gimnasio extends Model
         }
         return $clientes;
     }
+
+    public function getPorcentajeEstados(){
+
+        $data = array(
+            round(($this->getNoInscriptos() * 100)/$this->getClientes()),
+            round(($this->getInscriptos() * 100)/$this->getClientes()),
+            round(($this->getEnRegla() * 100)/$this->getClientes()),
+            round(($this->getEnDeuda() * 100)/$this->getClientes()),
+        );
+
+        return collect($data);
+    }
 }

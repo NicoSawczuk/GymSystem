@@ -147,6 +147,31 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
+
+                <div class="row">
+                    <div class="col col-md-6">
+                        <div class="card card-teal card-outline ">
+                            <div class="card-header">
+                            <h3 class="card-title">
+                                Estado de los clientes
+                                </h3>
+                
+                                <div class="card-tools">
+                                    <div class="float-right">
+                                        <a role="button" id="popover3" data-container="body" title="Ayuda" data-toggle="popover" data-placement="left" data-content="Este gráfico muestra el porcentaje de los estados de los clientes del gimnasio">
+                                            <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
+                                <canvas id="estadosChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
             @else
                 <div class="callout callout-warning">
                     <h5>Aún no tenes clientes</h5>
@@ -160,11 +185,13 @@
         $(function () {
             $('#popover').popover();
             $('#popover2').popover();
+            $('#popover3').popover();
         })
     </script>
         <script>
             var labelsEspe = [];
             var dataEspe = [];
+            dataEstados = []
             colors = ["#98FFB7", "#74C9E8","#A38CFF","#FFDB80","#EAFFA6","#C596FF", "#7DE8E6","#FFEC59","#E8E3FF","#B5E2FF","#D599E8", "#88EBAC","#A5EBA4","#FFE078","#7E7DFF","#81C8EB", "#D1FEED","#C4EBBE","#E1FCEE","#F3E1FD","#96FFB7", "#3DC1EB","#FFD359","#A296FF","#96FFFC","#E6E3FE", "#67EBBC","#DE96FF","#E3FFFC"];
         </script>
 
@@ -173,6 +200,12 @@
                 labelsEspe.push(" {{ $clave }} ");  
                 dataEspe.push(" {{ $valor }} "); 
             </script>           
+        @endforeach
+
+        @foreach ($gimnasio->getPorcentajeEstados() as $item)
+            <script>
+                dataEstados.push("{{$item}}");
+            </script>
         @endforeach
 
     {{-- Grafica de clientes x especialidades --}}
@@ -240,6 +273,31 @@
     <script>
         $(document).ready(function(){
             actualizarChart('{{ $gimnasio->id }}');
+        })
+    </script>
+    
+    
+    <script>
+        var estadosChartCanvas = $('#estadosChart').get(0).getContext('2d')
+        var estadosData        = {
+        labels: ["No inscriptos","Inscriptos","En regla","En deuda"],
+        datasets: [
+            {
+            data: dataEstados,
+            backgroundColor : ["#FFE373", "#68A0E8","#54F5A1","#FF3D5A"],
+            }
+        ]
+        }
+        var estadosOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var estadosChart = new Chart(estadosChartCanvas, {
+        type: 'doughnut',
+        data: estadosData,
+        options: estadosOptions      
         })
     </script>
     </body>
