@@ -96,7 +96,7 @@
                 <div class="card card-teal card-outline">
                     <div class="card-header">
                       <h3 class="card-title">
-                          Clientes por cada especialidad
+                        <i class="fal fa-chart-bar"></i> Clientes por cada especialidad
                         </h3>
           
                         <div class="card-tools">
@@ -117,7 +117,7 @@
                 <div class="card card-teal card-outline">
                     <div class="card-header">
                       <h3 class="card-title">
-                          Clientes mensuales
+                        <i class="fal fa-chart-line"></i> Clientes mensuales
                         </h3>
           
                         <div class="card-tools">
@@ -153,7 +153,7 @@
                         <div class="card card-teal card-outline ">
                             <div class="card-header">
                             <h3 class="card-title">
-                                Estado de los clientes
+                                <i class="fal fa-chart-pie"></i> Estado de los clientes
                                 </h3>
                 
                                 <div class="card-tools">
