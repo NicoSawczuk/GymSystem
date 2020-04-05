@@ -19,6 +19,12 @@ class EspecialidadController extends Controller
         return view('/especialidades/administrar', compact('especialidades', 'gimnasio'));
     }
 
+    public function indexMisEspecialidades(Gimnasio $gimnasio)
+    {
+        $especialidades = $gimnasio->especialidades;
+        return view('/especialidades/administrarMisEspecialidades', compact('especialidades', 'gimnasio'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

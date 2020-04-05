@@ -71,6 +71,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/especialidades/{gimnasio}/administrar', 'EspecialidadController@index')->name('especialidades.administrar')
     ->middleware('can:especialidades.index');
 
+    Route::get('/especialidades/{gimnasio}/administrar/mis_especialidades', 'EspecialidadController@indexMisEspecialidades')->name('especialidades.administrar')
+    ->middleware('can:especialidades.index');
+
     Route::get('/especialidades/{gimnasio}/create', 'EspecialidadController@create')->name('especialidades.create')
     ->middleware('can:especialidades.create');
 

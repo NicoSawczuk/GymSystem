@@ -83,6 +83,12 @@
                   <p>Administración</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/especialidades/{{ $gimnasio->id }}/administrar/mis_especialidades" class="nav-link">
+                  <i class="fal fa-circle nav-icon"></i>
+                  <p>Mis especialidades</p>
+                </a>
+              </li>
               @endisset
             </ul>
           </li>
