@@ -113,4 +113,11 @@ class EspecialidadController extends Controller
             return '1';
         }
     }
+
+    public function estadistica(Gimnasio $gimnasio){
+        
+
+        return view('especialidades/estadistica');
+    }
+
 }

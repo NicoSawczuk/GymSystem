@@ -28,4 +28,7 @@ class Especialidad extends Model
     }
 
     //Metodos
+    public function getClientes(){
+        return $this->clientes->count();
+    }
 }

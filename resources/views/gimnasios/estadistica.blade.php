@@ -1,6 +1,6 @@
 @extends('theme.admin-lte.template')
 
-@section('title') Estadística especialidades @endsection
+@section('title') Estadística @endsection
 
 @section('body')
     @parent

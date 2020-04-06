@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
 
 Auth::routes();
 
@@ -88,6 +92,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/especialidades/borrar', 'EspecialidadController@destroy')->name('especialidades.destroy')
     ->middleware('can:especialidades.destroy');
+
+    Route::get('/especialidades/{gimnasio}/estadistica', 'EspecialidadController@estadistica')->name('especialidades.estadistica')
+    ->middleware('can:especialidades.index');
 
 
 
