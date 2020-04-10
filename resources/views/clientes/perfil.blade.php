@@ -57,9 +57,9 @@
       
                       <a href="/clientes/{{ $cliente->id }}/enviar_email" class="btn bg-teal btn-block"><b>Enviar E-mail</b></a>
                       @if ($cliente->activo == 1)
-                      <a href="/clientes/{{ $cliente->id }}/baja" class="btn bg-maroon btn-block"><b>Dar de baja</b></a>
+                      <a href="#" role="button" onclick="modalBaja()" class="btn bg-maroon btn-block"><b>Dar de baja</b></a>
                       @else
-                      <a href="/clientes/{{ $cliente->id }}/alta-teal" class="btn bg-olive btn-block"><b>Dar de baja</b></a>
+                      <a href="#" role="button" onclick="modalAlta()" class="btn bg-olive btn-block"><b>Dar de alta</b></a>
                       @endif
                     </div>
                     <!-- /.card-body -->
@@ -212,6 +212,55 @@
           <!-- /.content -->
 
 
+          {{-- MODAL INSCRIBIR --}}
+          <div class="modal fade" id="modal-default-baja">
+            <div class="modal-dialog">
+              <form method="POST" action="/clientes/{{$cliente->id}}/baja">
+                @csrf
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title"> Dar de baja a {{$cliente->nombre}} {{$cliente->apellido}}</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              
+                <div class="modal-body">
+                  <div class="callout callout-warning">
+                    <h5>Atención</h5>
+  
+                    <p>Esta a punto de dar de baja a {{$cliente->nombre}} {{$cliente->apellido}}, con esta acción no se podrán registrar pagos del cliente. Además, el sistema no controlará los pagos de sus cuotas</p>
+                  </div>
+
+                  @if ($cliente->getDeuda() > 0)
+                    <div class="callout callout-danger">
+                      <h5>Deudas</h5>
+    
+                      <p>Ten en cuenta que el cliente tiene una deuda de <b>${{$cliente->getDeuda()}}</b>. Si no quieres saldar esa deuda, al momento de darlo de alta la podrás saldar</p>
+                    </div>
+                  @endif
+
+                  <div class="form-group">
+                    <label for="detalle" class=" col-form-label text-md-right">Detalle</label>
+                    <textarea id="detalle" class="form-control  @error('detalle') is-invalid @enderror" rows="3" name="detalle" value="{{ old('detalle') }}" placeholder="Ingrese el detalle de la baja" required>{{ old('detalle') }}</textarea>
+                    @error('detalle')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> Cancelar</button>
+                  <button type="submit" class="btn btn-primary"><i class="fal fa-check"></i> Confirmar</button>
+                </div>
+              
+              </div>
+              <!-- /.modal-content -->
+            </form>
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
 
 
 
@@ -226,6 +275,22 @@
     Notiflix.Notify.Failure(String(' {{ session('error') }} '));
 </script>
 @endif
+
+<script>
+  function modalBaja(){
+    $('#modal-default-baja').modal({
+        show: true
+    });
+  }
+</script>
+
+<script>
+  function modalAlta(){
+    $('#modal-default-alta').modal({
+        show: true
+    });
+  }
+</script>
 
 
 </body>

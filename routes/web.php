@@ -159,6 +159,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::patch('/email_configuracion/{gimnasio}', 'EmailConfiguracionController@update')->name('email_configuracion.update')
     ->middleware('can:gimnasios.edit');
-     
+
+    //BajaCliente
+    Route::post('/clientes/{cliente}/baja', 'BajaClienteController@store')->name('baja.create');
+    Route::post('/clientes/{cliente}/alta', 'BajaClienteController@update')->name('baja.update');
 
 });

@@ -224,5 +224,36 @@ class PermissionsTableSeeder extends Seeder
             'description'   => 'Podría eliminar cualquier cuota del sistema',      
         ]);
 
+        //BajaCliente
+        Permission::create([
+            'name'          => 'Navegar bajas',
+            'slug'          => 'bajas.index',
+            'description'   => 'Lista y navega todas las bajas del sistema',
+        ]);
+
+        Permission::create([
+            'name'          => 'Ver detalle de una baja',
+            'slug'          => 'bajas.show',
+            'description'   => 'Ve en detalle cada baja del sistema',            
+        ]);
+        
+        Permission::create([
+            'name'          => 'Creación de bajas',
+            'slug'          => 'bajas.create',
+            'description'   => 'Podría crear nuevas bajas en el sistema',
+        ]);
+        
+        Permission::create([
+            'name'          => 'Edición de bajas',
+            'slug'          => 'bajas.edit',
+            'description'   => 'Podría editar cualquier dato de una baja del sistema',
+        ]);
+        
+        Permission::create([
+            'name'          => 'Eliminar bajas',
+            'slug'          => 'bajas.destroy',
+            'description'   => 'Podría eliminar cualquier baja del sistema',      
+        ]);
+
     }
 }

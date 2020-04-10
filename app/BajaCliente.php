@@ -14,15 +14,20 @@ class BajaCliente extends Model
     {
         return $this->belongsTo(Cliente::class, 'cliente_id');
     }
-    
+
     public function gimnasio()
     {
-        return $this->belongsTo(Cliente::class, 'gimnasio_id');
+        return $this->belongsTo(Gimnasio::class, 'gimnasio_id');
     }
 
     public function especialidad()
     {
-        return $this->belongsTo(Cliente::class, 'especialidad_id');
+        return $this->belongsTo(Especialidad::class, 'especialidad_id');
+    }
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'especialidad_id');
     }
 
 }

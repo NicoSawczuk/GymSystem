@@ -16,11 +16,11 @@ class Cuota extends Model
 
     public function especialidad()
     {
-        return $this->belongsTo(Cliente::class, 'especialidad_id');
+        return $this->belongsTo(Especialidad::class, 'especialidad_id');
     }
 
     public function gimnasio()
     {
-        return $this->belongsTo(Cliente::class, 'gimnasio_id');
+        return $this->belongsTo(Gimnasio::class, 'gimnasio_id');
     }
 }
