@@ -6,6 +6,7 @@ use App\Cliente;
 use App\Cuota;
 use App\Gimnasio;
 use App\Especialidad;
+use App\Estado;
 use App\Pais;
 use App\User;
 use Illuminate\Http\Request;
@@ -299,18 +300,20 @@ class GimnasioController extends Controller
             $cuotas = Cuota::where(['gimnasio_id' => $gymId, 'vencido' => 0])->get();
             $cuotasMes = [];
             foreach ($cuotas as $cuota){
-                //Lo que se hace aca es guardar esa fecha porque despues hay que compararla en formato Y-m (no esta en date el formato sino en string), y de paso ya la vuelvo al formato Y-m-d con un mes adelantado, ya que esa fecha voy a usar en el calendar
-                $auxFecha = $cuota->fecha_pago;
-                $auxFecha = strtotime ( '+1 month' , strtotime ( $auxFecha ) ) ;
-                $auxFecha = date ( 'Y-m-d' , $auxFecha );   
-                $cuota->fecha_pago = date ( 'Y-m' , strtotime($cuota->fecha_pago) );
-                
-                if ($cuota->fecha_pago == $nuevafecha){
-                    //Le ponemos la fecha con un mes adelantado para tener la fecha correcta en el calendario
-                    $cuota->fecha_pago = $auxFecha;
-                    //Le cambiamos el id por el nombre del cliente
-                    $cuota->cliente_id = array($cuota->cliente->nombre.' '.$cuota->cliente->apellido, $cuota->cliente_id);
-                    array_push($cuotasMes, $cuota);
+                if (Cliente::where('id', $cuota->cliente_id)->value('estado_id') != Estado::where('orden', 5)->value('id')){
+                    //Lo que se hace aca es guardar esa fecha porque despues hay que compararla en formato Y-m (no esta en date el formato sino en string), y de paso ya la vuelvo al formato Y-m-d con un mes adelantado, ya que esa fecha voy a usar en el calendar
+                    $auxFecha = $cuota->fecha_pago;
+                    $auxFecha = strtotime ( '+1 month' , strtotime ( $auxFecha ) ) ;
+                    $auxFecha = date ( 'Y-m-d' , $auxFecha );   
+                    $cuota->fecha_pago = date ( 'Y-m' , strtotime($cuota->fecha_pago) );
+                    
+                    if ($cuota->fecha_pago == $nuevafecha){
+                        //Le ponemos la fecha con un mes adelantado para tener la fecha correcta en el calendario
+                        $cuota->fecha_pago = $auxFecha;
+                        //Le cambiamos el id por el nombre del cliente
+                        $cuota->cliente_id = array($cuota->cliente->nombre.' '.$cuota->cliente->apellido, $cuota->cliente_id);
+                        array_push($cuotasMes, $cuota);
+                    }
                 }
             }
         }
