@@ -56,6 +56,11 @@
                       </ul>
       
                       <a href="/clientes/{{ $cliente->id }}/enviar_email" class="btn bg-teal btn-block"><b>Enviar E-mail</b></a>
+                      @if ($cliente->activo == 1)
+                      <a href="/clientes/{{ $cliente->id }}/baja" class="btn bg-maroon btn-block"><b>Dar de baja</b></a>
+                      @else
+                      <a href="/clientes/{{ $cliente->id }}/alta-teal" class="btn bg-olive btn-block"><b>Dar de baja</b></a>
+                      @endif
                     </div>
                     <!-- /.card-body -->
                   </div>

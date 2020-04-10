@@ -34,6 +34,9 @@ class Cliente extends Model
         return $this->hasMany(Cuota::class);
     }
 
+    public function bajaClientes(){
+        return $this->hasMany(BajaCliente::class);
+    }
 
     //Metodos
     public function getEdad(){
