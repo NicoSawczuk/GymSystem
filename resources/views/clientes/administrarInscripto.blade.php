@@ -155,12 +155,12 @@
                         <td class="text-right" style="">
                             @if ($cliente->estado->id === 2)
                             <a role="button" class="" data-toggle="modal" href="#" onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->especialidad->id}}','{{$cliente->especialidad->nombre}}','{{$cliente->especialidad->monto}}','{{$cliente->getDeuda()}}','{{$cliente->nombre}}','{{$cliente->apellido}}')" title="Agregar pago">
-                              <i class="far fa-money-check-alt"></i>
+                              <i class="far fa-money-check-alt fa-lg"></i>
                             </a>
                             @endif
-                            <a title="Editar cliente" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt"></i></a>
+                            <a title="Editar cliente" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt fa-lg"></i></a>
                             
-                            <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus"></i></a>
+                            <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus fa-lg"></i></a>
                         </td>
                       </tr>
                       {{-- MODAL CUOTA

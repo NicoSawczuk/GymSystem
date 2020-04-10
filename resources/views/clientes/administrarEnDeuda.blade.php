@@ -65,12 +65,12 @@
                         <td class="text-right" style="">
                             @if ($cliente->estado->id === 4)
                             <a role="button" class="" data-toggle="modal" href="#" data-target="#modal-default-pagarDeuda-{{ $cliente->id }}" title="Saldar deuda">
-                              <i class="far fa-badge-dollar"></i>
+                              <i class="far fa-badge-dollar fa-lg"></i>
                             </a>
                             @endif
-                            <a title="Editar cliente" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt"></i></a>
+                            <a title="Editar cliente" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt fa-lg"></i></a>
                             
-                            <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus"></i></a>
+                            <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus fa-lg"></i></a>
                         </td>
                       </tr>
                       {{-- MODAL DEUDA --}}

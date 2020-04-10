@@ -39,7 +39,7 @@
                     <tbody>
                     @foreach ($gimnasios as $gimnasio)
                       <tr>
-                        <td ><a href="/home/{{$gimnasio->id}}">{{ $gimnasio->nombre }}</a></td>
+                        <td >{{ $gimnasio->nombre }}</td>
                         <td>
                             @foreach ($gimnasio->especialidades as $especialidad)
                                 <span class="badge badge-pill badge-light">{{ $especialidad->nombre }}</span>
@@ -55,12 +55,13 @@
                           @endif
                         </td>
                         <td class="text-right">
-                            <a title="Editar gimnasio" href="/gimnasios/{{ $gimnasio->id }}/edit"><i class="fal fa-pencil-alt"></i></a>
+                            <a title="Editar gimnasio" href="/gimnasios/{{ $gimnasio->id }}/edit"><i class="fal fa-pencil-alt fa-lg"></i></a>
                             @if ($gimnasio->estado == 1)
-                              <a title="Cambiar estado a inactivo" onclick="inactivo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="fal fa-eye"></i></a>
+                              <a title="Cambiar estado a inactivo" onclick="inactivo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="fal fa-eye fa-lg"></i></a>
                             @else
-                            <a title="Cambiar estado a activo" onclick="activo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="far fa-eye-slash"></i></a>
+                            <a title="Cambiar estado a activo" onclick="activo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="far fa-eye-slash fa-lg"></i></a>
                             @endif
+                            <a title="Ingresar con gimnasio" href="/home/{{$gimnasio->id}}"><i class="far fa-arrow-circle-right fa-lg"></i></a>
                         </td>
 
                       </tr>
