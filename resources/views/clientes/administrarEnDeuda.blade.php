@@ -39,6 +39,7 @@
                         <th>Edad</th>
                         <th>Especialidad</th>
                         <th>Estado</th>
+                        <th>Deuda</th>
                         <th class="text-right">Opciones</th>
                       </tr>
                     </thead>
@@ -61,6 +62,9 @@
                             @if ($cliente->getCuotaVencida() == '1')
                             <span class="badge badge-pill bg-Lightblue" >Cuota vencida</span>
                             @endif
+                        </td>
+                        <td class="text-right">
+                          <span class="badge badge-info">${{ $cliente->getDeuda()}}</span>
                         </td>
                         <td class="text-right" style="">
                             @if ($cliente->estado->id === 4)
