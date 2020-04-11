@@ -174,7 +174,7 @@
                             @endif
                         </td>
                         <td class="text-right" style="">
-                            @if ($cliente->estado->id === 1)
+                            @if ($cliente->estado->id === 1 or $cliente->estado->id === 5)
                             <a role="button" id="boton" onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}')" title="Realizar inscripción" href="#">
                               <i class="far fa-user-check fa-lg"></i>
                             </a>

@@ -8,6 +8,33 @@
 
 @section('content')
 
+<script>
+  var valido = false;
+  function mostrarMonto(){
+    valido = !valido;
+    if (valido == true){
+      if ($("#especialidad").val() != ""){
+        document.getElementById("montoEspecialidad").style.display = 'block';
+      }
+    }else{
+      document.getElementById("montoEspecialidad").style.display = 'none';
+    }
+  }
+</script>
+
+<script>
+  function cargarMonto(){
+    var idEspe = $("#especialidad").val();
+    if (idEspe != ""){
+      var monto = $("#montoEspecialidad"+idEspe).val();
+      const html = '<p class="text-muted" style="margin-top:40;"><h5>Monto <b><span class="badge bg-warning"> $'+monto+'</span></b></h5></p>'
+      $('#montoEspecialidad').html(html);
+    }else{
+      $('#montoEspecialidad').html('');
+    }
+  }
+</script>
+
     
 @section('contentHeader') Perfil del cliente @endsection
 <body class="container-fluid">
@@ -59,7 +86,7 @@
                       @if ($cliente->activo == 1)
                       <a href="#" role="button" onclick="modalBaja()" class="btn bg-maroon btn-block"><b>Dar de baja</b></a>
                       @else
-                      <a href="#" role="button" onclick="modalAlta()" class="btn bg-olive btn-block"><b>Dar de alta</b></a>
+                      <a href="#" role="button" onclick="modalAlta('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}')" class="btn bg-olive btn-block"><b>Dar de alta</b></a>
                       @endif
                     </div>
                     <!-- /.card-body -->
@@ -212,7 +239,7 @@
           <!-- /.content -->
 
 
-          {{-- MODAL INSCRIBIR --}}
+          {{-- MODAL BAJA --}}
           <div class="modal fade" id="modal-default-baja">
             <div class="modal-dialog">
               <form method="POST" action="/clientes/{{$cliente->id}}/baja">
@@ -262,6 +289,91 @@
             <!-- /.modal-dialog -->
           </div>
 
+          {{-- MODAL INSCRIBIR --}}
+          <div class="modal fade" id="modal-default-alta">
+            <div class="modal-dialog">
+              <form method="POST" action="" id="InscripcionForm">
+                @csrf
+                <input type="hidden" name="gimnasio" id="gimnasio">
+                <input type="hidden" name="cliente" id="cliente">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="tituloModal"></h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              
+                <div class="modal-body">
+                  <div class="form-group row">
+                    <div class="form-group col-md-6">
+                      <label for="especialidad" class="col-form-label text-md-right">Especialidad</label>
+                      <select name="especialidad" id="especialidad" onchange="cargarMonto()" class="form-control select2 select2-hidden-accessible @error('especialidad') is-invalid @enderror" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" required>
+                        <option value="" selected disabled>Seleccione especialidad</option>
+                        @foreach ($gimnasio->especialidades as $especialidad)
+                            <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
+                        @endforeach
+                      </select>
+                      @foreach ($gimnasio->especialidades as $especialidad)
+                          <input type="hidden" id="montoEspecialidad{{$especialidad->id}}" value="{{ $especialidad->monto }}">
+                      @endforeach
+                      @error('especialidad')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                  </div>
+
+                  <div class="form-group col-md-4">
+                    <label class="col-form-label text-md-right"></label>
+                    <div class="" style="display:none;" id="montoEspecialidad">
+                      
+                    </div>
+                </div>
+                  
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="form-group col-md-3">
+                      <label for="monto" class="col-form-label text-md-right">Monto</label>
+                      <input id="monto" type="number" class="form-control @error('monto') is-invalid @enderror" name="monto" step="0.01" value="{{ old('monto') }}" placeholder="$" min="1" pattern="^[0-9]+" required>
+                      @error('monto')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                  </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="form-group col-md-7">
+                      <label for="detalle" class=" col-form-label text-md-right">Detalle</label>
+                      <textarea id="detalle" class="form-control  @error('detalle') is-invalid @enderror" cols="45" rows="2" name="detalle" value="{{ old('detalle') }}" placeholder="Ingrese la descripción">{{ old('detalle') }}</textarea>
+                      @error('detalle')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" name="cuota" class="custom-control-input" id="customSwitch1" value="1" id="toggle">
+                    <label class="custom-control-label" for="customSwitch1">La inscripción forma parte de la cuota</label>
+                  </div>
+
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fal fa-times"></i> Cancelar</button>
+                  <button type="submit" class="btn btn-primary"><i class="fal fa-check"></i> Confirmar</button>
+                </div>
+              
+              </div>
+              <!-- /.modal-content -->
+            </form>
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+
 
 
 
@@ -277,6 +389,15 @@
 @endif
 
 <script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2({
+        theme: 'bootstrap4'
+    })
+  });
+</script>
+
+<script>
   function modalBaja(){
     $('#modal-default-baja').modal({
         show: true
@@ -285,9 +406,20 @@
 </script>
 
 <script>
-  function modalAlta(){
+  function modalAlta(gimId, clieId, clieNombre, clieApellido){
     $('#modal-default-alta').modal({
         show: true
+    });
+    $("#InscripcionForm").attr('action', '/inscripcion/create/'+clieId+'');
+    $('#gimnasio').val(gimId);
+    $('#cliente').val(clieId);
+
+    var title = 'Realizar inscripción de <b>'+clieNombre+' '+clieApellido+'</b>'
+    $('#tituloModal').html(title);
+
+
+    $('#customSwitch1').on('change', function() {
+      mostrarMonto();
     });
   }
 </script>
