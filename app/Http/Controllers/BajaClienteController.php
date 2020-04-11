@@ -59,7 +59,7 @@ class BajaClienteController extends Controller
             $cliente->estado_id = Estado::where('orden', 5)->value('id');
             $cliente->save();
 
-            Cuota::where(['cliente_id' => $cliente->id, 'especialidad_id' => $cliente->especialidad->id, 'gimnasio_id' => $cliente->gimnasio->id])->orderBy('fecha_pago', 'desc')->update(['vencido' => 1]);
+            Cuota::where(['cliente_id' => $cliente->id, 'especialidad_id' => $cliente->especialidad->id, 'gimnasio_id' => $cliente->gimnasio->id])->orderBy('fecha_pago', 'desc')->update(['saldado' => 1]);
 
             Inscripcion::where(['cliente_id' => $cliente->id, 'especialidad_id' => $cliente->especialidad->id, 'gimnasio_id' => $cliente->gimnasio->id])->orderBy('fecha_inscripcion', 'desc')->update(['activo' => 0]);
 

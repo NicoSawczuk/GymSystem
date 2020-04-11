@@ -131,6 +131,7 @@ class InscripcionController extends Controller
                 }
             }
         }else{
+            //Puso mas plata de la que esta permitida, entonces debo avisar de ese error
             return redirect()->back()->with('error','No se pudo realizar la inscripción debido a que el monto ingresado es mayor al monto de la especialidad');
         }
 
