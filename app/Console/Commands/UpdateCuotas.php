@@ -55,7 +55,7 @@ class UpdateCuotas extends Command
             $cuotas = Cuota::where(['fecha_pago'=> $nuevafecha, 'vencido' => 0])->get();
             foreach ($cuotas as $cuota){
                 $cliente = Cliente::where('id', $cuota->cliente_id)->first();
-                if ($cliente->estado_id != Estado::where('orden', 5)->value('id')){
+                if ($cliente->estado_id != Estado::where('orden', 5)->value('id') && $cuota->inscripcion->activo != 0){
 
                     $cuota->vencido = 1;
                     $cliente->estado_id = Estado::where('orden', 4)->value('id');

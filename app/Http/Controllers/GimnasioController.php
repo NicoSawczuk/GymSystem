@@ -7,6 +7,7 @@ use App\Cuota;
 use App\Gimnasio;
 use App\Especialidad;
 use App\Estado;
+use App\Inscripcion;
 use App\Pais;
 use App\User;
 use Illuminate\Http\Request;
@@ -299,8 +300,13 @@ class GimnasioController extends Controller
         if (Cuota::where(['gimnasio_id' => $gymId, 'vencido' => 0])->exists()){
             $cuotas = Cuota::where(['gimnasio_id' => $gymId, 'vencido' => 0])->get();
             $cuotasMes = [];
+            
+
             foreach ($cuotas as $cuota){
-                if (Cliente::where('id', $cuota->cliente_id)->value('estado_id') != Estado::where('orden', 5)->value('id')){
+
+
+
+                if (Cliente::where('id', $cuota->cliente_id)->value('estado_id') != Estado::where('orden', 5)->value('id') && $cuota->inscripcion->activo != 0){
                     //Lo que se hace aca es guardar esa fecha porque despues hay que compararla en formato Y-m (no esta en date el formato sino en string), y de paso ya la vuelvo al formato Y-m-d con un mes adelantado, ya que esa fecha voy a usar en el calendar
                     $auxFecha = $cuota->fecha_pago;
                     $auxFecha = strtotime ( '+1 month' , strtotime ( $auxFecha ) ) ;
