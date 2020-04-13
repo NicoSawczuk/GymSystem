@@ -55,7 +55,7 @@
             <a href="/clientes/{{ $cliente->id }}/perfil">
                 <button type="button" class="btn btn-default"><i class="fal fa-times"></i> Cancelar</button>
             </a>
-            <button type="submit" class="btn btn-primary"><i class="fal fa-envelope"></i> Send</button>
+            <button type="submit" class="btn btn-primary"><i class="fal fa-envelope"></i> Enviar</button>
           </div>
         </div>
         <!-- /.card-footer -->
