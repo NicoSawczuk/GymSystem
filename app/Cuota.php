@@ -23,4 +23,9 @@ class Cuota extends Model
     {
         return $this->belongsTo(Gimnasio::class, 'gimnasio_id');
     }
+
+    public function inscripcion()
+    {
+        return $this->belongsTo(Inscripcion::class, 'inscripcion_id');
+    }
 }

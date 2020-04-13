@@ -9,6 +9,8 @@ class Inscripcion extends Model
     protected $guarded = [];
     public $table = "inscripciones";
 
+
+    //Relaciones
     public function cliente()
     {
         return $this->belongsTo(Cliente::class, 'cliente_id');
@@ -22,5 +24,10 @@ class Inscripcion extends Model
     public function gimnasio()
     {
         return $this->belongsTo(Cliente::class, 'gimnasio_id');
+    }
+
+    public function cuotas()
+    {
+        return $this->hasMany(Cuota::class);
     }
 }
