@@ -8,29 +8,18 @@
 
 @section('content')
 
-<script>
-  var valido = false;
-  function mostrarMonto(){
-    valido = !valido;
-    if (valido == true){
-      if ($("#especialidad").val() != ""){
-        document.getElementById("montoEspecialidad").style.display = 'block';
-      }
-    }else{
-      document.getElementById("montoEspecialidad").style.display = 'none';
-    }
-  }
-</script>
+
 
 <script>
   function cargarMonto(){
     var idEspe = $("#especialidad").val();
     if (idEspe != ""){
       var monto = $("#montoEspecialidad"+idEspe).val();
-      const html = '<p class="text-muted" style="margin-top:40;"><h5>Monto <b><span class="badge bg-warning"> $'+monto+'</span></b></h5></p>'
-      $('#montoEspecialidad').html(html);
+      console.log(monto);
+      const html = 'Monto <span class="badge bg-warning text-right">$'+monto+'</span>'
+      $('#cardEspe').html(html);
     }else{
-      $('#montoEspecialidad').html('');
+      $('#cardEspe').html('');
     }
   }
 </script>
@@ -86,7 +75,7 @@
                       @if ($cliente->activo == 1)
                       <a href="#" role="button" onclick="modalBaja()" class="btn bg-maroon btn-block"><b>Dar de baja</b></a>
                       @else
-                      <a href="#" role="button" onclick="modalAlta('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}')" class="btn bg-olive btn-block"><b>Dar de alta</b></a>
+                      <a href="#" role="button" onclick="modalAlta('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}','{{$cliente->getDeuda()}}')" class="btn bg-olive btn-block"><b>Dar de alta</b></a>
                       @endif
                     </div>
                     <!-- /.card-body -->
@@ -294,8 +283,10 @@
             <div class="modal-dialog">
               <form method="POST" action="" id="InscripcionForm">
                 @csrf
+                @method('POST')
                 <input type="hidden" name="gimnasio" id="gimnasio">
                 <input type="hidden" name="cliente" id="cliente">
+                <input type="hidden" name="deuda_anterior" id="deuda_anterior">
               <div class="modal-content">
                 <div class="modal-header">
                   <h4 class="modal-title" id="tituloModal"></h4>
@@ -305,6 +296,53 @@
                 </div>
               
                 <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="card card-outline card-warning">
+                        <div class="card-header">
+                          <h3 class="card-title">Especialidad</h3>
+          
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+                          <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <p class="text-muted" id="cardEspe">Seleccione especialidad</p>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card card-outline card-danger">
+                        <div class="card-header">
+                          <h3 class="card-title">Deuda</h3>
+          
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+                          <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body " id="montoDeudaCliente">
+                          <div id="deudaSi" style="display: none;">
+                            <p class="text-muted">
+                                Monto </b><span class="badge bg-danger" id="montoDeuda"></span>
+                            </p>
+                          </div>
+                          <div id="deudaNo" style="display: none;">
+                            <p class="text-muted" >El cliente no registra deudas</p>
+                          </div>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                    </div>
+                    </div>
                   <div class="form-group row">
                     <div class="form-group col-md-6">
                       <label for="especialidad" class="col-form-label text-md-right">Especialidad</label>
@@ -356,7 +394,7 @@
                     </div>
                   </div>
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" name="cuota" class="custom-control-input" id="customSwitch1" value="1" id="toggle">
+                    <input type="checkbox" name="cuota" class="custom-control-input" id="customSwitch1" value="0" id="toggle">
                     <label class="custom-control-label" for="customSwitch1">La inscripción forma parte de la cuota</label>
                   </div>
 
@@ -406,24 +444,33 @@
 </script>
 
 <script>
-  function modalAlta(gimId, clieId, clieNombre, clieApellido){
+  function modalAlta(gimId, clieId, clieNombre, clieApellido, clieDeuda){
     $('#modal-default-alta').modal({
         show: true
     });
     $("#InscripcionForm").attr('action', '/inscripcion/create/'+clieId+'');
     $('#gimnasio').val(gimId);
     $('#cliente').val(clieId);
+    $('#deuda_anterior').val(clieDeuda);
 
     var title = 'Realizar inscripción de <b>'+clieNombre+' '+clieApellido+'</b>'
     $('#tituloModal').html(title);
 
 
-    $('#customSwitch1').on('change', function() {
-      mostrarMonto();
-    });
+    if (clieDeuda > 0){
+      $('#deudaSi').css({display: 'block'});
+      $('#montoDeuda').html('$'+clieDeuda);
+    }else{
+      $('#deudaNo').css({display: 'block'});
+    }
   }
 </script>
 
+<script>
+  $('#customSwitch1').on('change', function() {
+     $('#customSwitch1').val(1);   
+  });  
+</script>
 
 </body>
 @endsection

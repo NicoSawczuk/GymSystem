@@ -72,11 +72,13 @@ class InscripcionController extends Controller
             $inscripcion->save();
 
             //Cambiamos el estado del cliente
-            $cliente->estado_id = Estado::where('orden',Estado::where('id',$cliente->estado_id)->value('orden')+1)->value('id');
+            $cliente->estado_id = Estado::where('orden',2)->value('id');
             //Le asociamos la especialidad al cliente
             $cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
             
             $cliente->save();
+            return redirect('/clientes/administrar/inscripto/'.request()->gimnasio)->with('success','Se completo la inscripción de '.$cliente->nombre.' '.$cliente->apellido);
+
         }elseif(request()->cuota == 1 && request()->monto <= (Especialidad::where('id', request()->especialidad)->value('monto') + $deudaAnterior)){
             //Creamos la inscripcion
             $inscripcion = new Inscripcion();
@@ -112,6 +114,7 @@ class InscripcionController extends Controller
             $cuota->gimnasio_id = request()->gimnasio;
             $cuota->especialidad_id = request()->especialidad;
             $cuota->cliente_id = request()->cliente;
+            $cuota->inscripcion_id = $inscripcion->id;
 
             //Si lo pagado es menor a lo que debe pagar debo registrar esa deuda
             if (request()->monto < (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') + $deudaAnterior)) {

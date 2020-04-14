@@ -34,8 +34,9 @@
                   {{-- MODAL CUOTA --}}
                   <div class="modal fade" id="modal-default-cuota">
                     <div class="modal-dialog">
-                      <form method="POST" action="" id="CuotaForm">
+                      <form method="" action="" id="CuotaForm">
                         @csrf
+                        @method('POST')
                         <input type="hidden" name="gimnasio" id="gimnasio" value="">
                         <input type="hidden" name="cliente" id ="cliente" value="">
                         <input type="hidden" name="especialidad" id="especialidad" value="">
@@ -51,9 +52,9 @@
 
                           <div class="row">
                           <div class="col-md-6">
-                            <div class="card card-warning">
+                            <div class="card card-outline card-warning">
                               <div class="card-header">
-                                <h3 class="card-title">Monto</h3>
+                                <h3 class="card-title">Especialidad</h3>
                 
                                 <div class="card-tools">
                                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -63,14 +64,14 @@
                               </div>
                               <!-- /.card-header -->
                               <div class="card-body">
-                                <p>Monto de <b id="nombreEspe"></b><span class="badge bg-warning" id="montoEspe"></span></p>
+                                <p class="text-muted">Monto de <b id="nombreEspe"></b><span class="badge bg-warning" id="montoEspe"></span></p>
                               </div>
                               <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
                           </div>
                           <div class="col-md-6">
-                            <div class="card card-danger">
+                            <div class="card card-outline card-danger">
                               <div class="card-header">
                                 <h3 class="card-title">Deuda</h3>
                 
@@ -83,10 +84,8 @@
                               <!-- /.card-header -->
                               <div class="card-body " id="montoDeudaCliente">
                                 <div id="deudaSi" style="display: none;">
-                                  <p>
-                                    <h5>
+                                  <p class="text-muted">
                                       El cliente registra una deuda de </b><span class="badge bg-danger" id="montoDeuda"></span>
-                                    </h5>
                                   </p>
                                 </div>
                                 <div id="deudaNo" style="display: none;">
@@ -353,7 +352,7 @@
     $('#modal-default-cuota').modal({
           show: true
       });
-      $("#CuotaForm").attr('action', '/cuota/create/'+clieId+'');
+      $("#CuotaForm").attr({action:'/cuota/create/'+clieId+'',method:'POST'});
       $('#gimnasio').val(gimId);
       $('#cliente').val(clieId);
       $('#especialidad').val(espeId);

@@ -64,7 +64,9 @@ class CuotaController extends Controller
 
                 $cuota->fecha_pago_realizado = $fecha;
 
-                if (request()->monto === ($cliente->especialidad->monto + $cliente->getDeuda())){
+                $cuota->inscripcion_id = $cliente->getUltimaInscripcion()->id;
+
+                if (request()->monto == ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //Saldado
                     $cuota->saldado = 1;
                     $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
@@ -117,7 +119,9 @@ class CuotaController extends Controller
 
                 $cuota->fecha_pago_realizado = $fecha;
 
-                if (request()->monto === ($cliente->especialidad->monto + $cliente->getDeuda())){
+                $cuota->inscripcion_id = $cliente->getUltimaInscripcion()->id;
+
+                if (request()->monto == ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //Saldado
                     $cuota->saldado = 1;
                     $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
@@ -216,7 +220,7 @@ class CuotaController extends Controller
     
             }
         }else{
-            //El cliente tiene una deuda porque paso el el mes y debe crearse una cuota nueva
+            //El cliente tiene una deuda porque paso el mes y debe crearse una cuota nueva
             
             //Primero controlo que no pueda pagar mas que la deuda
             if (request()->monto > $cliente->getDeuda()){
@@ -239,6 +243,8 @@ class CuotaController extends Controller
                 $cuota->fecha_pago = $nuevafecha;
 
                 $cuota->fecha_pago_realizado = $fecha;
+
+                $cuota->inscripcion_id = $cliente->getUltimaInscripcion()->id;
 
                 if (request()->monto == $cliente->getDeuda()){
                     //Saldado

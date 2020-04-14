@@ -8,29 +8,30 @@
 
 @section('content')
 {{-- Las dos funciones siguientes se utilizan para mostrar el monto de la especialidad (segun corresponda) en el modal para inscribir a un alumno --}}
-<script>
+{{-- <script>
   var valido = false;
   function mostrarMonto(){
     valido = !valido;
     if (valido == true){
       if ($("#especialidad").val() != ""){
-        document.getElementById("montoEspecialidad").style.display = 'block';
+        document.getElementById("cardsMontos").style.display = 'block';
       }
     }else{
-      document.getElementById("montoEspecialidad").style.display = 'none';
+      document.getElementById("cardsMontos").style.display = 'none';
     }
   }
-</script>
+</script> --}}
 
 <script>
   function cargarMonto(){
     var idEspe = $("#especialidad").val();
     if (idEspe != ""){
       var monto = $("#montoEspecialidad"+idEspe).val();
-      const html = '<p class="text-muted" style="margin-top:40;"><h5>Monto <b><span class="badge bg-warning"> $'+monto+'</span></b></h5></p>'
-      $('#montoEspecialidad').html(html);
+      console.log(monto);
+      const html = 'Monto <span class="badge bg-warning text-right">$'+monto+'</span>'
+      $('#cardEspe').html(html);
     }else{
-      $('#montoEspecialidad').html('');
+      $('#cardEspe').html('');
     }
   }
 </script>
@@ -74,6 +75,55 @@
                             </div>
                           
                             <div class="modal-body">
+
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="card card-outline card-warning">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Especialidad</h3>
+                        
+                                        <div class="card-tools">
+                                          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                          </button>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                      </div>
+                                      <!-- /.card-header -->
+                                      <div class="card-body">
+                                        <p class="text-muted" id="cardEspe">Seleccione especialidad</p>
+                                      </div>
+                                      <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="card card-outline card-danger">
+                                      <div class="card-header">
+                                        <h3 class="card-title">Deuda</h3>
+                        
+                                        <div class="card-tools">
+                                          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                          </button>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                      </div>
+                                      <!-- /.card-header -->
+                                      <div class="card-body " id="montoDeudaCliente">
+                                        <div id="deudaSi" style="display: none;">
+                                          <p class="text-muted">
+                                              Monto </b><span class="badge bg-danger" id="montoDeuda"></span>
+                                          </p>
+                                        </div>
+                                        <div id="deudaNo" style="display: none;">
+                                          <p class="text-muted" >El cliente no registra deudas</p>
+                                        </div>
+                                      </div>
+                                      <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                  </div>
+                                  </div>
+
                               <div class="form-group row">
                                 <div class="form-group col-md-6">
                                   <label for="especialidad" class="col-form-label text-md-right">Especialidad</label>
@@ -125,7 +175,7 @@
                                 </div>
                               </div>
                               <div class="custom-control custom-switch">
-                                <input type="checkbox" name="cuota" class="custom-control-input" id="customSwitch1" value="1" id="toggle">
+                                <input type="checkbox" name="cuota" class="custom-control-input" id="customSwitch1" value="0" id="toggle">
                                 <label class="custom-control-label" for="customSwitch1">La inscripción forma parte de la cuota</label>
                               </div>
 
@@ -175,7 +225,7 @@
                         </td>
                         <td class="text-right" style="">
                             @if ($cliente->estado->id === 1 or $cliente->estado->id === 5)
-                            <a role="button" id="boton" onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}')" title="Realizar inscripción" href="#">
+                            <a role="button" id="boton" onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}','{{$cliente->getDeuda()}}')" title="Realizar inscripción" href="#">
                               <i class="far fa-user-check fa-lg"></i>
                             </a>
                             @endif
@@ -276,7 +326,7 @@
 
 
 <script>
-function modal(gimId, clieId, clieNombre, clieApellido){
+function modal(gimId, clieId, clieNombre, clieApellido, clieDeuda){
   $('#modal-default-inscripcion').modal({
         show: true
     });
@@ -288,10 +338,19 @@ function modal(gimId, clieId, clieNombre, clieApellido){
     $('#tituloModal').html(title);
 
 
-    $('#customSwitch1').on('change', function() {
-      mostrarMonto();
-    });
+    if (clieDeuda > 0){
+      $('#deudaSi').css({display: 'block'});
+      $('#montoDeuda').html('$'+clieDeuda);
+    }else{
+      $('#deudaNo').css({display: 'block'});
+    }
+
 }
+</script>
+<script>
+  $('#customSwitch1').on('change', function() {
+     $('#customSwitch1').val(1);   
+  });  
 </script>
 
 </body>
