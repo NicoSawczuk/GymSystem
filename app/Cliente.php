@@ -44,7 +44,7 @@ class Cliente extends Model
     }
 
     public function getDeuda(){
-        return Cuota::where('cliente_id', $this->id)->orderBy('fecha_pago_realizado', 'desc')->value('monto_deuda');
+        return Cuota::where('cliente_id', $this->id)->orderBy('created_at', 'desc')->value('monto_deuda');
     }
 
     public function getCuotaVencida(){

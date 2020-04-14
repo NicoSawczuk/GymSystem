@@ -85,7 +85,7 @@
                               <div class="card-body " id="montoDeudaCliente">
                                 <div id="deudaSi" style="display: none;">
                                   <p class="text-muted">
-                                      El cliente registra una deuda de </b><span class="badge bg-danger" id="montoDeuda"></span>
+                                      Monto de la deuda <span class="badge bg-danger" id="montoDeuda"></span>
                                   </p>
                                 </div>
                                 <div id="deudaNo" style="display: none;">
@@ -363,9 +363,11 @@
       $('#nombreEspe').html(espeNombre);
       $('#montoEspe').html(espeMonto);
 
-      if (deuda == '0'){
+      
+
+      if (deuda > 0){
         console.log('entra en deuda + cero');
-        $('#deudaSi').css('style', 'display : block;');
+        $('#deudaSi').css({display : 'block'});
         $('#montoDeuda').html('$'+deuda);
       }else{
         console.log('entra en deuda - cero');

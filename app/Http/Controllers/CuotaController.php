@@ -50,7 +50,7 @@ class CuotaController extends Controller
             }else{
                 //Puedo pagar cuanto sea
                 $cuota = new Cuota();
-                $cuota->monto_cuota = $cliente->especialidad->monto;
+                $cuota->monto_cuota = $cliente->especialidad->monto + $cliente->getDeuda();
                 $cuota->monto_pagado = request()->monto;
 
                 
@@ -69,7 +69,8 @@ class CuotaController extends Controller
                 if (request()->monto == ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //Saldado
                     $cuota->saldado = 1;
-                    $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
+                    $cuota->monto_deuda = 0;
+
                     $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
 
                     $cuota->gimnasio_id = request()->gimnasio;
@@ -83,7 +84,7 @@ class CuotaController extends Controller
                 }elseif(request()->monto < ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //No saldado
                     $cuota->saldado = 0;
-                    $cuota->monto_deuda += $cliente->especialidad->monto - request()->monto;
+                    $cuota->monto_deuda = ($cliente->especialidad->monto + $cliente->getDeuda()) - request()->monto;
                     $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
 
                     $cuota->gimnasio_id = request()->gimnasio;
@@ -105,7 +106,7 @@ class CuotaController extends Controller
             }else{
                 //Puedo pagar cuanto sea
                 $cuota = new Cuota();
-                $cuota->monto_cuota = $cliente->especialidad->monto;
+                $cuota->monto_cuota = $cliente->especialidad->monto + $cliente->getDeuda();
                 $cuota->monto_pagado = request()->monto;
 
                 
@@ -124,7 +125,7 @@ class CuotaController extends Controller
                 if (request()->monto == ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //Saldado
                     $cuota->saldado = 1;
-                    $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
+                    $cuota->monto_deuda = 0;
                     $cliente->update(['estado_id'=> Estado::where('orden',3)->value('id')]);
 
                     $cuota->gimnasio_id = request()->gimnasio;
@@ -138,7 +139,7 @@ class CuotaController extends Controller
                 }elseif(request()->monto < ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //No saldado
                     $cuota->saldado = 0;
-                    $cuota->monto_deuda += $cliente->especialidad->monto - request()->monto;
+                    $cuota->monto_deuda = ($cliente->especialidad->monto + $cliente->getDeuda()) - request()->monto;
                     $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
 
                     $cuota->gimnasio_id = request()->gimnasio;

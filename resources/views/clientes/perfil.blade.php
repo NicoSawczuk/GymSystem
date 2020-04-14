@@ -287,7 +287,7 @@
                 @method('POST')
                 <input type="hidden" name="gimnasio" id="gimnasio">
                 <input type="hidden" name="cliente" id="cliente">
-                <input type="hidden" name="deuda_anterior" id="deuda_anterior">
+                <input type="hidden" name="deuda_anterior" id="deuda_anterior" value="0">
                 <input type="hidden" name="alta" id="alta" value="1">
               <div class="modal-content">
                 <div class="modal-header">
@@ -453,7 +453,6 @@
     $("#InscripcionForm").attr('action', '/inscripcion/create/'+clieId+'');
     $('#gimnasio').val(gimId);
     $('#cliente').val(clieId);
-    $('#deuda_anterior').val(clieDeuda);
 
     var title = 'Realizar inscripción de <b>'+clieNombre+' '+clieApellido+'</b>'
     $('#tituloModal').html(title);
@@ -462,6 +461,7 @@
     if (clieDeuda > 0){
       $('#deudaSi').css({display: 'block'});
       $('#montoDeuda').html('$'+clieDeuda);
+      $('#deuda_anterior').val(1);
     }else{
       $('#deudaNo').css({display: 'block'});
     }
