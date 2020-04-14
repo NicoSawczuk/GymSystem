@@ -76,6 +76,10 @@ class InscripcionController extends Controller
             //Le asociamos la especialidad al cliente
             $cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
             
+            if (request()->alta == 1){
+                $cliente->activo = 1;
+            }
+
             $cliente->save();
             return redirect('/clientes/administrar/inscripto/'.request()->gimnasio)->with('success','Se completo la inscripción de '.$cliente->nombre.' '.$cliente->apellido);
 
@@ -101,8 +105,11 @@ class InscripcionController extends Controller
             //Le asociamos la especialidad al cliente
             $cliente->especialidad_id = Especialidad::where('id',request()->especialidad)->value('id');
             
-            $cliente->save();
+            if (request()->alta == 1){
+                $cliente->activo = 1;
+            }
 
+            $cliente->save();
 
             $cuota = new Cuota();
             $cuota->monto_cuota = (Especialidad::where('id', $inscripcion->especialidad_id)->value('monto') + $deudaAnterior);

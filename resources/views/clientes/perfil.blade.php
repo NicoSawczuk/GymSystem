@@ -74,7 +74,8 @@
                       <a href="/clientes/{{ $cliente->id }}/enviar_email" class="btn bg-teal btn-block"><b>Enviar E-mail</b></a>
                       @if ($cliente->activo == 1)
                       <a href="#" role="button" onclick="modalBaja()" class="btn bg-maroon btn-block"><b>Dar de baja</b></a>
-                      @else
+                      @endif
+                      @if ($cliente->estado->orden == 5)
                       <a href="#" role="button" onclick="modalAlta('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}','{{$cliente->getDeuda()}}')" class="btn bg-olive btn-block"><b>Dar de alta</b></a>
                       @endif
                     </div>
@@ -287,6 +288,7 @@
                 <input type="hidden" name="gimnasio" id="gimnasio">
                 <input type="hidden" name="cliente" id="cliente">
                 <input type="hidden" name="deuda_anterior" id="deuda_anterior">
+                <input type="hidden" name="alta" id="alta" value="1">
               <div class="modal-content">
                 <div class="modal-header">
                   <h4 class="modal-title" id="tituloModal"></h4>
