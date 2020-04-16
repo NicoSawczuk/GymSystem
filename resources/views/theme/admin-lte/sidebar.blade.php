@@ -119,6 +119,25 @@
               @endisset
             </ul>
           </li>
+          @can('users.index')
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fad fa-tools"></i>
+              <p>
+                Panel de administrador
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/usuarios/administrar/{{$gimnasio->id}}" class="nav-link">
+                  <i class="fal fa-users-cog nav-icon"></i>
+                  <p>Usuarios, roles y permisos</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @endcan
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fad fa-door-open"></i>

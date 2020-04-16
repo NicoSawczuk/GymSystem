@@ -24,6 +24,11 @@ Route::get('/clear-cache', function() {
 
 Auth::routes();
 
+Route::get('/logout', function () {
+    Auth::logout();
+    return view('welcome');
+});
+
 // Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -31,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Gimnasios
     Route::get('/gimnasios/administrar', 'GimnasioController@index')->name('gimnasios.administrar')
-    ->middleware('can:gimnasios.create');
+    ->middleware('can:gimnasios.index');
 
     Route::get('/gimnasios/pais', 'GimnasioController@pais')->name('gimnasios.pais')
     ->middleware('can:gimnasios.create');
@@ -166,5 +171,20 @@ Route::middleware(['auth'])->group(function () {
     //BajaCliente
     Route::post('/clientes/{cliente}/baja', 'BajaClienteController@store')->name('baja.create');
     Route::post('/clientes/{cliente}/alta', 'BajaClienteController@update')->name('baja.update');
+
+
+    //Usuario
+    Route::get('/usuarios/administrar/{gimnasio}', 'UserController@index')->name('usuarios.administrar')
+    ->middleware('can:users.index');
+
+    Route::get('/usuarios/{usuario}/{gimnasio}/edit', 'UserController@edit')->name('usuarios.edit')
+    ->middleware('can:users.edit');
+
+    Route::patch('/usuarios/{usuario}', 'UserController@update')->name('usuarios.update')
+    ->middleware('can:users.edit');
+
+    Route::get('/usuarios/registro_completo', function () {
+        return view('usuarios/esperaPermisos');
+    });
 
 });

@@ -94,7 +94,7 @@
                             <label for="altura" class="col-md-4 col-form-label text-md-right">{{ __('Altura') }}</label>
 
                             <div class="col-md-6">
-                                <input id="altura" type="number" class="form-control @error('altura') is-invalid @enderror" name="altura" value="{{ old('altura') }}" placeholder="Ingrese la altura">
+                                <input id="altura" type="number" class="form-control @error('altura') is-invalid @enderror" name="altura" step="0.01" value="{{ old('altura') }}" placeholder="En m" min="1" pattern="^[0-9]+">
 
                                 @error('altura')
                                     <span class="invalid-feedback" role="alert">
@@ -103,6 +103,7 @@
                                 @enderror
                             </div>
                         </div>
+                        
 
                         <div class="form-group row">
                             <label for="peso" class="col-md-4 col-form-label text-md-right">{{ __('Peso') }}</label>

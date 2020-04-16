@@ -52,6 +52,9 @@
 <script src="{{ asset("assets/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
 <script src="{{ asset("assets/admin-lte/plugins/select2/js/select2.full.min.js") }}"></script>
 
+<!-- Bootstrap4 Duallistbox -->
+<script src="{{ asset("assets/admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js") }}"></script>
+
 
 
 <!-- Notiflix -->
