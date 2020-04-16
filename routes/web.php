@@ -107,16 +107,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/clientes/administrar/{gimnasio}', 'ClienteController@index')->name('clientes.administrar')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/administrar/en_deuda/{gimnasio}', 'ClienteController@indexEnDeuda')->name('clientes.administrar')
+    Route::get('/clientes/administrar/en_deuda/{gimnasio}', 'ClienteController@indexEnDeuda')->name('clientes.administrarEnDeuda')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/administrar/en_regla/{gimnasio}', 'ClienteController@indexEnRegla')->name('clientes.administrar')
+    Route::get('/clientes/administrar/en_regla/{gimnasio}', 'ClienteController@indexEnRegla')->name('clientes.administrarEnRegla')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/administrar/no_inscripto/{gimnasio}', 'ClienteController@indexNoInscripto')->name('clientes.administrar')
+    Route::get('/clientes/administrar/no_inscripto/{gimnasio}', 'ClienteController@indexNoInscripto')->name('clientes.administrarNoInscripto')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/administrar/inscripto/{gimnasio}', 'ClienteController@indexInscripto')->name('clientes.administrar')
+    Route::get('/clientes/administrar/inscripto/{gimnasio}', 'ClienteController@indexInscripto')->name('clientes.administrarInscripto')
     ->middleware('can:clientes.index');
 
     Route::get('/clientes/create/{gimnasio}', 'ClienteController@create')->name('clientes.create')

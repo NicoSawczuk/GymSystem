@@ -82,6 +82,13 @@ class InscripcionController extends Controller
 
             $cliente->save();
             return redirect('/clientes/administrar/inscripto/'.request()->gimnasio)->with('success','Se completo la inscripción de '.$cliente->nombre.' '.$cliente->apellido);
+            // $gimnasio = $cliente->gimnasio;
+            // $clientes = Cliente::where([
+            //     'gimnasio_id'=> $gimnasio->id,
+            //     'estado_id' =>Estado::where('orden', 2)->value('id')
+            //     ])->get();
+            
+            // return redirect()->route('clientes.administrarInscripto', compact('clientes', 'gimnasio'))->with('success','Se completo la inscripción de '.$cliente->nombre.' '.$cliente->apellido);
 
         }elseif(request()->cuota == 1 && request()->monto <= (Especialidad::where('id', request()->especialidad)->value('monto') + $deudaAnterior)){
             //Creamos la inscripcion
