@@ -30,9 +30,8 @@ class GimnasioController extends Controller
     public function index()
     {
 
-        $gimnasios = User::findOrFail(1)->gimnasios;
-        
-        Log::info('HOLA');
+        $gimnasios = Gimnasio::where('user_id', Auth::user()->id)->get();
+
         return view('gimnasios/administrarGimnasios')->with(array(
             'gimnasios' => $gimnasios
         ));
