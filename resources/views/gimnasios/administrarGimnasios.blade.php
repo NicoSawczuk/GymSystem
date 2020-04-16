@@ -25,7 +25,7 @@
                 @isset($gimnasios)
                 <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
                 
-                  <table id="tabla" class="table table-head-fixed text-nowrap ">
+                  <table id="tabla" class="table table-head-fixed text-nowrap table-striped">
                     <thead>
                       <tr>
                         <th>Nombre</th>

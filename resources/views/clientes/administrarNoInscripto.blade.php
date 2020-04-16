@@ -143,7 +143,7 @@
                   </div>
 
 
-                  <table id="tabla"class="table table-head-fixed text-nowrap dataTable dtr-inline ">
+                  <table id="tabla"class="table table-head-fixed text-nowrap dataTable dtr-inline table-striped">
                     <thead>
                       <tr>
                         <th>Nombre, Apellido</th>
