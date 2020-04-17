@@ -99,7 +99,7 @@
                   "sProcessing":     "Procesando...",
                   "sLengthMenu":     "Ver _MENU_",
                   "sZeroRecords":    "No se encontraron resultados",
-                  "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                  "sEmptyTable":     "Aún no hay gimnasios que mostrar, por favor carga uno",
                   "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",
                   "sInfoEmpty":      "Mostrando  del 0 al 0 de de 0 ",
                   "sInfoFiltered":   "(filtrado de _MAX_ registros)",

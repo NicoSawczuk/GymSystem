@@ -120,6 +120,7 @@
             </ul>
           </li>
           @can('users.index')
+          @isset($gimnasio)
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fad fa-tools"></i>
@@ -136,7 +137,8 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>   
+          @endisset
           @endcan
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
