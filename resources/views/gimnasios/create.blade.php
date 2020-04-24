@@ -3,6 +3,9 @@
 @section('title') Agregar un gimnasio @endsection
 
 @section('body')
+@section('sidebarMenu')
+    
+@endsection
 <body class="container">
     <div class=" mt-4 row justify-content-center">
         <div class="col-md-8">
