@@ -9,7 +9,7 @@
 @section('content')
 
     
-@section('contentHeader') Administrar clientes en deuda @endsection
+@section('contentHeader') Administrar clientes en regla @endsection
 <body class="container-fluid">
     <div class="">
         <div class="">

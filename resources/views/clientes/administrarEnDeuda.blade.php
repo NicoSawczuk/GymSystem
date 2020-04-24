@@ -58,7 +58,7 @@
                         </td>
                         <td>
                             <span class="badge badge-pill" style="background-color: {{$cliente->estado->color}}; color: white;">{{ $cliente->estado->nombre }}</span>
-                            @if ($cliente->getCuotaVencida() === '1')
+                            @if ($cliente->getCuotaVencida() == '1')
                             <span class="badge badge-pill bg-info" >Cuota vencida</span>
                             @endif
                         </td>
