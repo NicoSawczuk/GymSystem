@@ -92,6 +92,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/especialidades/create', 'EspecialidadController@store')->name('especialidades.create')
     ->middleware('can:especialidades.create');
 
+    Route::post('/especialidades/ajax_create', 'EspecialidadController@storeAjax')->name('especialidades.ajax_create')
+    ->middleware('can:especialidades.create');
+
     Route::get('/especialidades/{gimnasio}/{especialidad}/edit/', 'EspecialidadController@edit')->name('especialidades.edit')
     ->middleware('can:especialidades.edit');
 

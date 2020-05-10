@@ -3,6 +3,8 @@
 - [x] Hacer grafico que me muestre los inscriptos de cada especialidad
 - [x] Hacer grafico que me muestre la cantidad de inscriptos de cada mes
 
+- [x] Mirar en las estedísticas que muestran las epecialidades si se controla de que usuario son (solo verificar)
+
 - [ ] Permitir que se agreguen especialidades desde el abm gimnasios
 - [ ] Mejorar la codificación mediante la implementación de variables para guardar consultas que se hacen varias veces en una funcion del backend
 

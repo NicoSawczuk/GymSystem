@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Especialidad;
 use App\Gimnasio;
+use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class EspecialidadController extends Controller
 {
@@ -15,7 +18,7 @@ class EspecialidadController extends Controller
      */
     public function index(Gimnasio $gimnasio)
     {
-        $especialidades = Especialidad::all();
+        $especialidades = $gimnasio->user->especialidades;
         return view('/especialidades/administrar', compact('especialidades', 'gimnasio'));
     }
 
@@ -43,14 +46,55 @@ class EspecialidadController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate([
-            'nombre' => 'required|unique:especialidades',
+        $data = request()->validate(array(
+            'nombre' => Rule::unique('especialidades')->where(function ($query) {
+                return $query->where('user_id', Auth::id());
+            }),
             'descripcion' => 'required',
             'monto' => 'required',
-        ]);
+        ));
 
-        Especialidad::create($data);
-        return redirect('/especialidades/'.request()->gimnasio.'/administrar')->with('success','Especialidad agregada con éxito');
+        $espe = new Especialidad();
+        $espe->nombre = $request->nombre;
+        $espe->descripcion = $request->descripcion;
+        $espe->monto = $request->monto;
+        $espe->user_id = Auth::id();
+        $espe->save();
+
+        return redirect('/especialidades/' . request()->gimnasio . '/administrar')->with('success', 'Especialidad agregada con éxito');
+    }
+
+    public function storeAjax(Request $request)
+    {
+        if (request()->ajax()){
+            $validator = Validator::make(
+                array(
+                    'nombre' => $request->get('nombre'),
+                    'monto' => $request->get('monto'),
+                    'descripcion' => $request->get('descripcion')
+                ),
+                array(
+                    'nombre' => Rule::unique('especialidades')->where(function ($query) {
+                        return $query->where('user_id', Auth::id());
+                    }),
+                    'monto' => 'required',
+                    'descripcion' => 'required',
+                )
+            );
+    
+            if ($validator->fails()) {
+                return $validator->errors()->all();
+            } else {
+                $data = [
+                    'nombre' => $request->get('nombre'),
+                    'monto' => $request->get('monto'),
+                    'descripcion' => $request->get('descripcion'),
+                    'user_id' => Auth::id()
+                ];
+                Especialidad::create($data);
+                return '1';
+            }
+        }
     }
 
     /**
@@ -85,14 +129,17 @@ class EspecialidadController extends Controller
     public function update(Request $request, Especialidad $especialidad)
     {
         $data = request()->validate([
-            'nombre' => 'required|unique:especialidades,nombre,'.$especialidad->id,
+            'nombre' => [ 
+                'required', 
+                Rule::unique('especialidades', 'user_id')->ignore($especialidad->user_id), 
+            ],
             'descripcion' => 'required',
             'monto' => 'required',
         ]);
 
         $especialidad->update($data);
 
-        return redirect('/especialidades/'.request()->gimnasio.'/administrar')->with('success', 'Especialidad modificada con éxito');
+        return redirect('/especialidades/' . request()->gimnasio . '/administrar')->with('success', 'Especialidad modificada con éxito');
     }
 
     /**
@@ -106,18 +153,18 @@ class EspecialidadController extends Controller
         $id = $request->get('id');
         $especialidad = Especialidad::where('id', $id)->first();
 
-        if ($especialidad->gimnasios->count() > 0){
+        if ($especialidad->gimnasios->count() > 0) {
             return '0';
-        }else{
+        } else {
             $especialidad->delete();
             return '1';
         }
     }
 
-    public function estadistica(Gimnasio $gimnasio){
-        
+    public function estadistica(Gimnasio $gimnasio)
+    {
+
 
         return view('especialidades/estadistica');
     }
-
 }

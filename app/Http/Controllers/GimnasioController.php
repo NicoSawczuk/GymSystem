@@ -119,7 +119,7 @@ class GimnasioController extends Controller
         foreach($paises as $pais){
             $pais->nombre = strtoupper($pais->nombre);
         }
-        $especialidades = Especialidad::all();
+        $especialidades = $gimnasio->user->especialidades;;
 
         return view('gimnasios.edit', compact('gimnasio','paises','especialidades'));
     }
