@@ -38,7 +38,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //Relaciones
     public function gimnasios(){
         return $this->hasMany(Gimnasio::class);
+    }
+
+    public function especialidades(){
+        return $this->hasMany(Especialidad::class);
     }
 }

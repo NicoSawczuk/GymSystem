@@ -9,6 +9,11 @@ class Especialidad extends Model
     protected $guarded = [];
     public $table = "especialidades";
 
+    //Relaciones
+    public function user(){
+        return $this->belongsTo('App\User', 'user_id');
+    }
+    
     public function gimnasios(){
         return $this->belongsToMany(Gimnasio::class, 'gimnasios_especialidades');
     }
