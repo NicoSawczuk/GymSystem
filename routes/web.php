@@ -83,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/especialidades/{gimnasio}/administrar', 'EspecialidadController@index')->name('especialidades.administrar')
     ->middleware('can:especialidades.index');
 
-    Route::get('/especialidades/{gimnasio}/administrar/mis_especialidades', 'EspecialidadController@indexMisEspecialidades')->name('especialidades.administrar')
+    Route::get('/especialidades/{gimnasio}/administrar/mis_especialidades', 'EspecialidadController@indexMisEspecialidades')->name('especialidades.administrarMisEspecialidades')
     ->middleware('can:especialidades.index');
 
     Route::get('/especialidades/{gimnasio}/create', 'EspecialidadController@create')->name('especialidades.create')
@@ -161,8 +161,16 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Cuota
+    Route::get('/cuotas/{gimnasio}/administrar', 'CuotaController@index')->name('cuotas.administrar')
+    ->middleware('can:cuotas.index');
+
+    Route::get('/cuotas/{gimnasio}/administrar/mis_cuotas', 'CuotaController@indexMisCuotas')->name('cuotas.administrarMisCuotas')
+    ->middleware('can:cuotas.index');
+
     Route::post('/cuota/create/{cliente}', 'CuotaController@store')->name('cuota.create')->middleware('can:cuotas.edit');
+    
     Route::post('/cuota/pagar_deuda/{cliente}', 'CuotaController@update')->name('cuota.update')->middleware('can:cuotas.edit');
+
 
     //EmailConfiguracion
     Route::get('/email_configuracion/{gimnasio}/edit/', 'EmailConfiguracionController@edit')->name('email_configuracion.edit')

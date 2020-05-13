@@ -7,11 +7,13 @@ Marcar nota (Alt+D)
 
 - [ ] Mirar en las estedísticas que muestran las epecialidades si se controla de que usuario son (solo verificar)
 
+- [ ] Agregar la ayuda a las vistas que no la tienen
+
 - [x] Permitir que se agreguen especialidades desde el abm gimnasios
 - [ ] Mejorar la codificación mediante la implementación de variables para guardar consultas que se hacen varias veces en una funcion del backend
 
 - [ ] Preparar la pagina de contacto con el soporte
-- [ ] Agregar la pagina de cuotas, tanto en general como en el perfil de cada ciente
+- [x] Agregar la pagina de cuotas, tanto en general como en el perfil de cada ciente
 - [ ] Preparar la configuración del reporte (osea la cabecera)
 - [ ] Agregar el campo logo en gimnasio para poder integrarlo con los reportes(primero tengo que ver si se puede convertir una imagen a base64 con javascript)
 - [ ] Hacer reportes en las tablas que lo necesiten

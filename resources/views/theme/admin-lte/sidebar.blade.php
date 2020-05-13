@@ -102,6 +102,33 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
+              <i class="nav-icon fal fa-cash-register"></i>
+              <p>
+                 Cuotas
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @isset($gimnasio)
+              <li class="nav-item">
+                <a href="/cuotas/{{ $gimnasio->id }}/administrar" class="nav-link">
+                  <i class="fal fa-circle nav-icon"></i>
+                  <p>
+                    Administración
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/cuotas/{{$gimnasio->id}}/administrar/mis_cuotas" class="nav-link">
+                  <i class="fal fa-circle nav-icon"></i>
+                  <p>Mis cuotas</p>
+                </a>
+              </li>
+              @endisset
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fad fa-cog"></i>
               <p>
                 Configuración

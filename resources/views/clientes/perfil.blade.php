@@ -28,8 +28,8 @@
 @section('contentHeader') Perfil del cliente @endsection
 <body class="container-fluid">
         <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
+
+
               <div class="row">
                 <div class="col-md-3">
       
@@ -133,8 +133,12 @@
                   <div class="card">
                     <div class="card-header p-2">
                       <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link active" href="#infoPersonal" data-toggle="tab">Informacion personal</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#cuotas" data-toggle="tab">Cuotas</a></li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#infoPersonal" data-toggle="tab">Informacion personal</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#cuotas" data-toggle="tab">Cuotas</a>
+                        </li>
                       </ul>
                     </div><!-- /.card-header -->
                     <div class="card-body">
@@ -212,7 +216,55 @@
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="cuotas">
-                        </div>
+                          @if($cliente->getUltimasTresCuotas()->count() != 0)
+
+                            <div class="table-responsive">
+                            <table id="tabla" class="table table-head-fixed text-nowrap table-striped table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>Fecha de pago</th>
+                                  <th>Especialidad</th>
+                                  <th>Monto</th>
+                                  <th>Monto pago</th>
+                                  <th>Deuda</th>
+                                  <th>Estado</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              @foreach ($cliente->cuotas as $cuota)
+                                <tr>
+                                  <td class="text-right">{{ \Carbon\Carbon::create($cuota->fecha_pago)->format('d/m/Y')}}</td>
+                                  <td>
+                                    <span class="badge badge-pill badge-light">{{ $cuota->especialidad->nombre }}</span>
+                                  </td>
+                                  <td class="text-right">
+                                    <span class="badge badge-pill badge-warning">${{$cuota->monto_cuota}}</span>
+                                  </td>
+                                  <td class="text-right">
+                                    <span class="badge badge-pill badge-success">${{$cuota->monto_pagado}}</span>
+                                  </td>
+                                  <td class="text-right">
+                                    <span class="badge badge-pill badge-danger">${{$cuota->monto_deuda}}</span>
+                                  </td>
+                                  <td>
+                                  @if ($cuota->vencido == 0)
+                                    Activa
+                                  @else
+                                    Vencida
+                                  @endif
+                                  </td>
+                                </tr>
+                              @endforeach
+                              </tbody>
+                            </table>
+                            </div>
+                          @else
+                          <div class="callout" style="border-left-color: #20c997;">
+                            <h5>Cuotas</h5>
+          
+                            <p>El cliente aún no registra cuotas pagadas</p>
+                          </div>
+                          @endif
                         </div>
                         <!-- /.tab-pane -->
                       </div>
@@ -224,8 +276,8 @@
                 <!-- /.col -->
               </div>
               <!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </section>
+
+
           <!-- /.content -->
 
 
@@ -472,6 +524,45 @@
   $('#customSwitch1').on('change', function() {
      $('#customSwitch1').val(1);   
   });  
+</script>
+
+<script>
+  $(function () {
+    $("#tabla").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+      "lengthChange": true,
+      "ordering": true,
+      language: {
+              "sProcessing":     "Procesando...",
+              "sLengthMenu":     "Ver _MENU_",
+              "sZeroRecords":    "No se encontraron resultados",
+              "sEmptyTable":     "Aún no hay cuotas para mostrar",
+              "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",
+              "sInfoEmpty":      "Mostrando  del 0 al 0 de de 0 ",
+              "sInfoFiltered":   "(filtrado de _MAX_ registros)",
+              "sInfoPostFix":    "",
+              "sSearch":         "Buscar:",
+              "sUrl":            "",
+              "sInfoThousands":  ",",
+              "sLoadingRecords": "Cargando...",
+              "oPaginate": {
+                  "sFirst":    "Primero",
+                  "sLast":     "Último",
+                  "sNext":     "Sig",
+                  "sPrevious": "Ant"
+              },
+              "oAria": {
+                  "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                  "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+              },
+              "buttons": {
+                  "copy": "Copiar",
+                  "colvis": "Visibilidad"
+              }
+  }
+    });
+  });
 </script>
 
 </body>
