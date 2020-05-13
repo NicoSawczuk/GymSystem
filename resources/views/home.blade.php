@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-lg-3 col-6">
                   <!-- small box -->
-                  <div class="small-box bg-info">
+                  <div class="small-box"  style="background-color: rgb(92,192,240,0.9)">
                     <div class="inner">
                       <h3>{{ $gimnasio->getInscriptos() }}</h3>
       
@@ -76,7 +76,7 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                   <!-- small box -->
-                  <div class="small-box bg-success">
+                  <div class="small-box" style="background-color: rgb(34,212,129,0.9)">
                     <div class="inner">
                       <h3>{{ $gimnasio->getEnRegla() }}<sup style="font-size: 20px"></sup></h3>
       
@@ -91,7 +91,7 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                   <!-- small box -->
-                  <div class="small-box bg-warning">
+                  <div class="small-box" style="background-color: rgb(255,223,80,0.9)">
                     <div class="inner">
                       <h3>{{ $gimnasio->getNoInscriptos() }}</h3>
       
@@ -106,7 +106,7 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                   <!-- small box -->
-                  <div class="small-box bg-danger">
+                  <div class="small-box"  style="background-color: rgb(235,53,38,0.9)">
                     <div class="inner">
                       <h3>{{ $gimnasio->getEnDeuda() }}</h3>
       
