@@ -111,3 +111,15 @@
 <script src="{{ asset("assets/admin-lte/plugins/fullcalendar-interaction/main.min.js") }}"></script>
 <script src="{{ asset("assets/admin-lte/plugins/fullcalendar-bootstrap/main.min.js") }}"></script>
 <script src="{{ asset("assets/admin-lte/plugins/fullcalendar-list/main.min.js") }}"></script>
+
+
+{{-- Datatable Export --}}
+<script src="{{ asset("assets/export-datatable/dataTables.buttons.min.js") }}"></script>
+<script src="{{ asset("assets/export-datatable/buttons.bootstrap4.min.js") }}"></script>
+<script src="{{ asset("assets/export-datatable/jszip.min.js") }}"></script>
+<script src="{{ asset("assets/export-datatable/pdfmake.min.js") }}"></script>
+<script src="{{ asset("assets/export-datatable/vfs_fonts.js") }}"></script>
+<script src="{{ asset("assets/export-datatable/buttons.html5.min.js") }}"></script>
+<script src="{{ asset("assets/export-datatable/buttons.print.min.js") }}"></script>
+<script src="{{ asset("assets/export-datatable/buttons.colVis.min.js") }}"></script>
+

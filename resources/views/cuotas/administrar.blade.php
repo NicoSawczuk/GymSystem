@@ -97,6 +97,8 @@
 
 
 
+
+
     <script>
         $(function () {
       $("#tabla").DataTable({
@@ -104,6 +106,10 @@
         "autoWidth": false,
         "lengthChange": true,
         "ordering": true,
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf'
+        ],
+        dom: 'lrfBtip',
         language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Ver _MENU_",
@@ -132,6 +138,18 @@
                     "colvis": "Visibilidad"
                 }
     }
+      });
+
+      $('#tabla_length').css({
+          'position': 'absolute'
+      });
+
+      $('.dt-buttons').css({
+        'position': "relative",
+        'display': "-ms-inline-flexbox",
+        'display': "block",
+        'vertical-align': "middle",
+        'text-align':" right"
       });
     });
     </script>
