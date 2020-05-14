@@ -123,3 +123,4 @@
 <script src="{{ asset("assets/export-datatable/buttons.print.min.js") }}"></script>
 <script src="{{ asset("assets/export-datatable/buttons.colVis.min.js") }}"></script>
 
+
