@@ -73,7 +73,7 @@ class Gimnasio extends Model
             }
         }
         return $clientes;
-    }
+    } 
 
     public function getPorcentajeEstados(){
 

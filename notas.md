@@ -5,7 +5,8 @@ Marcar nota (Alt+D)
 - [x] Hacer grafico que me muestre los inscriptos de cada especialidad
 - [x] Hacer grafico que me muestre la cantidad de inscriptos de cada mes
 
-- [ ] Mirar en las estedísticas que muestran las epecialidades si se controla de que usuario son (solo verificar)
+- [x] Mirar en las estedísticas que muestran las epecialidades si se controla de que usuario son (solo verificar)
+- [ ] Crear estadisticas que muestren cuantos clientes hacen cierta especialidad (pero global, ya que la que existe muestra por gimnasio)
 
 - [ ] Agregar la ayuda a las vistas que no la tienen
 

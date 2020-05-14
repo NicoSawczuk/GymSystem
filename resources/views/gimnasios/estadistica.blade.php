@@ -172,13 +172,7 @@
                         </div>
                     </div>
                 </div>
-            @else
-                <div class="callout callout-warning">
-                    <h5>Aún no tenes clientes</h5>
-    
-                    <p>Por favor crea uno para ver el grafico</p>
-                </div>
-            @endif
+            
                 <!-- /.card -->
 
     <script>
@@ -300,6 +294,13 @@
         options: estadosOptions      
         })
     </script>
+    @else
+    <div class="callout callout-warning">
+        <h5>Aún no tenes clientes</h5>
+
+        <p>Por favor crea uno para ver los gráficos</p>
+    </div>
+@endif
     </body>
     @endsection
 
