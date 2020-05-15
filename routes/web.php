@@ -179,6 +179,15 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/email_configuracion/{gimnasio}', 'EmailConfiguracionController@update')->name('email_configuracion.update')
     ->middleware('can:gimnasios.edit');
 
+
+    //ReporteConfiguracion
+    Route::get('/reporte_configuracion/{gimnasio}/edit/', 'ReporteConfiguracionController@edit')->name('reporte_configuracion.edit')
+    ->middleware('can:gimnasios.edit');
+
+    Route::patch('/reporte_configuracion/{gimnasio}', 'ReporteConfiguracionController@update')->name('reporte_configuracion.update')
+    ->middleware('can:gimnasios.edit');
+
+
     //BajaCliente
     Route::post('/clientes/{cliente}/baja', 'BajaClienteController@store')->name('baja.create');
     Route::post('/clientes/{cliente}/alta', 'BajaClienteController@update')->name('baja.update');

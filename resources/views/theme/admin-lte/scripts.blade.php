@@ -124,3 +124,6 @@
 <script src="{{ asset("assets/export-datatable/buttons.colVis.min.js") }}"></script>
 
 
+<!-- bs-custom-file-input -->
+<script src="{{ asset("assets/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js") }}"></script>
+

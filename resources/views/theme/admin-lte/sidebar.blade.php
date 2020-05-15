@@ -143,6 +143,12 @@
                   <p>Correos automáticos</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/reporte_configuracion/{{ $gimnasio->id }}/edit" class="nav-link">
+                  <i class="fal fa-circle nav-icon"></i>
+                  <p>Reportes</p>
+                </a>
+              </li>
               @endisset
             </ul>
           </li>

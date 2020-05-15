@@ -36,6 +36,11 @@ class Gimnasio extends Model
         return $this->hasOne(EmailConfiguracion::class);
     }
 
+    public function reporte_configuracion()
+    {
+        return $this->hasOne(ReporteConfiguracion::class);
+    }
+
     public function bajaClientes(){
         return $this->hasMany(BajaCliente::class);
     }
