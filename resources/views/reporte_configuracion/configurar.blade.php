@@ -93,7 +93,7 @@
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="exampleInputFile"
-                                            accept="image/*" name="logo">
+                                            accept="image/*" name="logo" value="">
                                         <label class="custom-file-label" for="exampleInputFile">Seleccione un
                                             logo</label>
                                     </div>
@@ -284,6 +284,8 @@
             var img = new Image();
             img.src = "{{ asset('/storage/'.$gimnasio->reporte_configuracion->logo) }}";
             $('#logo2').attr("src", img.src);
+            // $('#exampleInputFile').val(img.src);
+
 
     })
     </script>    

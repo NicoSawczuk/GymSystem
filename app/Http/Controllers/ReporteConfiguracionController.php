@@ -71,39 +71,60 @@ class ReporteConfiguracionController extends Controller
     public function update(Request $request, Gimnasio $gimnasio)
     {
         $data = request()->validate([
-            'titulo'    => 'required',
+            'titulo'    => 'required|regex:/^[a-zA-Z\s]*$/',
             'calle'     => 'required|regex:/^[a-zA-Z\s]*$/',
             'altura'    => 'required|numeric',
-            'ciudad'    => 'required',
-            'provincia' => 'required',
-            'pais'      => 'required',
+            'ciudad'    => 'required|regex:/^[a-zA-Z\s]*$/',
+            'provincia' => 'required|regex:/^[a-zA-Z\s]*$/',
+            'pais'      => 'required|regex:/^[a-zA-Z\s]*$/',
             'telefono'  => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
         ]);
 
-        if (request()->hasFile('logo')){
+        if (request()->hasFile('logo')) {
             request()->validate([
                 'logo'  => 'required|file|image|max:3000',
             ]);
         }
 
-        $configuracion = new ReporteConfiguracion();
-        $configuracion->titulo = $request->titulo;
-        $configuracion->calle = $request->calle;
-        $configuracion->altura = $request->altura;
-        $configuracion->ciudad = $request->ciudad;
-        $configuracion->provincia = $request->provincia;
-        $configuracion->pais = $request->pais;
-        $configuracion->telefono = $request->telefono;
+        if (ReporteConfiguracion::where('gimnasio_id', $gimnasio->id)->exists()) {
+            $configuracion = ReporteConfiguracion::where('gimnasio_id', $gimnasio->id)->first();
+            $configuracion->titulo = $request->titulo;
+            $configuracion->calle = $request->calle;
+            $configuracion->altura = $request->altura;
+            $configuracion->ciudad = $request->ciudad;
+            $configuracion->provincia = $request->provincia;
+            $configuracion->pais = $request->pais;
+            $configuracion->telefono = $request->telefono;
+    
+            $configuracion->gimnasio_id = $gimnasio->id;
+            $configuracion->save();
+    
+            if (request()->has('logo')){
+                $configuracion->update([
+                    'logo' => request()->logo->store('logos_reporte_configuracion', 'public'),
+                ]);
+            }
+        } else {
+            $configuracion = new ReporteConfiguracion();
+            $configuracion->titulo = $request->titulo;
+            $configuracion->calle = $request->calle;
+            $configuracion->altura = $request->altura;
+            $configuracion->ciudad = $request->ciudad;
+            $configuracion->provincia = $request->provincia;
+            $configuracion->pais = $request->pais;
+            $configuracion->telefono = $request->telefono;
 
-        $configuracion->gimnasio_id = $gimnasio->id;
-        $configuracion->save();
+            $configuracion->gimnasio_id = $gimnasio->id;
+            $configuracion->save();
 
-        if (request()->has('logo')){
-            $configuracion->update([
-                'logo' => request()->logo->store('logos_reporte_configuracion', 'public'),
-            ]);
+            if (request()->has('logo')) {
+                $configuracion->update([
+                    'logo' => request()->logo->store('logos_reporte_configuracion', 'public'),
+                ]);
+            }
         }
-        return redirect('/reporte_configuracion/'.$gimnasio->id.'/edit')->with('success', 'Cabecera actualizada con éxito');
+
+        return redirect('/reporte_configuracion/' . $gimnasio->id . '/edit')->with('success', 'Cabecera actualizada con éxito');
     }
 
     /**
