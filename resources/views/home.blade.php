@@ -4,7 +4,13 @@
 
 @section('body')
     @parent
-    @section('nombreGimnasio') <strong>{{ $gimnasio->nombre }}</strong> @endsection
+    @section('nombreGimnasio')
+    <strong>
+      @isset($gimnasio->reporte_configuracion)
+      <img src="{{asset("storage/".$gimnasio->reporte_configuracion->logo)}}" class="brand-image img-circle" style="opacity: .8">
+      @endisset
+      {{ $gimnasio->nombre }}</strong>
+    @endsection
 
     @section('usuario')
         {{ Auth::user()->name }} {{ Auth::user()->apellido }}

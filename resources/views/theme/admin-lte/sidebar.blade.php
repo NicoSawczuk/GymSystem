@@ -7,7 +7,12 @@
       <span class="brand-text font-weight-light h3">
         @section('nombreGimnasio')
           @isset($gimnasio)
-              <b>{{ $gimnasio->nombre }}</b>
+              <b>
+                @isset($gimnasio->reporte_configuracion)
+                <img src="{{asset("storage/".$gimnasio->reporte_configuracion->logo)}}" class="brand-image img-circle" style="opacity: .8">
+                @endisset
+                {{ $gimnasio->nombre }}
+              </b>
           @endisset
         @show
       </span>
