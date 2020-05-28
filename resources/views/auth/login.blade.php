@@ -32,6 +32,8 @@
 <!-- Select2 -->
 <link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/select2/css/select2.min.css") }}">
 <link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") }}">
+{{-- Icon --}}
+<link rel="icon" href="{{ asset("assets/icon/GymSystem.png") }}">
 </head>    
 <body>
 <div class="mt-2 container">

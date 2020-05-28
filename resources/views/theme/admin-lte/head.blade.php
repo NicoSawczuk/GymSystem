@@ -42,6 +42,9 @@
 <link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/fullcalendar-bootstrap/main.min.css") }}">
 <link rel="stylesheet" href="{{ asset("assets/admin-lte/plugins/fullcalendar-list/main.min.css") }}">
 
+{{-- Icon --}}
+<link rel="icon" href="{{ asset("assets/icon/GymSystem.png") }}">
+
 
 
 
