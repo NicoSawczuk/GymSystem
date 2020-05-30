@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Caffeinated\Shinobi\Concerns\HasRolesAndPermissions;
-
+use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -45,5 +45,10 @@ class User extends Authenticatable
 
     public function especialidades(){
         return $this->hasMany(Especialidad::class);
+    }
+
+    //Metodos
+    public function slug(){
+        return Str::slug($this->name)."-".Str::slug($this->apellido);
     }
 }

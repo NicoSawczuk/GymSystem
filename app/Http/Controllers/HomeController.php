@@ -24,7 +24,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Gimnasio $gimnasio)
+    public function index(Gimnasio $gimnasio, $slug)
     {   
         if (Gimnasio::where('user_id', Auth::id())->exists()){
             return view('home', compact('gimnasio'));

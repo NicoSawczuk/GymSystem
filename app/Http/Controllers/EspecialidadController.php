@@ -16,13 +16,13 @@ class EspecialidadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Gimnasio $gimnasio)
+    public function index(Gimnasio $gimnasio, $slug)
     {
         $especialidades = $gimnasio->user->especialidades;
         return view('/especialidades/administrar', compact('especialidades', 'gimnasio'));
     }
 
-    public function indexMisEspecialidades(Gimnasio $gimnasio)
+    public function indexMisEspecialidades(Gimnasio $gimnasio, $slug)
     {
         $especialidades = $gimnasio->especialidades;
         return view('/especialidades/administrarMisEspecialidades', compact('especialidades', 'gimnasio'));
@@ -33,7 +33,7 @@ class EspecialidadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Gimnasio $gimnasio)
+    public function create(Gimnasio $gimnasio, $slug)
     {
         return view('especialidades.create', compact('gimnasio'));
     }
@@ -44,7 +44,7 @@ class EspecialidadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Gimnasio $gimnasio,  $slug)
     {
         $data = request()->validate(array(
             'nombre' => Rule::unique('especialidades')->where(function ($query) {
@@ -61,7 +61,7 @@ class EspecialidadController extends Controller
         $espe->user_id = Auth::id();
         $espe->save();
 
-        return redirect('/especialidades/' . request()->gimnasio . '/administrar')->with('success', 'Especialidad agregada con éxito');
+        return redirect('/especialidades/' . $gimnasio->id .'-'.$slug.'/administrar')->with('success', 'Especialidad agregada con éxito');
     }
 
     public function storeAjax(Request $request)
@@ -114,7 +114,7 @@ class EspecialidadController extends Controller
      * @param  \App\Especialidad  $especialidad
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gimnasio $gimnasio, Especialidad $especialidad)
+    public function edit(Gimnasio $gimnasio, $slug1, Especialidad $especialidad, $slug2)
     {
         return view('especialidades/edit', compact('especialidad', 'gimnasio'));
     }
@@ -126,7 +126,7 @@ class EspecialidadController extends Controller
      * @param  \App\Especialidad  $especialidad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Especialidad $especialidad)
+    public function update(Request $request, Especialidad $especialidad, $slug)
     {
         $data = request()->validate([
             'nombre' => [ 
@@ -138,8 +138,9 @@ class EspecialidadController extends Controller
         ]);
 
         $especialidad->update($data);
+        $gimnasio = Gimnasio::where('id', $request->gimnasio)->first();
 
-        return redirect('/especialidades/' . request()->gimnasio . '/administrar')->with('success', 'Especialidad modificada con éxito');
+        return redirect('/especialidades/' . $gimnasio->id . '-'.$gimnasio->slug().'/administrar')->with('success', 'Especialidad modificada con éxito');
     }
 
     /**
@@ -161,7 +162,7 @@ class EspecialidadController extends Controller
         }
     }
 
-    public function estadistica(Gimnasio $gimnasio)
+    public function estadistica(Gimnasio $gimnasio, $slug)
     {
 
 

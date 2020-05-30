@@ -64,7 +64,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/gimnasios/{{ $gimnasio->id }}/estadistica" class="nav-link">
+              <a href="{{route('gimnasios.estadistica', [$gimnasio->id, $gimnasio->slug()])}}" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
                   <p>Estadística</p>
                 </a>
@@ -83,13 +83,13 @@
             <ul class="nav nav-treeview">
               @isset($gimnasio)
               <li class="nav-item">
-                <a href="/especialidades/{{ $gimnasio->id }}/administrar" class="nav-link">
+                <a href="{{route('especialidades.administrar',[$gimnasio->id, $gimnasio->slug()])}}" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
                   <p>Administración</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/especialidades/{{ $gimnasio->id }}/administrar/mis_especialidades" class="nav-link">
+                <a href="{{route('especialidades.administrarMisEspecialidades',[$gimnasio->id, $gimnasio->slug()])}}" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
                   <p>Mis especialidades</p>
                 </a>
@@ -97,7 +97,7 @@
               @endisset
               @isset($gimnasio)
               <li class="nav-item">
-                <a href="/especialidades/{{ $gimnasio->id }}/estadistica" class="nav-link">
+                <a href="{{route('especialidades.estadistica', [$gimnasio->id, $gimnasio->slug()])}}" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
                   <p>Estadística</p>
                 </a>

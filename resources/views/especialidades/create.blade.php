@@ -25,7 +25,7 @@
 
                     
                     <div class="card-body">
-                        <form method="POST" action="/especialidades/create">
+                        <form method="POST" action="{{route('especialidades.store', [$gimnasio->id, $gimnasio->slug()])}}">
                             @csrf
                             <input type="hidden" value="{{ $gimnasio->id }}" name="gimnasio">
                             <div class="form-group row">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="card-footer float">
                         <div class="float-right">
-                            <a href="/especialidades/{{ $gimnasio->id }}/administrar">
+                            <a href="javascript:history.back()">
                                 <button type="button" class="btn btn-default"><i class="fal fa-times"></i> Cancelar</button>
                             </a>
                             <button type="submit" class="btn btn-primary "><i class="fal fa-check"></i> Guardar</button>

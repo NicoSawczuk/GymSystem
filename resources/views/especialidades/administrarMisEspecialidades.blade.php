@@ -7,80 +7,86 @@
 
 
 @section('content')
-    
+
 @section('contentHeader') Administrar especialidades @endsection
+
 <body class="container-fluid">
+  <div class="">
     <div class="">
-        <div class="">
 
 
-            <div class="card card-teal card-outline">
-                <div class="card-header">
-                  <h3 class="card-title">
-                      Especialidades ofrecidas por {{$gimnasio->nombre}}
-                    </h3>
-      
-                  <div class="card-tools">
-                    <div class="float-right">
-                    <a title="Agregar una especialidad" class="fal fa-plus-circle fa-lg" href="/especialidades/{{ $gimnasio->id }}/create"></a>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                @isset($especialidades)
-                <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
-                
-                  <table id="tabla"class="table table-head-fixed text-nowrap dataTable dtr-inline table-striped">
-                    <thead>
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Monto</th>
-                        <th class="text-right">Opciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($especialidades as $especialidad)
-                      <tr>
-                        <td >{{ $especialidad->nombre }}</td>
-                        <td >
-                            {{ $especialidad->descripcion }}
-                        </td>
-                        <td class="text-right">
-                          ${{ $especialidad->monto }}
-                      </td>
-                        <td class="text-right" style="">
-                            <a title="Editar especialidad" href="/especialidades/{{ $gimnasio->id }}/{{ $especialidad->id }}/edit"><i class="fal fa-pencil-alt fa-lg"></i></a>
-                            
-                            <a title="Eliminar especialidad" onclick="borrar('{{ $especialidad->nombre }}','{{ $especialidad->id }}')" href="#"><i class="fal fa-trash-alt fa-lg"></i></a>
-                        </td>
+      <div class="card card-teal card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            Especialidades ofrecidas por {{$gimnasio->nombre}}
+          </h3>
 
-                      </tr>
-                    @endforeach
-                    </tbody>
-                  </table>
-                @endisset
-                
-                
-                </div>
-                @empty($especialidades)
-                <div class="callout callout-warning">
-                  <h5>Aún no tenes especialidades</h5>
-
-                  <p>Por favor crea una</p>
-                </div>
-                @endempty
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
+          <div class="card-tools">
+            <div class="float-right">
+              <a title="Agregar una especialidad" class="fal fa-plus-circle fa-lg"
+                href="{{route('especialidades.create', [$gimnasio->id, $gimnasio->slug()])}}"></a>
+            </div>
+          </div>
         </div>
+        <!-- /.card-header -->
+        @isset($especialidades)
+        <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
+
+          <table id="tabla" class="table table-head-fixed text-nowrap dataTable dtr-inline table-striped">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Monto</th>
+                <th class="text-right">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($especialidades as $especialidad)
+              <tr>
+                <td>{{ $especialidad->nombre }}</td>
+                <td>
+                  {{ $especialidad->descripcion }}
+                </td>
+                <td class="text-right">
+                  ${{ $especialidad->monto }}
+                </td>
+                <td class="text-right" style="">
+                  <a title="Editar especialidad"
+                    href="{{route('especialidades.edit',[$gimnasio->id, $gimnasio->slug(), $especialidad->id, $especialidad->slug()])}}"><i
+                      class="fal fa-pencil-alt fa-lg"></i></a>
+
+                  <a title="Eliminar especialidad"
+                    onclick="borrar('{{ $especialidad->nombre }}','{{ $especialidad->id }}')" href="#"><i
+                      class="fal fa-trash-alt fa-lg"></i></a>
+                </td>
+
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+          @endisset
+
+
+        </div>
+        @empty($especialidades)
+        <div class="callout callout-warning">
+          <h5>Aún no tenes especialidades</h5>
+
+          <p>Por favor crea una</p>
+        </div>
+        @endempty
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
     </div>
+  </div>
 
 
 
 
 
-<script>
+  <script>
     $(function () {
       $("#tabla").DataTable({
         "responsive": true,
@@ -122,20 +128,20 @@
 
 
 
-@if (session('success'))
-<script>
+  @if (session('success'))
+  <script>
     Notiflix.Notify.Success(String(' {{ session('success') }} '));
-</script>
-@endif
-@if (session('error'))
-<script>
+  </script>
+  @endif
+  @if (session('error'))
+  <script>
     Notiflix.Notify.Failure(String(' {{ session('error') }} '));
-</script>
-@endif
+  </script>
+  @endif
 
 
-<script>
-  function ajaxBorrar(id){
+  <script>
+    function ajaxBorrar(id){
     $.ajax({
       url:"/especialidades/borrar",
       method:"GET",
@@ -168,12 +174,12 @@
       }
     })
   }
-</script>
+  </script>
 
 
 
-<script>
-  function borrar(especialidad, id){
+  <script>
+    function borrar(especialidad, id){
     const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',
@@ -205,7 +211,7 @@
   }
 })
   }
-</script>
+  </script>
 
 
 </body>

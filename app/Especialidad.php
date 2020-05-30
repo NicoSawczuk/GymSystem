@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Especialidad extends Model
 {
@@ -37,7 +38,11 @@ class Especialidad extends Model
     }
 
     //Metodos
+    public function slug(){
+        return Str::slug($this->nombre);
+    }
     public function getClientes(){
         return $this->clientes->count();
     }
+    
 }

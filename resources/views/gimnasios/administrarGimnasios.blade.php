@@ -17,7 +17,7 @@
       
                   <div class="card-tools">
                     <div class="float-right">
-                        <a title="Agregar un gimnasio" class="fal fa-plus-circle fa-lg" href="/gimnasios/create/{{ Auth::user()->id }}"></a>
+                        <a title="Agregar un gimnasio" class="fal fa-plus-circle fa-lg" href="{{route('gimnasios.create', [Auth::user()->id,Auth::user()->slug()])}}"></a>
                     </div>
                   </div>
                 </div>
@@ -55,13 +55,13 @@
                           @endif
                         </td>
                         <td class="text-right">
-                            <a title="Editar gimnasio" href="/gimnasios/{{ $gimnasio->id }}/edit"><i class="fal fa-pencil-alt fa-lg"></i></a>
+                            <a title="Editar gimnasio" href="{{route('gimnasios.edit',[$gimnasio->id, $gimnasio->slug()])}}"><i class="fal fa-pencil-alt fa-lg"></i></a>
                             @if ($gimnasio->estado == 1)
                               <a title="Cambiar estado a inactivo" onclick="inactivo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="fal fa-eye fa-lg"></i></a>
                             @else
                             <a title="Cambiar estado a activo" onclick="activo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="far fa-eye-slash fa-lg"></i></a>
                             @endif
-                            <a title="Ingresar con gimnasio" href="/home/{{$gimnasio->id}}"><i class="far fa-arrow-circle-right fa-lg"></i></a>
+                            <a title="Ingresar con gimnasio" href="{{route('home', [$gimnasio->id,$gimnasio->slug()])}}"><i class="far fa-arrow-circle-right fa-lg"></i></a>
                         </td>
 
                       </tr>

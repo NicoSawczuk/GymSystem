@@ -7,7 +7,7 @@
       </li>
       <li class="nav-item  d-sm-inline-block">
         @isset($gimnasio)
-        <a href="/home/{{ $gimnasio->id }}" class="nav-link">Home</a>
+        <a href="{{route('home', [$gimnasio->id,$gimnasio->slug()])}}" class="nav-link">Home</a>
         @endisset
       </li>
     </ul>

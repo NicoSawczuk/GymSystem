@@ -19,7 +19,7 @@
 
                     
                     <div class="card-body">
-                        <form method="POST" action="/gimnasios/{{ $gimnasio->id }}">
+                        <form method="POST" action="{{route('gimnasios.update', [$gimnasio->id, $gimnasio->slug()])}}">
                             @csrf
                             @method('PATCH')
                             

@@ -42,7 +42,7 @@ class GimnasioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(User $user)
+    public function create(User $user, $slug)
     {
 
         $paises = Pais::all();
@@ -59,7 +59,7 @@ class GimnasioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user, Request $request)
+    public function store(User $user, Request $request, $slug)
     {
         $data = request()->validate([
             'nombre' => 'required|unique:gimnasios',
@@ -113,7 +113,7 @@ class GimnasioController extends Controller
      * @param  \App\Gimnasio  $gimnasio
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gimnasio $gimnasio)
+    public function edit(Gimnasio $gimnasio, $slug)
     {
         $paises = Pais::all();
         foreach($paises as $pais){
@@ -131,7 +131,7 @@ class GimnasioController extends Controller
      * @param  \App\Gimnasio  $gimnasio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Gimnasio $gimnasio)
+    public function update(Request $request, Gimnasio $gimnasio, $slug)
     {
         $data = request()->validate([
             'nombre' => 'required|unique:gimnasios,nombre,'.$gimnasio->id,
@@ -257,7 +257,7 @@ class GimnasioController extends Controller
         return '1';
     }
 
-    public function estadistica (Gimnasio $gimnasio){
+    public function estadistica (Gimnasio $gimnasio, $slug){
 
         $especialidades = [];
         foreach ($gimnasio->especialidades as $especialidad){

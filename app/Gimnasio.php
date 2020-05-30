@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Gimnasio extends Model
 {
@@ -47,6 +48,10 @@ class Gimnasio extends Model
 
 
     //Metodos
+    public function slug(){
+        return Str::slug($this->nombre);
+    }
+
     public function getClientes(){
         return Cliente::where('gimnasio_id', $this->id)->count();
     }

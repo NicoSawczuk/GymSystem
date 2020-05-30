@@ -25,7 +25,7 @@
 
 
                 <div class="card-body">
-                    <form method="POST" action="/gimnasios/{{ Auth::user()->id }}/create">
+                    <form method="POST" action="{{route('gimnasios.store', [Auth::user()->id,Auth::user()->slug()])}}">
                         @csrf
 
                         <div class="form-group row">

@@ -44,16 +44,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gimnasios/provincia', 'GimnasioController@provincia')->name('gimnasios.provincia')
     ->middleware('can:gimnasios.create');
 
-    Route::get('/gimnasios/create/{user}', 'GimnasioController@create')->name('gimnasios.create')
+    Route::get('/gimnasios/create/{user}-{slug}', 'GimnasioController@create')->name('gimnasios.create')
     ->middleware('can:gimnasios.create');
 
-    Route::post('/gimnasios/{user}/create/', 'GimnasioController@store')->name('gimnasios.store')
+    Route::post('/gimnasios/{user}-{slug}/create/', 'GimnasioController@store')->name('gimnasios.store')
     ->middleware('can:gimnasios.create');
 
-    Route::get('/gimnasios/{gimnasio}/edit/', 'GimnasioController@edit')->name('gimnasios.edit')
+    Route::get('/gimnasios/{gimnasio}-{slug}/edit/', 'GimnasioController@edit')->name('gimnasios.edit')
     ->middleware('can:gimnasios.edit');
 
-    Route::patch('/gimnasios/{gimnasio}', 'GimnasioController@update')->name('gimnasios.update')
+    Route::patch('/gimnasios/{gimnasio}-{slug}', 'GimnasioController@update')->name('gimnasios.update')
     ->middleware('can:gimnasios.edit');
 
     Route::get('/gimnasios/ocultar', 'GimnasioController@ocultar')->name('gimnasios.administrar')
@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gimnasios/mostrar', 'GimnasioController@mostrar')->name('gimnasios.administrar')
     ->middleware('can:gimnasios.create');
 
-    Route::get('/gimnasios/{gimnasio}/estadistica', 'GimnasioController@estadistica')->name('gimnasios.estadistica')
+    Route::get('/gimnasios/{gimnasio}-{slug}/estadistica', 'GimnasioController@estadistica')->name('gimnasios.estadistica')
     ->middleware('can:gimnasios.index');
 
     Route::get('/gimnasios/actualizar_chart', 'GimnasioController@actualizarChart')->name('gimnasios.actualizarChart')
@@ -73,38 +73,38 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Home
-    Route::get('/home/{gimnasio}', 'HomeController@index')->name('home')
+    Route::get('/home/{gimnasio}-{slug}', 'HomeController@index')->name('home')
     ->middleware('can:gimnasios.index');
 
     Route::get('/home/cargar_tareas', 'HomeController@cargarTareas')->name('home.cargarTareas');
 
 
     //Especialidades
-    Route::get('/especialidades/{gimnasio}/administrar', 'EspecialidadController@index')->name('especialidades.administrar')
+    Route::get('/especialidades/{gimnasio}-{slug}/administrar', 'EspecialidadController@index')->name('especialidades.administrar')
     ->middleware('can:especialidades.index');
 
-    Route::get('/especialidades/{gimnasio}/administrar/mis_especialidades', 'EspecialidadController@indexMisEspecialidades')->name('especialidades.administrarMisEspecialidades')
+    Route::get('/especialidades/{gimnasio}-{slug}/administrar/mis_especialidades', 'EspecialidadController@indexMisEspecialidades')->name('especialidades.administrarMisEspecialidades')
     ->middleware('can:especialidades.index');
 
-    Route::get('/especialidades/{gimnasio}/create', 'EspecialidadController@create')->name('especialidades.create')
+    Route::get('/especialidades/{gimnasio}-{slug}/create', 'EspecialidadController@create')->name('especialidades.create')
     ->middleware('can:especialidades.create');
 
-    Route::post('/especialidades/create', 'EspecialidadController@store')->name('especialidades.create')
+    Route::post('/especialidades/{gimnasio}-{slug}/create/', 'EspecialidadController@store')->name('especialidades.store')
     ->middleware('can:especialidades.create');
 
     Route::post('/especialidades/ajax_create', 'EspecialidadController@storeAjax')->name('especialidades.ajax_create')
     ->middleware('can:especialidades.create');
 
-    Route::get('/especialidades/{gimnasio}/{especialidad}/edit/', 'EspecialidadController@edit')->name('especialidades.edit')
+    Route::get('/especialidades/{gimnasio}-{slug1}/{especialidad}-{slug2}/edit/', 'EspecialidadController@edit')->name('especialidades.edit')
     ->middleware('can:especialidades.edit');
 
-    Route::patch('/especialidades/{especialidad}', 'EspecialidadController@update')->name('especialidades.update')
+    Route::patch('/especialidades/{especialidad}-{slug}', 'EspecialidadController@update')->name('especialidades.update')
     ->middleware('can:especialidades.edit');
 
     Route::get('/especialidades/borrar', 'EspecialidadController@destroy')->name('especialidades.destroy')
     ->middleware('can:especialidades.destroy');
 
-    Route::get('/especialidades/{gimnasio}/estadistica', 'EspecialidadController@estadistica')->name('especialidades.estadistica')
+    Route::get('/especialidades/{gimnasio}-{slug}/estadistica', 'EspecialidadController@estadistica')->name('especialidades.estadistica')
     ->middleware('can:especialidades.index');
 
 
@@ -130,7 +130,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/clientes/create/{gimnasio}', 'ClienteController@create')->name('clientes.create')
     ->middleware('can:clientes.create');
 
-    Route::post('/clientes/create/{gimnasio}', 'ClienteController@store')->name('clientes.create')
+    Route::post('/clientes/create/{gimnasio}', 'ClienteController@store')->name('clientes.store')
     ->middleware('can:clientes.create');
 
     Route::get('/clientes/{cliente}/edit/{gimnasio}', 'ClienteController@edit')->name('clientes.edit')
