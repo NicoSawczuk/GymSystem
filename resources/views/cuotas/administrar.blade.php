@@ -1,4 +1,4 @@
-@extends('theme.admin-lte.template')
+@extends ('theme.admin-lte.template')
 
 @section('title') Administrar cuotas @endsection
 
@@ -11,87 +11,87 @@
 @section('contentHeader') Administrar cuotas @endsection
 
 <body class="container-fluid">
+  <div class="">
     <div class="">
-        <div class="">
 
 
-            <div class="card card-teal card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        Cuotas de todos los gimnasios
-                    </h3>
-                    <div class="card-tools">
-                        <div class="float-right">
-                            <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.card-header -->
-                @isset($cuotas)
-                <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
-
-                    <div class="table-responsive">
-                        <table id="tabla" class="table table-head-fixed text-nowrap table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Gimnasio</th>
-                                    <th>Fecha de pago</th>
-                                    <th>Especialidad</th>
-                                    <th>Monto</th>
-                                    <th>Monto pago</th>
-                                    <th>Deuda</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($cuotas as $cuota)
-                                <tr>
-                                    <td>{{$cuota->cliente->nombre}} {{$cuota->cliente->apellido}}</td>
-                                    <td>{{$cuota->gimnasio->nombre}}</td>
-                                    <td class="text-right">
-                                        {{ \Carbon\Carbon::create($cuota->fecha_pago)->format('d/m/Y')}}</td>
-                                    <td>
-                                        <span class="badge badge-pill badge-light">{{ $cuota->especialidad->nombre }}
-                                        </span>
-                                    </td>
-                                    <td class="text-right">
-                                        <span class="badge badge-pill badge-warning">${{$cuota->monto_cuota}}</span>
-                                    </td>
-                                    <td class="text-right">
-                                        <span class="badge badge-pill badge-success">${{$cuota->monto_pagado}}</span>
-                                    </td>
-                                    <td class="text-right">
-                                        <span class="badge badge-pill badge-danger">${{$cuota->monto_deuda}}</span>
-                                    </td>
-                                    <td>
-                                        @if ($cuota->vencido == 0)
-                                        Activa
-                                        @else
-                                        Vencida
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    @endisset
-
-
-                </div>
-                @empty($cuotas)
-                <div class="callout callout-warning">
-                    <h5>Aún no tenes cuotas</h5>
-
-                    <p>Tus clientes aún no han pagado ninguna cuota</p>
-                </div>
-                @endempty
-                <!-- /.card-body -->
+      <div class="card card-teal card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            Cuotas de todos los gimnasios
+          </h3>
+          <div class="card-tools">
+            <div class="float-right">
+              <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
             </div>
-            <!-- /.card -->
+          </div>
         </div>
+        <!-- /.card-header -->
+        @isset($cuotas)
+        <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
+
+          <div class="table-responsive">
+            <table id="tabla" class="table table-head-fixed text-nowrap table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Gimnasio</th>
+                  <th>Fecha de pago</th>
+                  <th>Especialidad</th>
+                  <th>Monto</th>
+                  <th>Monto pago</th>
+                  <th>Deuda</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($cuotas as $cuota)
+                <tr>
+                  <td>{{ $cuota-> cliente -> nombre}} {{ $cuota-> cliente -> apellido}}</td>
+                  <td>{{ $cuota-> gimnasio -> nombre}}</td>
+                  <td class="text-right">
+                    {{ \Carbon\Carbon::create($cuota->fecha_pago)->format('d/m/Y')}}</td>
+                  <td>
+                    <span class="badge badge-pill badge-light">{{ $cuota-> especialidad -> nombre}}
+                    </span>
+                  </td>
+                  <td class="text-right">
+                    <span class="badge badge-pill badge-warning">${{ $cuota-> monto_cuota}}</span>
+                  </td>
+                  <td class="text-right">
+                    <span class="badge badge-pill badge-success">${{ $cuota-> monto_pagado}}</span>
+                  </td>
+                  <td class="text-right">
+                    <span class="badge badge-pill badge-danger">${{ $cuota-> monto_deuda}}</span>
+                  </td>
+                  <td>
+                    @if ($cuota->vencido == 0)
+                    Activa
+                    @else
+                    Vencida
+                    @endif
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          @endisset
+
+
+        </div>
+        @empty($cuotas)
+        <div class="callout callout-warning">
+          <h5>Aún no tenes cuotas</h5>
+
+          <p>Tus clientes aún no han pagado ninguna cuota</p>
+        </div>
+        @endempty
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
     </div>
+  </div>
 
 
 
@@ -99,19 +99,21 @@
 
 
 
-    <script>
-        $(function () {
+  @if (isset($gimnasio->reporte_configuracion))
+  <script>
+    $(function () {
       $("#tabla").DataTable({
         "responsive": true,
         "autoWidth": false,
         "lengthChange": true,
         "ordering": true,
         buttons: [
-            'copy', 'csv', 'excel',
-            {extend: 'pdfHtml5',
+          'copy', 'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
             className: 'btn btn-secondary buttons-pdf buttons-html5',
             text: 'PDF',
-            filename: 'reporte_pdf',
+            filename: 'cuotas_gimnasios_pdf',
             orientation: 'portrait', //landscape
             pageSize: 'A4', //A3 , A5 , A6 , legal , letter
 
@@ -128,13 +130,13 @@
 
 
               //#region aca esta el logo en base64 (expandir, es muy largo xd)
-              var logo = '';
+              var logo= '{{$gimnasio->getImagenReporte64()}}';
               //#endregion
 
 
               // Ahora establecemos los margenes: [left,top,right,bottom] o [horizontal,vertical]
               // si ponemos solo un numero se establece ese mismo para todos los margenes
-              doc.pageMargins = [65, 150, 25, 55];
+              doc.pageMargins = [60, 135, 20, 50];
 
               // Tamaño de fuente de todo el documento
               doc.defaultStyle.fontSize = 10;
@@ -147,40 +149,57 @@
 
               // Para personalizar el encabezado:
               // Creamos un encabezado con 3 columnas
-              // A la izquierda: Logo
+              // A la izquierdalogo
               // En el medio: Titulo
               // A la derecha: algo xd
 
               //El titulo lo saco de un input oculto para poder usar esta misma configuracion para reportes distintos, entonces cambia el titulo segun el reporte.
-              var titulo = 'titulo';
-              var autor_reporte = 'autor_reporte';
-              var filtros = 'filtros';
+              var titulo = 'Listado de cuotas de todos los gimnasios de '+'{{$gimnasio->user->name}} {{$gimnasio->user->apellido}}';
+              var autor_reporte = '{{$gimnasio->user->name}} {{$gimnasio->user->apellido}}';
+              var filtros = '';
 
-              var titulo_header = "titulo_header"
-              var direccion_header = "direccion_header"
-              var contacto_header = "contacto_header"
- 
+              var titulo_header = "{{$gimnasio->reporte_configuracion->titulo}}"
+              var direccion_header = "{{$gimnasio->reporte_configuracion->calle}} {{$gimnasio->reporte_configuracion->altura}}, {{$gimnasio->reporte_configuracion->ciudad}} {{$gimnasio->reporte_configuracion->provincia}} {{$gimnasio->reporte_configuracion->pais}} "
+              var contacto_header = "Teléfono: {{$gimnasio->reporte_configuracion->telefono}}"
+
               doc['header'] = (function () {
                 return {
                   columns: [
                     {
-                      text: 'Logo',
-                      width: 75
+                      image: logo,
+                      width: 70,
+                      margin: [-10, -10, 10, 0]
                     },
-
+                    // {
+                    //   alignment: 'left',
+                    //   fontSize: 10,
+                    //   text: [
+                    //     { text: titulo + " \n", bold: true, fontSize: 12 },
+                    //     { text: 'Filtros' + "\n", fontSize: 10 },
+                    //     { text: filtros + "\n" },
+                    //   ],
+                    //   width: 100,
+                    //   margin: [-30, 100, 0, 0],
+                    //   alignment: 'left'
+                    // },
                     {
                       alignment: 'center',
-                      text: [{ text: titulo_header+" \n" , bold: true, fontSize: 16 }, { text: direccion_header+" \n"},
-                      {text:contacto_header+ "\n \n \n" },
-                      { text: '' + filtros, bold: true, fontSize: 11, alignment: 'left' }],
+                      text: [
+                        { text: titulo_header + " \n", bold: true, fontSize: 16 }, 
+                        { text: direccion_header + " \n" },
+                        { text: contacto_header + "\n \n \n \n" },
+                        { text: titulo + " \n", bold: true, fontSize: 12, alignment: 'left' },
+                        { text: 'Filtros' + "\n", fontSize: 10, alignment: 'left'},
+                        { text: filtros, alignment: 'left'},
+                      ],
                       fontSize: 10,
-                      margin: [-30, 40, 0, 0]
+                      margin: [-28, 10, 0, 0]
                     },
                     {
                       alignment: 'right',
                       fontSize: 10,
                       text: ['Fecha: ', { text: jsDate.toString() }, { text: '\n Autor: ' + autor_reporte, bold: true, fontSize: 11 }],
-                      width: 90,
+                      width: 75,
                       margin: [0, 10, 0, 0],
                       alignment: 'left'
                     }
@@ -204,7 +223,20 @@
               //doc.content[0].table.widths = colCount;
 
               //Es equivalente a: 
-              doc.content[0].table.widths = ['auto','auto','auto','auto','auto','auto','auto','auto'];
+              doc.content[0].table.widths = [90, 70, 60, 'auto', 'auto', 'auto', 'auto', 'auto'];
+
+              //Obtenemos la cantidad de filas y le damos la orientacion (izquierda, centro, derecha) que queremos
+              var rowCount = document.getElementById("tabla").rows.length;
+              for (i = 1; i < rowCount; i++) {
+                  doc.content[0].table.body[i][0].alignment = 'left';
+                  doc.content[0].table.body[i][1].alignment = 'left';
+                  doc.content[0].table.body[i][2].alignment = 'right';
+                  doc.content[0].table.body[i][3].alignment = 'left';
+                  doc.content[0].table.body[i][4].alignment = 'right';
+                  doc.content[0].table.body[i][5].alignment = 'right';
+                  doc.content[0].table.body[i][6].alignment = 'right';
+                  doc.content[0].table.body[i][7].alignment = 'left';
+                };
 
 
               // Para personalizar el pie de pagina:
@@ -230,12 +262,14 @@
               // To use predefined layouts uncomment the line below and comment the custom lines below
               // doc.content[0].layout = 'lightHorizontalLines'; // noBorders , headerLineOnly
               var objLayout = {};
-              objLayout['hLineWidth'] = function (i) { return .5; };
-              objLayout['vLineWidth'] = function (i) { return .5; };
-              objLayout['hLineColor'] = function (i) { return '#fff'; };
-              objLayout['vLineColor'] = function (i) { return '#fff'; };
+              objLayout['hLineWidth'] = function (i) { return .7; };
+              objLayout['vLineWidth'] = function (i) { return .7; };
+              objLayout['hLineColor'] = function (i) { return '#cdcdcd'; };
+              objLayout['vLineColor'] = function (i) { return '#cdcdcd'; };
               objLayout['paddingLeft'] = function (i) { return 4; };
               objLayout['paddingRight'] = function (i) { return 4; };
+              objLayout['paddingTop'] = function (i) { return 6; };
+              objLayout['paddingBottom'] = function (i) { return 6; };
               doc.content[0].layout = objLayout;
             },
             exportOptions: {
@@ -245,48 +279,88 @@
         ],
         dom: 'lrfBtip',
         language: {
-                "sProcessing":     "Procesando...",
-                "sLengthMenu":     "Ver _MENU_",
-                "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Todavía no se registraron pagos",
-                "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",
-                "sInfoEmpty":      "Mostrando  del 0 al 0 de de 0 ",
-                "sInfoFiltered":   "(filtrado de _MAX_ registros)",
-                "sInfoPostFix":    "",
-                "sSearch":         "Buscar:",
-                "sUrl":            "",
-                "sInfoThousands":  ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst":    "Primero",
-                    "sLast":     "Último",
-                    "sNext":     "Sig",
-                    "sPrevious": "Ant"
-                },
-                "oAria": {
-                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
-                }
-    }
+          "sProcessing": "Procesando...",
+          "sLengthMenu": "Ver _MENU_",
+          "sZeroRecords": "No se encontraron resultados",
+          "sEmptyTable": "Todavía no se registraron pagos",
+          "sInfo": "Mostrando del _START_ al _END_ de _TOTAL_",
+          "sInfoEmpty": "Mostrando  del 0 al 0 de de 0 ",
+          "sInfoFiltered": "(filtrado de _MAX_ registros)",
+          "sInfoPostFix": "",
+          "sSearch": "Buscar:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Cargando...",
+          "oPaginate": {
+            "sFirst": "Primero",
+            "sLast": "Último",
+            "sNext": "Sig",
+            "sPrevious": "Ant"
+          },
+          "oAria": {
+            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+          },
+          "buttons": {
+            "copy": "Copiar",
+            "colvis": "Visibilidad"
+          }
+        }
       });
 
-      $('#tabla_length').css({
-          'position': 'absolute'
-      });
+$('#tabla_length').css({
+      'position': 'absolute'
+});
 
-      $('.dt-buttons').css({
-        'position': "relative",
-        'display': "-ms-inline-flexbox",
-        'display': "block",
-        'vertical-align': "middle",
-        'text-align':" right"
+$('.dt-buttons').css({
+      'position': "relative",
+  'display': "-ms-inline-flexbox",
+  'display': "block",
+  'vertical-align': "middle",
+  'text-align':" right"
+});
+});
+  </script>
+  @else
+  <script>
+    $(function () {
+      $("#tabla").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+        "lengthChange": true,
+        "ordering": true,
+        language: {
+          "sProcessing": "Procesando...",
+          "sLengthMenu": "Ver _MENU_",
+          "sZeroRecords": "No se encontraron resultados",
+          "sEmptyTable": "Todavia no tiene clientes en su gimnasio, por agregue uno",
+          "sInfo": "Mostrando del _START_ al _END_ de _TOTAL_",
+          "sInfoEmpty": "Mostrando  del 0 al 0 de de 0 ",
+          "sInfoFiltered": "(filtrado de _MAX_ registros)",
+          "sInfoPostFix": "",
+          "sSearch": "Buscar:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Cargando...",
+          "oPaginate": {
+            "sFirst": "Primero",
+            "sLast": "Último",
+            "sNext": "Sig",
+            "sPrevious": "Ant"
+          },
+          "oAria": {
+            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+          },
+          "buttons": {
+            "copy": "Copiar",
+            "colvis": "Visibilidad"
+          }
+        }
       });
     });
-    </script>
+  </script>
+  @endif
 
 
 </body>

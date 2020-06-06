@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Faker\Provider\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Input\Input;
 
 class Gimnasio extends Model
 {
@@ -95,5 +97,10 @@ class Gimnasio extends Model
         );
 
         return collect($data);
+    }
+
+    public function getImagenReporte64(){
+        $image = base64_encode(file_get_contents('storage/'.$this->reporte_configuracion->logo));
+        return 'data:image/png;base64,'.$image;
     }
 }
