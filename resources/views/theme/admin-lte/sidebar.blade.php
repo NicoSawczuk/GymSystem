@@ -27,9 +27,11 @@
         </div>
         <div class="info">
           <a href="#" class="d-block">
+            @auth
             @section('usuario')
             {{ Auth::user()->name }} {{ Auth::user()->apellido }}
             @show
+            @endauth
           </a>
         </div>
       </div>
