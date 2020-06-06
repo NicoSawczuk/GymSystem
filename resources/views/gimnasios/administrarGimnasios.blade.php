@@ -11,7 +11,7 @@
             <div class="card card-teal card-outline">
                 <div class="card-header">
                   <h3 class="card-title">
-                    <a href="javascript:history.back()"><i class="fas fa-angle-left fa-lg" style="color: #495057;"></i></a>
+                    <i class="far fa-list-alt"></i>
                     Mis gimnasios
                   </h3>
       
@@ -61,7 +61,7 @@
                             @else
                             <a title="Cambiar estado a activo" onclick="activo('{{ $gimnasio->nombre }}','{{ $gimnasio->id }}')" href="#"><i class="far fa-eye-slash fa-lg"></i></a>
                             @endif
-                            <a title="Ingresar con gimnasio" href="{{route('home', [$gimnasio->id,$gimnasio->slug()])}}"><i class="far fa-arrow-circle-right fa-lg"></i></a>
+                            <a title="Ingresar con {{$gimnasio->nombre}}" href="{{route('home', [$gimnasio->id,$gimnasio->slug()])}}"><i class="far fa-arrow-circle-right fa-lg"></i></a>
                         </td>
 
                       </tr>
