@@ -258,7 +258,7 @@
             $('#titulo').val(titulo);
 
             var calle = "{{$gimnasio->reporte_configuracion->calle}}";
-            $('#calle2').html(calle+'&nbsp;');
+            $('#calle2').html('&nbsp;'+calle+'&nbsp;');
             $('#calle').val(calle)
 
             var altura = "{{$gimnasio->reporte_configuracion->altura}}";
@@ -266,7 +266,7 @@
             $('#altura').val(altura)
 
             var ciudad = "{{$gimnasio->reporte_configuracion->ciudad}}";
-            $('#ciudad2').html(' '+ciudad+'&nbsp;');
+            $('#ciudad2').html(', '+ciudad+'&nbsp;');
             $('#ciudad').val(ciudad)
 
             var provincia = "{{$gimnasio->reporte_configuracion->provincia}}";
@@ -274,11 +274,11 @@
             $('#provincia').val(provincia)
 
             var telefono = "{{$gimnasio->reporte_configuracion->telefono}}";
-            $('#telefono2').html(''+telefono);
+            $('#telefono2').html('Telefono: '+telefono);
             $('#telefono').val(telefono)
 
             var pais = "{{$gimnasio->reporte_configuracion->pais}}";
-            $('#pais2').html(''+pais);
+            $('#pais2').html('&nbsp;'+pais);
             $('#pais').val(pais)
 
             var img = new Image();
