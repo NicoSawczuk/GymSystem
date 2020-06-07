@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Cuota extends Model
 {
@@ -27,5 +28,10 @@ class Cuota extends Model
     public function inscripcion()
     {
         return $this->belongsTo(Inscripcion::class, 'inscripcion_id');
+    }
+
+    //Metodos
+    public function slug(){
+        return Str::slug($this->nombre);
     }
 }

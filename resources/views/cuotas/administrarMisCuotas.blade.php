@@ -11,89 +11,86 @@
 @section('contentHeader') Administrar cuotas @endsection
 
 <body class="container-fluid">
+  <div class="">
     <div class="">
-        <div class="">
 
 
-            <div class="card card-teal card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        Cuotas de {{$gimnasio->nombre}}
-                    </h3>
-                    <div class="card-tools">
-                        <div class="float-right">
-                            <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.card-header -->
-                @isset($cuotas)
-                <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
-
-                    <div class="table-responsive">
-                        <table id="tabla" class="table table-head-fixed text-nowrap table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Fecha de pago</th>
-                                    <th>Especialidad</th>
-                                    <th>Monto</th>
-                                    <th>Monto pago</th>
-                                    <th>Deuda</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($cuotas as $cuota)
-                                <tr>
-                                    <td>{{$cuota->cliente->nombre}} {{$cuota->cliente->apellido}}</td>
-                                    <td class="text-right">
-                                        {{ \Carbon\Carbon::create($cuota->fecha_pago)->format('d/m/Y')}}</td>
-                                    <td>
-                                        <span class="badge badge-pill badge-light">{{ $cuota->especialidad->nombre }}
-                                        </span>
-                                    </td>
-                                    <td class="text-right">
-                                        <span class="badge badge-pill badge-warning">${{$cuota->monto_cuota}}</span>
-                                    </td>
-                                    <td class="text-right">
-                                        <span class="badge badge-pill badge-success">${{$cuota->monto_pagado}}</span>
-                                    </td>
-                                    <td class="text-right">
-                                        <span class="badge badge-pill badge-danger">${{$cuota->monto_deuda}}</span>
-                                    </td>
-                                    <td>
-                                        @if ($cuota->vencido == 0)
-                                        Activa
-                                        @else
-                                        Vencida
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    @endisset
-
-
-                </div>
-                @empty($cuotas)
-                <div class="callout callout-warning">
-                    <h5>Aún no tenes cuotas</h5>
-
-                    <p>Tus clientes aún no han pagado ninguna cuota</p>
-                </div>
-                @endempty
-                <!-- /.card-body -->
+      <div class="card card-teal card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            Cuotas de {{$gimnasio->nombre}}
+          </h3>
+          <div class="card-tools">
+            <div class="float-right">
+              <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
             </div>
-            <!-- /.card -->
+          </div>
         </div>
-    </div>
+        <!-- /.card-header -->
+        @if (count($cuotas)>0)
+        <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
 
-    @if (isset($gimnasio->reporte_configuracion))
-    <script>
-      $(function () {
+          <div class="table-responsive">
+            <table id="tabla" class="table table-head-fixed text-nowrap table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Fecha de pago</th>
+                  <th>Especialidad</th>
+                  <th>Monto</th>
+                  <th>Monto pago</th>
+                  <th>Deuda</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($cuotas as $cuota)
+                <tr>
+                  <td>{{$cuota->cliente->nombre}} {{$cuota->cliente->apellido}}</td>
+                  <td class="text-right">
+                    {{ \Carbon\Carbon::create($cuota->fecha_pago)->format('d/m/Y')}}</td>
+                  <td>
+                    <span class="badge badge-pill badge-light">{{ $cuota->especialidad->nombre }}
+                    </span>
+                  </td>
+                  <td class="text-right">
+                    <span class="badge badge-pill badge-warning">${{$cuota->monto_cuota}}</span>
+                  </td>
+                  <td class="text-right">
+                    <span class="badge badge-pill badge-success">${{$cuota->monto_pagado}}</span>
+                  </td>
+                  <td class="text-right">
+                    <span class="badge badge-pill badge-danger">${{$cuota->monto_deuda}}</span>
+                  </td>
+                  <td>
+                    @if ($cuota->vencido == 0)
+                    Activa
+                    @else
+                    Vencida
+                    @endif
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          @else
+        </div>
+        <div class="callout callout-warning">
+          <h5>Aún no tenes cuotas</h5>
+
+          <p>Tus clientes aún no han pagado ninguna cuota</p>
+        </div>
+        @endif
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+
+  @if (isset($gimnasio->reporte_configuracion))
+  <script>
+    $(function () {
         $("#tabla").DataTable({
           "responsive": true,
           "autoWidth": false,
@@ -312,10 +309,10 @@
     'text-align':" right"
   });
   });
-    </script>
-    @else
-    <script>
-      $(function () {
+  </script>
+  @else
+  <script>
+    $(function () {
         $("#tabla").DataTable({
           "responsive": true,
           "autoWidth": false,
@@ -351,8 +348,8 @@
           }
         });
       });
-    </script>
-    @endif
+  </script>
+  @endif
 
 </body>
 @endsection

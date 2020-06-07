@@ -161,10 +161,10 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Cuota
-    Route::get('/cuotas/{gimnasio}/administrar', 'CuotaController@index')->name('cuotas.administrar')
+    Route::get('/cuotas/{gimnasio}-{slug}/administrar', 'CuotaController@index')->name('cuotas.administrar')
     ->middleware('can:cuotas.index');
 
-    Route::get('/cuotas/{gimnasio}/administrar/mis_cuotas', 'CuotaController@indexMisCuotas')->name('cuotas.administrarMisCuotas')
+    Route::get('/cuotas/{gimnasio}-{slug}/administrar/mis_cuotas', 'CuotaController@indexMisCuotas')->name('cuotas.administrarMisCuotas')
     ->middleware('can:cuotas.index');
 
     Route::post('/cuota/create/{cliente}', 'CuotaController@store')->name('cuota.create')->middleware('can:cuotas.edit');

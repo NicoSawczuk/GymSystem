@@ -10,6 +10,7 @@
 
 @section('contentHeader') Administrar especialidades @endsection
 
+
 <body class="container-fluid">
   <div class="">
     <div class="">

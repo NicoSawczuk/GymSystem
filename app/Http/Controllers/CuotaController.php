@@ -6,6 +6,7 @@ use App\Cliente;
 use App\Cuota;
 use App\Estado;
 use App\Gimnasio;
+use App\User;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -16,20 +17,22 @@ class CuotaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Gimnasio $gimnasio)
+    public function index(Gimnasio $gimnasio, $slug)
     {
+        
         $cuotas = [];
-        $user = $gimnasio->user;
-        foreach ($user->gimnasios as $gim){
-            foreach ($gim->cuotas as $cuota){
+
+        foreach ($gimnasio->user->gimnasios as $gym){
+            foreach ($gym->cuotas as $cuota){
                 array_push($cuotas, $cuota);
             }
         }
+        
 
-        return view('cuotas/administrar', compact('cuotas', 'gimnasio'));
+        return view('cuotas/administrar', compact("cuotas", "gimnasio"));
     }
 
-    public function indexMisCuotas(Gimnasio $gimnasio)
+    public function indexMisCuotas(Gimnasio $gimnasio, $slug)
     {
         $cuotas = $gimnasio->cuotas;
         return view('cuotas/administrarMisCuotas', compact('cuotas', 'gimnasio'));

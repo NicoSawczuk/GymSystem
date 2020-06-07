@@ -118,7 +118,7 @@
             <ul class="nav nav-treeview">
               @isset($gimnasio)
               <li class="nav-item">
-                <a href="/cuotas/{{ $gimnasio->id }}/administrar" class="nav-link">
+                <a href="{{route('cuotas.administrar', [$gimnasio->id, $gimnasio->slug()])}}" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
                   <p>
                     Administración
@@ -126,7 +126,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/cuotas/{{$gimnasio->id}}/administrar/mis_cuotas" class="nav-link">
+                <a href="{{route('cuotas.administrarMisCuotas', [$gimnasio->id, $gimnasio->slug()])}}" class="nav-link">
                   <i class="fal fa-circle nav-icon"></i>
                   <p>Mis cuotas</p>
                 </a>
