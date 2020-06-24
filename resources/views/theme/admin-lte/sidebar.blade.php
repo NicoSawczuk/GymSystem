@@ -42,7 +42,8 @@
         @section('sidebarNenu')
         <li
           class="nav-item has-treeview {{ (request()->routeIs('gimnasios.*')) ? 'menu-open' : '' }} {{ (request()->routeIs('clientes.*')) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
+          <a href="#"
+            class="nav-link {{ (request()->routeIs('gimnasios.*')) ? 'active bg-teal' : '' }} {{ (request()->routeIs('clientes.*')) ? 'active bg-teal' : '' }}">
             <i class="nav-icon fal fa-dumbbell"></i>
             <p>
               Gimnasio
@@ -59,7 +60,8 @@
             @isset($gimnasio)
             <li class="nav-item">
               <a href="{{route('clientes.administrar',$gimnasio->id)}}"
-                class="nav-link {{ (request()->routeIs('clientes.*')) ? 'active' : '' }}">
+                class="nav-link {{ (request()->routeIs('clientes.*')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('clientes.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>
                   Clientes
@@ -68,8 +70,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('gimnasios.estadistica', [$gimnasio->id, $gimnasio->slug()])}}"
-                class="nav-link {{ (request()->routeIs('gimnasios.*')) ? 'active' : '' }}">
+              <a href="{{route('gimnasios.estadistica', [$gimnasio->id, $gimnasio->slug()])}}" class="nav-link"
+                style="{{ (request()->routeIs('gimnasios.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>Estadística</p>
               </a>
@@ -78,7 +80,7 @@
           </ul>
         </li>
         <li class="nav-item has-treeview {{ (request()->routeIs('especialidades.*')) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
+          <a href="#" class="nav-link {{ (request()->routeIs('especialidades.*')) ? 'active bg-teal' : '' }}">
             <i class="nav-icon fad fa-stream"></i>
             <p>
               Especialidades
@@ -89,14 +91,16 @@
             @isset($gimnasio)
             <li class="nav-item">
               <a href="{{route('especialidades.administrar',[$gimnasio->id, $gimnasio->slug()])}}"
-                class="nav-link  {{ (request()->routeIs('especialidades.administrar')) ? 'active' : '' }}">
+                class="nav-link  {{ (request()->routeIs('especialidades.administrar')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('especialidades.administrar')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>Administración</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{route('especialidades.administrarMisEspecialidades',[$gimnasio->id, $gimnasio->slug()])}}"
-                class="nav-link  {{ (request()->routeIs('especialidades.administrarMisEspecialidades')) ? 'active' : '' }}">
+                class="nav-link  {{ (request()->routeIs('especialidades.administrarMisEspecialidades')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('especialidades.administrarMisEspecialidades')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>Mis especialidades</p>
               </a>
@@ -105,7 +109,8 @@
             @isset($gimnasio)
             <li class="nav-item">
               <a href="{{route('especialidades.estadistica', [$gimnasio->id, $gimnasio->slug()])}}"
-                class="nav-link  {{ (request()->routeIs('especialidades.estadistica')) ? 'active' : '' }}">
+                class="nav-link  {{ (request()->routeIs('especialidades.estadistica')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('especialidades.estadistica.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>Estadística</p>
               </a>
@@ -114,7 +119,7 @@
           </ul>
         </li>
         <li class="nav-item has-treeview {{ (request()->routeIs('cuotas.*')) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
+          <a href="#" class="nav-link {{ (request()->routeIs('cuotas.*')) ? 'active bg-teal' : '' }}">
             <i class="nav-icon fal fa-cash-register"></i>
             <p>
               Cuotas
@@ -125,7 +130,8 @@
             @isset($gimnasio)
             <li class="nav-item">
               <a href="{{route('cuotas.administrar', [$gimnasio->id, $gimnasio->slug()])}}"
-                class="nav-link {{ (request()->routeIs('cuotas.administrar')) ? 'active' : '' }}">
+                class="nav-link {{ (request()->routeIs('cuotas.administrar')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('cuotas.administrar')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>
                   Administración
@@ -134,7 +140,8 @@
             </li>
             <li class="nav-item">
               <a href="{{route('cuotas.administrarMisCuotas', [$gimnasio->id, $gimnasio->slug()])}}"
-                class="nav-link {{ (request()->routeIs('cuotas.administrarMisCuotas')) ? 'active' : '' }}">
+                class="nav-link {{ (request()->routeIs('cuotas.administrarMisCuotas')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('cuotas.administrarMisCuotas')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>Mis cuotas</p>
               </a>
@@ -144,7 +151,8 @@
         </li>
         <li
           class="nav-item has-treeview {{ (request()->routeIs('email_configuracion.*')) ? 'menu-open' : '' }} {{ (request()->routeIs('reporte_configuracion.*')) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
+          <a href="#"
+            class="nav-link {{ (request()->routeIs('email_configuracion.*')) ? 'active bg-teal' : '' }} {{ (request()->routeIs('reporte_configuracion.*')) ? 'active bg-teal' : '' }}">
             <i class="nav-icon fad fa-cog"></i>
             <p>
               Configuración
@@ -155,14 +163,16 @@
             @isset($gimnasio)
             <li class="nav-item">
               <a href="/email_configuracion/{{ $gimnasio->id }}/edit"
-                class="nav-link {{ (request()->routeIs('email_configuracion.edit')) ? 'active' : '' }}">
+                class="nav-link {{ (request()->routeIs('email_configuracion.edit')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('email_configuracion.edit')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>Correos automáticos</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="/reporte_configuracion/{{ $gimnasio->id }}/edit"
-                class="nav-link {{ (request()->routeIs('reporte_configuracion.edit')) ? 'active' : '' }}">
+                class="nav-link {{ (request()->routeIs('reporte_configuracion.edit')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('reporte_configuracion.edit')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
                 <p>Reportes</p>
               </a>
@@ -173,7 +183,7 @@
         @can('users.index')
         @isset($gimnasio)
         <li class="nav-item has-treeview {{ (request()->routeIs('usuarios.*')) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
+          <a href="#" class="nav-link {{ (request()->routeIs('usuarios.*')) ? 'active bg-teal' : '' }}">
             <i class="nav-icon fad fa-tools"></i>
             <p>
               Panel de administrador
@@ -182,7 +192,9 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/usuarios/administrar/{{$gimnasio->id}}" class="nav-link {{ (request()->routeIs('usuarios.administrar')) ? 'active' : '' }}">
+              <a href="/usuarios/administrar/{{$gimnasio->id}}"
+                class="nav-link {{ (request()->routeIs('usuarios.administrar')) ? 'active' : '' }}"
+                style="{{ (request()->routeIs('usuarios.administrar')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-users-cog nav-icon"></i>
                 <p>Usuarios, roles y permisos</p>
               </a>
