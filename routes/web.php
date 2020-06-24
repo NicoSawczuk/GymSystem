@@ -56,10 +56,10 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/gimnasios/{gimnasio}-{slug}', 'GimnasioController@update')->name('gimnasios.update')
     ->middleware('can:gimnasios.edit');
 
-    Route::get('/gimnasios/ocultar', 'GimnasioController@ocultar')->name('gimnasios.administrar')
+    Route::get('/gimnasios/ocultar', 'GimnasioController@ocultar')->name('gimnasios.ocultar')
     ->middleware('can:gimnasios.create');
 
-    Route::get('/gimnasios/mostrar', 'GimnasioController@mostrar')->name('gimnasios.administrar')
+    Route::get('/gimnasios/mostrar', 'GimnasioController@mostrar')->name('gimnasios.mostrar')
     ->middleware('can:gimnasios.create');
 
     Route::get('/gimnasios/{gimnasio}-{slug}/estadistica', 'GimnasioController@estadistica')->name('gimnasios.estadistica')

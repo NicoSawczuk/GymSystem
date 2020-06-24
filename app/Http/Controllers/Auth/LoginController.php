@@ -40,7 +40,12 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->can('gimnasios.index')){
-            return redirect('/gimnasios/administrar');
+            if ($user->gimnasios->count() === 1){
+                $gym = $user->gimnasios[0];
+                return redirect(route('home', [$gym->id, $gym->slug()]));
+            }else{
+                return redirect(route('gimnasios.administrar'));
+            }
         }else{
             return redirect('usuarios/registro_completo');
         }
