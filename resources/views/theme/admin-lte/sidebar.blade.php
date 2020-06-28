@@ -59,7 +59,7 @@
             </li>
             @isset($gimnasio)
             <li class="nav-item">
-              <a href="{{route('clientes.administrar',$gimnasio->id)}}"
+              <a href="{{route('clientes.administrar',[$gimnasio->id,$gimnasio->slug()])}}"
                 class="nav-link {{ (request()->routeIs('clientes.*')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('clientes.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>

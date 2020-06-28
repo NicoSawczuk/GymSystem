@@ -19,14 +19,14 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Gimnasio $gimnasio)
+    public function index(Gimnasio $gimnasio, $slug)
     {
         $clientes = Cliente::where('gimnasio_id', $gimnasio->id)->get();
 
         return view('/clientes/administrar', compact('clientes', 'gimnasio'));
     }
 
-    public function indexEnDeuda(Gimnasio $gimnasio)
+    public function indexEnDeuda(Gimnasio $gimnasio, $slug)
     {
         $clientes = Cliente::where([
                                     'gimnasio_id'=> $gimnasio->id,
@@ -36,7 +36,7 @@ class ClienteController extends Controller
         return view('/clientes/administrarEnDeuda', compact('clientes', 'gimnasio'));
     }
 
-    public function indexEnRegla(Gimnasio $gimnasio)
+    public function indexEnRegla(Gimnasio $gimnasio, $slug)
     {
         $clientes = Cliente::where([
                                     'gimnasio_id'=> $gimnasio->id,
@@ -46,7 +46,7 @@ class ClienteController extends Controller
         return view('/clientes/administrarEnRegla', compact('clientes', 'gimnasio'));
     }
 
-    public function indexNoInscripto(Gimnasio $gimnasio)
+    public function indexNoInscripto(Gimnasio $gimnasio, $slug)
     {
         $clientes = Cliente::where([
                                     'gimnasio_id'=> $gimnasio->id,
@@ -56,7 +56,7 @@ class ClienteController extends Controller
         return view('/clientes/administrarNoInscripto', compact('clientes', 'gimnasio'));
     }
 
-    public function indexInscripto(Gimnasio $gimnasio)
+    public function indexInscripto(Gimnasio $gimnasio, $slug)
     {
         $clientes = Cliente::where([
                                     'gimnasio_id'=> $gimnasio->id,
@@ -71,7 +71,7 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Gimnasio $gimnasio)
+    public function create(Gimnasio $gimnasio, $slug)
     {
         $especialidades = $gimnasio->especialidades();
         return view('/clientes/create', compact('especialidades', 'gimnasio'));
@@ -83,7 +83,7 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Gimnasio $gimnasio)
+    public function store(Request $request, Gimnasio $gimnasio, $slug)
     {
         $data = request()->validate([
             'nombre' => 'required',
@@ -119,7 +119,7 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        return redirect('clientes/administrar/'.$gimnasio->id)->with('success','Cliente '.$cliente->nombre.' '.$cliente->apellido.' creado con éxito');
+        return redirect(route('clientes.administrar',[$gimnasio->id,$slug]))->with('success','Cliente '.$cliente->nombre.' '.$cliente->apellido.' creado con éxito');
     }
 
     /**
@@ -139,7 +139,7 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente, Gimnasio $gimnasio)
+    public function edit(Cliente $cliente, $slug1, Gimnasio $gimnasio, $slug2)
     {
         return view('/clientes/edit', compact('gimnasio', 'cliente'));
     }
@@ -151,7 +151,7 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, Cliente $cliente, $slug)
     {
         $data = request()->validate([
             'nombre' => 'required',
@@ -167,7 +167,7 @@ class ClienteController extends Controller
         ]);
 
         $cliente->update($data);
-        return redirect('clientes/administrar/'.$cliente->gimnasio->id)->with('success','Información del cliente '.$cliente->nombre.' '.$cliente->apellido.' modificada con éxito');
+        return redirect(route('clientes.administrar',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Información del cliente '.$cliente->nombre.' '.$cliente->apellido.' modificada con éxito');
     }
 
     /**
@@ -187,17 +187,17 @@ class ClienteController extends Controller
         return $monto;
     }
 
-    public function perfil(Cliente $cliente){
+    public function perfil(Cliente $cliente, $slug){
         $gimnasio = $cliente->gimnasio;
         return view('clientes/perfil', compact('cliente', 'gimnasio'));
     }
 
-    public function email(Cliente $cliente){
+    public function email(Cliente $cliente, $slug){
         $gimnasio = $cliente->gimnasio;
         return view('clientes/enviarEmail', compact('cliente', 'gimnasio'));
     }
 
-    public function sendEmail(Request $request, Cliente $cliente){
+    public function sendEmail(Request $request, Cliente $cliente, $slug){
         $gimnasio = $cliente->gimnasio;
 
         $data = request()->validate([
@@ -217,7 +217,7 @@ class ClienteController extends Controller
 
         Mail::to($cliente->email)->send(new EnviarMailCliente($dataMail));
 
-        return redirect('/clientes/'.$cliente->id.'/perfil')->with('success', 'Correo electrónico enviado con éxito');
+        return redirect(route('clientes.perfil',[$cliente->id,$slug]))->with('success', 'Correo electrónico enviado con éxito');
     }
 
     public function getCliente(Request $request){

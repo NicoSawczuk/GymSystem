@@ -8,89 +8,95 @@
 
 @section('content')
 
-    
+
 @section('contentHeader') Administrar clientes en regla @endsection
+
 <body class="container-fluid">
+  <div class="">
     <div class="">
-        <div class="">
 
 
-            <div class="card card-teal card-outline">
-                <div class="card-header">
-                  <h3 class="card-title">
-                  Clientes de <b>{{$gimnasio->nombre}}</b>
-                    </h3>
-      
-                  <div class="card-tools">
-                    <div class="float-right">
-                        <a title="Agregar un cliente" class="fal fa-plus-circle fa-lg" href="/clientes/create/{{ $gimnasio->id }}"></a>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                @isset($clientes)
-                <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
-                
-                  <table id="tabla"class="table table-head-fixed text-nowrap dataTable dtr-inline table-striped">
-                    <thead>
-                      <tr>
-                        <th>Nombre, Apellido</th>
-                        <th>Edad</th>
-                        <th>Especialidad</th>
-                        <th>Estado</th>
-                        <th class="text-right">Opciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($clientes as $cliente)
-                      <tr>
-                        <td >{{ $cliente->nombre }} {{ $cliente->apellido }}</td>
-                        <td class="text-right">
-                            {{ $cliente->getEdad() }}
-                        </td>
-                        <td>
-                          @isset($cliente->especialidad)
-                          <span class="badge badge-pill badge-light">{{ $cliente->especialidad->nombre }}</span>
-                          @else
-                          <span class="badge badge-pill bg-pink">Sin especialidad</span>
-                          @endisset
-                        </td>
-                        <td>
-                            <span class="badge badge-pill" style="background-color: {{$cliente->estado->color}}; color: white;">{{ $cliente->estado->nombre }}</span>
-                        </td>
-                        <td class="text-right" style="">
+      <div class="card card-teal card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            Clientes de <b>{{$gimnasio->nombre}}</b>
+          </h3>
 
-                            <a title="Editar cliente" href="/clientes/{{ $cliente->id }}/edit/{{ $gimnasio->id }}"><i class="far fa-pencil-alt fa-lg"></i></a>
-                            
-                            <a title="Ver cliente" href="/clientes/{{ $cliente->id }}/perfil"><i class="far fa-search-plus fa-lg"></i></a>
-                        </td>
-                      </tr>
-                      
-                    @endforeach
-                    </tbody>
-                  </table>
-                @endisset
-                
-                
-                </div>
-                @empty($clientes)
-                <div class="callout callout-warning">
-                  <h5>Aún no tenes inscriptos en este gimnasio</h5>
-
-                  <p>Puedes agregar uno</p>
-                </div>
-                @endempty
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
+          <div class="card-tools">
+            <div class="float-right">
+              <a title="Agregar un cliente" class="fal fa-plus-circle fa-lg"
+                href="{{route('clientes.create',[$gimnasio->id,$gimnasio->slug()])}}"></a>
+            </div>
+          </div>
         </div>
+        <!-- /.card-header -->
+        @isset($clientes)
+        <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
+
+          <table id="tabla" class="table table-head-fixed text-nowrap dataTable dtr-inline table-striped">
+            <thead>
+              <tr>
+                <th>Nombre, Apellido</th>
+                <th>Edad</th>
+                <th>Especialidad</th>
+                <th>Estado</th>
+                <th class="text-right">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($clientes as $cliente)
+              <tr>
+                <td>{{ $cliente->nombre }} {{ $cliente->apellido }}</td>
+                <td class="text-right">
+                  {{ $cliente->getEdad() }}
+                </td>
+                <td>
+                  @isset($cliente->especialidad)
+                  <span class="badge badge-pill badge-light">{{ $cliente->especialidad->nombre }}</span>
+                  @else
+                  <span class="badge badge-pill bg-pink">Sin especialidad</span>
+                  @endisset
+                </td>
+                <td>
+                  <span class="badge badge-pill"
+                    style="background-color: {{$cliente->estado->color}}; color: white;">{{ $cliente->estado->nombre }}</span>
+                </td>
+                <td class="text-right" style="">
+
+                  <a title="Editar cliente"
+                    href="{{route('clientes.edit',[$cliente->id,$cliente->slug(),$gimnasio->id,$gimnasio->slug()])}}"><i
+                      class="far fa-pencil-alt fa-lg"></i></a>
+
+                  <a title="Ver perfil" href="{{route('clientes.perfil',[$cliente->id,$cliente->slug()])}}"><i
+                      class="far fa-search-plus fa-lg"></i></a>
+                </td>
+              </tr>
+
+              @endforeach
+            </tbody>
+          </table>
+          @endisset
+
+
+        </div>
+        @empty($clientes)
+        <div class="callout callout-warning">
+          <h5>Aún no tenes inscriptos en este gimnasio</h5>
+
+          <p>Puedes agregar uno</p>
+        </div>
+        @endempty
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
     </div>
+  </div>
 
 
 
 
 
-<script>
+  <script>
     $(function () {
       $("#tabla").DataTable({
         "responsive": true,
@@ -129,8 +135,8 @@
     });
   </script>
 
-<script>
-  $(function () {
+  <script>
+    $(function () {
     //Initialize Select2 Elements
     $('.select2').select2({
         theme: 'bootstrap4'
@@ -141,20 +147,20 @@
       theme: 'bootstrap4'
     })
   });
-</script>
+  </script>
 
 
 
-@if (session('success'))
-<script>
+  @if (session('success'))
+  <script>
     Notiflix.Notify.Success(String(' {{ session('success') }} '));
-</script>
-@endif
-@if (session('error'))
-<script>
+  </script>
+  @endif
+  @if (session('error'))
+  <script>
     Notiflix.Notify.Failure(String(' {{ session('error') }} '));
-</script>
-@endif
+  </script>
+  @endif
 
 
 </body>

@@ -112,42 +112,42 @@ Route::middleware(['auth'])->group(function () {
     
 
     //Clientes
-    Route::get('/clientes/administrar/{gimnasio}', 'ClienteController@index')->name('clientes.administrar')
+    Route::get('/clientes/administrar/{gimnasio}-{slug}', 'ClienteController@index')->name('clientes.administrar')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/administrar/en_deuda/{gimnasio}', 'ClienteController@indexEnDeuda')->name('clientes.administrarEnDeuda')
+    Route::get('/clientes/administrar/en_deuda/{gimnasio}-{slug}', 'ClienteController@indexEnDeuda')->name('clientes.administrarEnDeuda')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/administrar/en_regla/{gimnasio}', 'ClienteController@indexEnRegla')->name('clientes.administrarEnRegla')
+    Route::get('/clientes/administrar/en_regla/{gimnasio}-{slug}', 'ClienteController@indexEnRegla')->name('clientes.administrarEnRegla')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/administrar/no_inscripto/{gimnasio}', 'ClienteController@indexNoInscripto')->name('clientes.administrarNoInscripto')
+    Route::get('/clientes/administrar/no_inscripto/{gimnasio}-{slug}', 'ClienteController@indexNoInscripto')->name('clientes.administrarNoInscripto')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/administrar/inscripto/{gimnasio}', 'ClienteController@indexInscripto')->name('clientes.administrarInscripto')
+    Route::get('/clientes/administrar/inscripto/{gimnasio}-{slug}', 'ClienteController@indexInscripto')->name('clientes.administrarInscripto')
     ->middleware('can:clientes.index');
 
-    Route::get('/clientes/create/{gimnasio}', 'ClienteController@create')->name('clientes.create')
+    Route::get('/clientes/create/{gimnasio}-{slug}', 'ClienteController@create')->name('clientes.create')
     ->middleware('can:clientes.create');
 
-    Route::post('/clientes/create/{gimnasio}', 'ClienteController@store')->name('clientes.store')
+    Route::post('/clientes/create/{gimnasio}-{slug}', 'ClienteController@store')->name('clientes.store')
     ->middleware('can:clientes.create');
 
-    Route::get('/clientes/{cliente}/edit/{gimnasio}', 'ClienteController@edit')->name('clientes.edit')
+    Route::get('/clientes/{cliente}-{slug1}/edit/{gimnasio}-{slug2}', 'ClienteController@edit')->name('clientes.edit')
     ->middleware('can:clientes.edit');
 
-    Route::patch('/clientes/{cliente}', 'ClienteController@update')->name('clientes.update')
+    Route::patch('/clientes/{cliente}-{slug}', 'ClienteController@update')->name('clientes.update')
     ->middleware('can:clientes.edit');
     
     Route::get('/clientes/deuda/consultar', 'ClienteController@consultarDeuda')->name('clientes.deuda');
 
-    Route::get('/clientes/{cliente}/perfil', 'ClienteController@perfil')->name('clientes.perfil')
+    Route::get('/clientes/{cliente}-{slug}/perfil', 'ClienteController@perfil')->name('clientes.perfil')
     ->middleware('can:clientes.show');
 
-    Route::get('/clientes/{cliente}/enviar_email', 'ClienteController@email')->name('clientes.email')
+    Route::get('/clientes/{cliente}-{slug}/enviar_email', 'ClienteController@email')->name('clientes.email')
     ->middleware('can:clientes.show');
 
-    Route::post('/clientes/{cliente}/enviar_email', 'ClienteController@sendEmail')->name('clientes.sendEmail')
+    Route::post('/clientes/{cliente}-{slug}/enviar_email', 'ClienteController@sendEmail')->name('clientes.sendEmail')
     ->middleware('can:clientes.show');
 
     Route::get('/clientes/obtener_cliente/ajax/', 'ClienteController@getCliente')->name('clientes.getCliente')

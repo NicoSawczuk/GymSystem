@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Cliente extends Model
 {
@@ -39,6 +40,10 @@ class Cliente extends Model
     }
 
     //Metodos
+    public function slug(){
+        return Str::slug($this->nombre.'-'.$this->apellido);
+    }
+
     public function getEdad(){
         return Carbon::parse($this->fecha_nacimiento)->age;
     }
