@@ -153,7 +153,7 @@
                 </div>
                 <div class="card-footer float">
                     <div class="float-right">
-                        <a href="/gimnasios/administrar">
+                    <a href="{{route('gimnasios.administrar')}}">
                             <button type="button" class="btn btn-default"><i class="fal fa-times"></i> Cancelar</button>
                         </a>
                         <button type="submit" class="btn btn-primary "><i class="fal fa-check"></i> Guardar</button>

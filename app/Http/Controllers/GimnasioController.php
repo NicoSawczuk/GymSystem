@@ -92,7 +92,7 @@ class GimnasioController extends Controller
         $gym->especialidades()->sync($request->especialidades);
 
 
-        return redirect('/gimnasios/administrar')->with('success','Gimnasio cargado con éxito');
+        return redirect(route('gimnasios.administrar'))->with('success','Gimnasio cargado con éxito');
 
     }
 
@@ -166,14 +166,14 @@ class GimnasioController extends Controller
         foreach ($especGim as $eG){
             if (!in_array($eG, $especReq)){
                 if (Cliente::where('especialidad_id', $eG)->exists()){
-                    return redirect('gimnasios/'.$gimnasio->id.'/edit')->with('error_espe' , 'La especialidad '.Especialidad::where('id', $eG)->value('nombre').' no se puede quitar del gimnasio porque existen clientes inscriptos a la misma');
+                    return redirect(route('gimnasios.edit',[$gimnasio->id,$gimnasio->slug()]))->with('error_espe' , 'La especialidad '.Especialidad::where('id', $eG)->value('nombre').' no se puede quitar del gimnasio porque existen clientes inscriptos a la misma');
                 }
             }
         }
         $gimnasio->especialidades()->sync($request->especialidades);
 
 
-        return redirect('/gimnasios/administrar')->with('success','Gimnasio modificado con éxito');
+        return redirect(route('gimnasios.administrar'))->with('success','Gimnasio modificado con éxito');
 
     }
 
