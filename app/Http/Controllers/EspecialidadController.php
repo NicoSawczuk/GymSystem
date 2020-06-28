@@ -61,7 +61,7 @@ class EspecialidadController extends Controller
         $espe->user_id = Auth::id();
         $espe->save();
 
-        return redirect('/especialidades/' . $gimnasio->id .'-'.$slug.'/administrar')->with('success', 'Especialidad agregada con éxito');
+        return redirect(route('especialidades.administrar',[$gimnasio->id,$gimnasio->slug()]))->with('success', 'Especialidad agregada con éxito');
     }
 
     public function storeAjax(Request $request)
@@ -140,7 +140,7 @@ class EspecialidadController extends Controller
         $especialidad->update($data);
         $gimnasio = Gimnasio::where('id', $request->gimnasio)->first();
 
-        return redirect('/especialidades/' . $gimnasio->id . '-'.$gimnasio->slug().'/administrar')->with('success', 'Especialidad modificada con éxito');
+        return redirect(route('especialidades.administrar',[$gimnasio->id,$gimnasio->slug()]))->with('success', 'Especialidad modificada con éxito');
     }
 
     /**
