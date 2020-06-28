@@ -156,7 +156,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Inscripcion
-    Route::post('/inscripcion/create/{cliente}', 'InscripcionController@store')->name('inscripcion.create')->middleware('can:inscripciones.edit');
+    Route::post('/inscripcion/create/{cliente}-{slug}', 'InscripcionController@store')->name('inscripcion.create')->middleware('can:inscripciones.edit');
 
 
 

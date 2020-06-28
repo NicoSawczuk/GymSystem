@@ -39,7 +39,7 @@ class InscripcionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Cliente $cliente)
+    public function store(Request $request, Cliente $cliente, $slug)
     {
         $data = request()->validate([
             'monto' => 'required'
@@ -81,7 +81,7 @@ class InscripcionController extends Controller
             }
 
             $cliente->save();
-            return redirect('/clientes/administrar/inscripto/'.request()->gimnasio)->with('success','Se completo la inscripción de '.$cliente->nombre.' '.$cliente->apellido);
+            return redirect(route('clientes.administrarInscripto',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Se completo la inscripción de '.$cliente->nombre.' '.$cliente->apellido);
             // $gimnasio = $cliente->gimnasio;
             // $clientes = Cliente::where([
             //     'gimnasio_id'=> $gimnasio->id,
@@ -139,7 +139,7 @@ class InscripcionController extends Controller
                 $cliente->save();
 
                 $cuota->save();
-                return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
+                return redirect(route('clientes.administrarEnDeuda',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
             }
 
             //Deuda saldada
@@ -150,7 +150,7 @@ class InscripcionController extends Controller
                 $cliente->save();
 
                 $cuota->save();
-                return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
+                return redirect(route('clientes.administrarEnRegla',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Se completo la inscripción de '.Cliente::where('id', request()->cliente)->value('nombre').' '.Cliente::where('id', request()->cliente)->value('apellido'));
             }
 
         }else{

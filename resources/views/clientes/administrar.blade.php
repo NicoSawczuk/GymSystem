@@ -241,7 +241,7 @@
                 <td class="text-right" style="">
                   @if ($cliente->estado->id === 1 or $cliente->estado->id === 5)
                   <a role="button" id="boton"
-                    onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}','{{$cliente->getDeuda()}}')"
+                    onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->slug()}}','{{$cliente->nombre}}','{{$cliente->apellido}}','{{$cliente->getDeuda()}}')"
                     title="Realizar inscripción" href="#">
                     <i class="far fa-user-check fa-lg"></i>
                   </a>
@@ -346,11 +346,11 @@
 
 
   <script>
-    function modal(gimId, clieId, clieNombre, clieApellido, clieDeuda){
+    function modal(gimId, clieId, slug, clieNombre, clieApellido, clieDeuda){
   $('#modal-default-inscripcion').modal({
         show: true
     });
-    $("#InscripcionForm").attr('action', '/inscripcion/create/'+clieId+'');
+    $("#InscripcionForm").attr('action', '/inscripcion/create/'+clieId+'-'+slug);
     $('#gimnasio').val(gimId);
     $('#cliente').val(clieId);
 
