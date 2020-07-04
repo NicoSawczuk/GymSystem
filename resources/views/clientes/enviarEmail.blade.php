@@ -55,7 +55,7 @@
       <!-- /.card-body -->
       <div class="card-footer">
         <div class="float-right">
-          <a href="/clientes/{{ $cliente->id }}/perfil">
+          <a href="{{route('clientes.perfil',[$cliente->id, $cliente->slug()])}}">
             <button type="button" class="btn btn-default"><i class="fal fa-times"></i> Cancelar</button>
           </a>
           <button type="submit" class="btn btn-primary"><i class="fal fa-envelope"></i> Enviar</button>
