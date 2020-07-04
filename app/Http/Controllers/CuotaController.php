@@ -54,7 +54,7 @@ class CuotaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Cliente $cliente)
+    public function store(Request $request, Cliente $cliente, $slug)
     {
         $data = request()->validate([
             'monto' => 'required'
@@ -97,7 +97,7 @@ class CuotaController extends Controller
 
                     $cuota->save();
                     
-                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    return redirect(route('clientes.administrarEnRegla',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
 
                 }elseif(request()->monto < ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //No saldado
@@ -111,7 +111,7 @@ class CuotaController extends Controller
 
                     $cuota->save();
                     
-                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    return redirect(route('clientes.administrarEnDeuda',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                 }
 
             }
@@ -152,7 +152,7 @@ class CuotaController extends Controller
 
                     $cuota->save();
                     
-                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    return redirect(route('clientes.administrarEnRegla',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
 
                 }elseif(request()->monto < ($cliente->especialidad->monto + $cliente->getDeuda())){
                     //No saldado
@@ -166,7 +166,7 @@ class CuotaController extends Controller
 
                     $cuota->save();
                     
-                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    return redirect(route('clientes.administrarEnDeuda',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                 }
 
             }
@@ -202,7 +202,7 @@ class CuotaController extends Controller
      * @param  \App\Cuota  $cuota
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, Cliente $cliente, $slug)
     {
         $data = request()->validate([
             'monto' => 'required'
@@ -225,7 +225,7 @@ class CuotaController extends Controller
                     $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
                     $cuota->save();
                     
-                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    return redirect(route('clientes.administrarEnRegla',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                     
                 }elseif(request()->monto < $cliente->getDeuda()){
                     //No saldado
@@ -234,7 +234,7 @@ class CuotaController extends Controller
                     $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
                     $cuota->save();
 
-                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    return redirect(route('clientes.administrarEnDeuda',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                 }
     
             }
@@ -278,7 +278,7 @@ class CuotaController extends Controller
                     $cuota->cliente_id = $cliente->id;
                     $cuota->save();
                     
-                    return redirect('/clientes/administrar/en_regla/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    return redirect(route('clientes.administrarEnRegla',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                     
                 }elseif(request()->monto < $cliente->getDeuda()){
                     //No saldado
@@ -291,7 +291,7 @@ class CuotaController extends Controller
                     $cuota->cliente_id = $cliente->id;
                     $cuota->save();
 
-                    return redirect('/clientes/administrar/en_deuda/'.request()->gimnasio)->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
+                    return redirect(route('clientes.administrarEnDeuda',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Pago de '.$cliente->nombre.' '.$cliente->apellido.' registrado con éxito');
                 }
             }
 

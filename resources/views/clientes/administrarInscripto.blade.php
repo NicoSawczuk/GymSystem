@@ -163,7 +163,7 @@
                 <td class="text-right" style="">
                   @if ($cliente->estado->id === 2)
                   <a role="button" class="" data-toggle="modal" href="#"
-                    onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->especialidad->id}}','{{$cliente->especialidad->nombre}}','{{$cliente->especialidad->monto}}','{{$cliente->getDeuda()}}','{{$cliente->nombre}}','{{$cliente->apellido}}')"
+                    onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->slug()}}','{{$cliente->especialidad->id}}','{{$cliente->especialidad->nombre}}','{{$cliente->especialidad->monto}}','{{$cliente->getDeuda()}}','{{$cliente->nombre}}','{{$cliente->apellido}}')"
                     title="Agregar pago">
                     <i class="far fa-money-check-alt fa-lg"></i>
                   </a>
@@ -370,11 +370,11 @@
 
 
   <script>
-    function modal(gimId, clieId, espeId, espeNombre, espeMonto, deuda, clieNombre, clieApellido){
+    function modal(gimId, clieId, slug, espeId, espeNombre, espeMonto, deuda, clieNombre, clieApellido){
     $('#modal-default-cuota').modal({
           show: true
       });
-      $("#CuotaForm").attr({action:'/cuota/create/'+clieId+'',method:'POST'});
+      $("#CuotaForm").attr({action:'/cuota/create/'+clieId+'-'+slug,method:'POST'});
       $('#gimnasio').val(gimId);
       $('#cliente').val(clieId);
       $('#especialidad').val(espeId);

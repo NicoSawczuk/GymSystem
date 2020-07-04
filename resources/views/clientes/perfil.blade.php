@@ -82,7 +82,7 @@
           @endif
           @if ($cliente->estado->orden == 5)
           <a href="#" role="button"
-            onclick="modalAlta('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->nombre}}','{{$cliente->apellido}}','{{$cliente->getDeuda()}}')"
+            onclick="modalAlta('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->slug()}}','{{$cliente->nombre}}','{{$cliente->apellido}}','{{$cliente->getDeuda()}}')"
             class="btn bg-olive btn-block"><b>Dar de alta</b></a>
           @endif
         </div>
@@ -524,11 +524,11 @@
   </script>
 
   <script>
-    function modalAlta(gimId, clieId, clieNombre, clieApellido, clieDeuda){
+    function modalAlta(gimId, clieId, slug, clieNombre, clieApellido, clieDeuda){
     $('#modal-default-alta').modal({
         show: true
     });
-    $("#InscripcionForm").attr('action', '/inscripcion/create/'+clieId+'');
+    $("#InscripcionForm").attr('action', '/inscripcion/create/'+clieId+'-'+slug);
     $('#gimnasio').val(gimId);
     $('#cliente').val(clieId);
 

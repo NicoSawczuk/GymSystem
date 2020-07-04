@@ -305,7 +305,8 @@
         {{-- MODAL DEUDA --}}
         <div class="modal fade" id="modal-default-pagarDeuda-{{ $cliente->id }}">
           <div class="modal-dialog">
-            <form method="POST" action="/cuota/pagar_deuda/{{ $cliente->id }}" id="DeudaForm-{{ $cliente->id }}">
+            <form method="POST" action="{{ route('cuota.update', [$cliente->id, $cliente->slug()]) }}"
+              id="DeudaForm-{{ $cliente->id }}">
               @csrf
               <input type="hidden" name="gimnasio" value="{{ $gimnasio->id }}">
               <input type="hidden" name="cliente" value="{{ $cliente->id }}">
