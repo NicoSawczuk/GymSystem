@@ -194,13 +194,13 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Usuario
-    Route::get('/usuarios/administrar/{gimnasio}', 'UserController@index')->name('usuarios.administrar')
+    Route::get('/usuarios/administrar/{gimnasio}-{slug}', 'UserController@index')->name('usuarios.administrar')
     ->middleware('can:users.index');
 
-    Route::get('/usuarios/{usuario}/{gimnasio}/edit', 'UserController@edit')->name('usuarios.edit')
+    Route::get('/usuarios/{usuario}-{slug1}/{gimnasio}-{slug2}/edit', 'UserController@edit')->name('usuarios.edit')
     ->middleware('can:users.edit');
 
-    Route::patch('/usuarios/{usuario}', 'UserController@update')->name('usuarios.update')
+    Route::patch('/usuarios/{usuario}-{slug}', 'UserController@update')->name('usuarios.update')
     ->middleware('can:users.edit');
 
     Route::get('/usuarios/registro_completo', function () {

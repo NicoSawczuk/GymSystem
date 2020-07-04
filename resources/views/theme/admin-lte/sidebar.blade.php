@@ -192,7 +192,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/usuarios/administrar/{{$gimnasio->id}}"
+              <a href="{{ route('usuarios.administrar',[$gimnasio->id,$gimnasio->slug()]) }}"
                 class="nav-link {{ (request()->routeIs('usuarios.administrar')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('usuarios.administrar')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-users-cog nav-icon"></i>

@@ -16,7 +16,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($gimnasio)
+    public function index($gimnasio, $slug)
     {
         $gimnasio = Gimnasio::where('id',$gimnasio)->first();
         $usuarios = User::all();
@@ -65,7 +65,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($usuario, $gimnasio)
+    public function edit($usuario, $slug1, $gimnasio, $slug2)
     {
 
         if ($usuario != Auth::id()){
@@ -75,7 +75,7 @@ class UserController extends Controller
             $gimnasio = Gimnasio::where('id', $gimnasio)->first();
             return view('usuarios/edit', compact('gimnasio','usuario','roles','permisos'));
         }else{
-            return redirect('usuarios/administrar/'.$gimnasio);
+            return redirect(route('usuarios.administrar',[$gimnasio->id,$gimnasio->slug()]));
         }
 
 
@@ -89,14 +89,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $usuario)
+    public function update(Request $request, $usuario, $slug)
     {
         $usuario = User::where('id', $usuario)->first();
         $usuario->permissions()->sync($request->permisos);
 
         $usuario->roles()->sync($request->roles);
 
-        return redirect('/usuarios/administrar/'.$request->gimnasio)->with('success','Roles y permisos de '.$usuario->name.' '.$usuario->apellido.' modificados con éxito');
+        $gimnasio = Gimnasio::where('id',$request->gimnasio)->first();
+
+        return redirect(route('usuarios.administrar',[$gimnasio->id,$gimnasio->slug()]))->with('success','Roles y permisos de '.$usuario->name.' '.$usuario->apellido.' modificados con éxito');
     }
 
     /**
