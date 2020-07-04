@@ -115,7 +115,8 @@
 
             <div class="card-body">
 
-                <form method="POST" action="/email_configuracion/{{ $gimnasio->id }}">
+                <form method="POST"
+                    action="{{ route('email_configuracion.update',[$gimnasio->id, $gimnasio->slug()]) }}">
                     @csrf
                     @method('PATCH')
                     <div class="form-group row">

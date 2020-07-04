@@ -162,7 +162,7 @@
           <ul class="nav nav-treeview">
             @isset($gimnasio)
             <li class="nav-item">
-              <a href="/email_configuracion/{{ $gimnasio->id }}/edit"
+              <a href="{{ route('email_configuracion.edit',[$gimnasio->id, $gimnasio->slug()]) }}"
                 class="nav-link {{ (request()->routeIs('email_configuracion.edit')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('email_configuracion.edit')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>

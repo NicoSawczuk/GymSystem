@@ -58,7 +58,7 @@ class EmailConfiguracionController extends Controller
      * @param  \App\EmailConfiguracion  $emailConfiguracion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gimnasio $gimnasio)
+    public function edit(Gimnasio $gimnasio, $slug)
     {
 
 
@@ -72,7 +72,7 @@ class EmailConfiguracionController extends Controller
      * @param  \App\EmailConfiguracion  $emailConfiguracion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Gimnasio $gimnasio)
+    public function update(Request $request, Gimnasio $gimnasio, $slug)
     {
         $data = request()->validate([
             'asunto' => 'required',
@@ -109,7 +109,7 @@ class EmailConfiguracionController extends Controller
             }
             $email->save();
         }
-        return redirect('/email_configuracion/'.$gimnasio->id.'/edit/')->with('success','Configración de email automático actualizada con éxito');
+        return redirect(route('email_configuracion.edit', [$gimnasio->id, $gimnasio->slug()]))->with('success','Configración de email automático actualizada con éxito');
     }
 
     /**

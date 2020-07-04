@@ -173,10 +173,10 @@ Route::middleware(['auth'])->group(function () {
 
 
     //EmailConfiguracion
-    Route::get('/email_configuracion/{gimnasio}/edit/', 'EmailConfiguracionController@edit')->name('email_configuracion.edit')
+    Route::get('/email_configuracion/{gimnasio}-{slug}/edit/', 'EmailConfiguracionController@edit')->name('email_configuracion.edit')
     ->middleware('can:gimnasios.edit');
 
-    Route::patch('/email_configuracion/{gimnasio}', 'EmailConfiguracionController@update')->name('email_configuracion.update')
+    Route::patch('/email_configuracion/{gimnasio}-{slug}', 'EmailConfiguracionController@update')->name('email_configuracion.update')
     ->middleware('can:gimnasios.edit');
 
 
