@@ -181,10 +181,10 @@ Route::middleware(['auth'])->group(function () {
 
 
     //ReporteConfiguracion
-    Route::get('/reporte_configuracion/{gimnasio}/edit/', 'ReporteConfiguracionController@edit')->name('reporte_configuracion.edit')
+    Route::get('/reporte_configuracion/{gimnasio}-{slug}/edit/', 'ReporteConfiguracionController@edit')->name('reporte_configuracion.edit')
     ->middleware('can:gimnasios.edit');
 
-    Route::patch('/reporte_configuracion/{gimnasio}', 'ReporteConfiguracionController@update')->name('reporte_configuracion.update')
+    Route::patch('/reporte_configuracion/{gimnasio}-{slug}', 'ReporteConfiguracionController@update')->name('reporte_configuracion.update')
     ->middleware('can:gimnasios.edit');
 
 

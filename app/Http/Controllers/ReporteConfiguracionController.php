@@ -56,7 +56,7 @@ class ReporteConfiguracionController extends Controller
      * @param  \App\ReporteConfiguracion  $reporteConfiguracion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gimnasio $gimnasio)
+    public function edit(Gimnasio $gimnasio, $slug)
     {
         return view('reporte_configuracion/configurar', compact('gimnasio'));
     }
@@ -68,7 +68,7 @@ class ReporteConfiguracionController extends Controller
      * @param  \App\ReporteConfiguracion  $reporteConfiguracion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Gimnasio $gimnasio)
+    public function update(Request $request, Gimnasio $gimnasio, $slug)
     {
         $data = request()->validate([
             'titulo'    => 'required|regex:/^[a-zA-Z\s]*$/',
@@ -124,7 +124,7 @@ class ReporteConfiguracionController extends Controller
             }
         }
 
-        return redirect('/reporte_configuracion/' . $gimnasio->id . '/edit')->with('success', 'Cabecera actualizada con éxito');
+        return redirect(route('reporte_configuracion.edit',[$gimnasio->id, $gimnasio->slug()]))->with('success', 'Cabecera actualizada con éxito');
     }
 
     /**

@@ -29,165 +29,156 @@
 
 <body class="container">
 
-            <div class="card card-teal card-outline">
-                <div class="card-header">
-                    <h3 class="card-title text-center"><i class="fal fa-edit"></i> Modificar la cabecera
-                    </h3>
-                    <div class="card-tools">
-                        <div class="float-right">
-                            <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+    <div class="card card-teal card-outline">
+        <div class="card-header">
+            <h3 class="card-title text-center"><i class="fal fa-edit"></i> Modificar la cabecera
+            </h3>
+            <div class="card-tools">
+                <div class="float-right">
+                    <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('reporte_configuracion.update',[$gimnasio->id, $gimnasio->slug()]) }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                @method('PATCH')
+                <center>
+                    <div class="card text-center" style="max-width: 80%">
+                        <div class="row">
+                            <div class="col col-md-3 text-left">
+                                <img src="" id="logo2" height="100px" width="100px" alt="Logo">
+
+                            </div>
+                            <div class="col col-md-6">
+                                <div class="row justify-content-center">
+                                    <b>
+                                        <p id="titulo2" style="font-size: 160%;"></p>
+                                    </b>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <p id="calle2"></p>
+                                    <p id="altura2"> </p>
+                                    <p id="ciudad2"></p>
+                                    <p id="provincia2"></p>
+                                    <p id="pais2"></p>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <p id="telefono2"></p>
+                                </div>
+                            </div>
+                            <div class="col col-md-3 text-right">
+                                <p id="fecha"></p>
+                                <p id="autor"></p>
+                            </div>
+                        </div>
+                    </div>
+                </center>
+                <br>
+                <div class="form-group row">
+                    <div class="form-group col-md-6">
+                        <label for="titulo" class=" col-form-label text-md-right">Titulo</label>
+                        <input id="titulo" type="text" class="form-control  @error('titulo') is-invalid @enderror"
+                            name="titulo" value="" placeholder="Ingrese el titulo" onkeyup=cambiarTitulo() required>
+                        @error('titulo')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4" style="margin-top: 6px">
+                        <label for="exampleInputFile">Logo</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="exampleInputFile" accept="image/*"
+                                    name="logo" value="">
+                                <label class="custom-file-label" for="exampleInputFile">Seleccione un
+                                    logo</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-                    <div class="card-body">
-                        <form action="/reporte_configuracion/{{$gimnasio->id}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PATCH')
-                        <center>
-                            <div class="card text-center" style="max-width: 80%">
-                                <div class="row">
-                                    <div class="col col-md-3 text-left">
-                                        <img src="" id="logo2" height="100px" width="100px" alt="Logo">
-
-                                    </div>
-                                    <div class="col col-md-6">
-                                        <div class="row justify-content-center">
-                                            <b>
-                                                <p id="titulo2" style="font-size: 160%;"></p>
-                                            </b>
-                                        </div>
-                                        <div class="row justify-content-center">
-                                            <p id="calle2"></p>
-                                            <p id="altura2"> </p>
-                                            <p id="ciudad2"></p>
-                                            <p id="provincia2"></p>
-                                            <p id="pais2"></p>
-                                        </div>
-                                        <div class="row justify-content-center">
-                                            <p id="telefono2"></p>
-                                        </div>
-                                    </div>
-                                    <div class="col col-md-3 text-right">
-                                        <p id="fecha"></p>
-                                        <p id="autor"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </center>
-                        <br>
-                        <div class="form-group row">
-                            <div class="form-group col-md-6">
-                                <label for="titulo" class=" col-form-label text-md-right">Titulo</label>
-                                <input id="titulo" type="text"
-                                    class="form-control  @error('titulo') is-invalid @enderror" name="titulo"
-                                    value="" placeholder="Ingrese el titulo" onkeyup=cambiarTitulo()
-                                    required>
-                                @error('titulo')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-4" style="margin-top: 6px">
-                                <label for="exampleInputFile">Logo</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile"
-                                            accept="image/*" name="logo" value="">
-                                        <label class="custom-file-label" for="exampleInputFile">Seleccione un
-                                            logo</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="form-group col-md-4">
-                                <label for="calle" class=" col-form-label text-md-right">Calle</label>
-                                <input id="calle" type="text" class="form-control  @error('calle') is-invalid @enderror"
-                                    name="calle" value="" placeholder="Ingrese la calle" required
-                                    onkeyup=cambiarCalle()>
-                                @error('calle')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="altura" class=" col-form-label text-md-right">Altura</label>
-                                <input id="altura" type="number"
-                                    class="form-control  @error('altura') is-invalid @enderror" name="altura"
-                                    value="" placeholder="Ingrese la altura" required
-                                    onkeyup=cambiarAltura()>
-                                @error('altura')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="ciudad" class=" col-form-label text-md-right">Ciudad</label>
-                                <input id="ciudad" type="text"
-                                    class="form-control  @error('ciudad') is-invalid @enderror" name="ciudad"
-                                    value="" placeholder="Ingrese la ciudad" required
-                                    onkeyup=cambiarCiudad()>
-                                @error('ciudad')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-
-                        </div>
-                        <div class="form-group row">
-                            <div class="form-group col-md-4">
-                                <label for="provincia" class=" col-form-label text-md-right">Provincia</label>
-                                <input id="provincia" type="text"
-                                    class="form-control  @error('provincia') is-invalid @enderror" name="provincia"
-                                    value="" placeholder="Ingrese la provincia" required
-                                    onkeyup=cambiarProvincia()>
-                                @error('provincia')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="pais" class=" col-form-label text-md-right">Pais</label>
-                                <input id="pais" type="text" class="form-control  @error('pais') is-invalid @enderror"
-                                    name="pais" value="" placeholder="Ingrese el pais" required
-                                    onkeyup=cambiarPais()>
-                                @error('pais')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="telefono" class=" col-form-label text-md-right">Teléfono</label>
-                                <input id="telefono" type="text"
-                                    class="form-control  @error('telefono') is-invalid @enderror" name="telefono"
-                                    value="" placeholder="Ingrese el telefono"
-                                    data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']"
-                                    data-mask required onkeyup=cambiarTelefono()>
-                                @error('telefono')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
+                <div class="form-group row">
+                    <div class="form-group col-md-4">
+                        <label for="calle" class=" col-form-label text-md-right">Calle</label>
+                        <input id="calle" type="text" class="form-control  @error('calle') is-invalid @enderror"
+                            name="calle" value="" placeholder="Ingrese la calle" required onkeyup=cambiarCalle()>
+                        @error('calle')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-                    <div class="card-footer float">
-                        <div class="float-right">
-                            <a href="javascript: history.go(-1)">
-                                <button type="button" class="btn btn-default"><i class="fal fa-times"></i>
-                                    Cancelar</button>
-                            </a>
-                            <button type="submit" class="btn btn-primary "><i class="fal fa-check"></i> Guardar</button>
-                        </div>
+                    <div class="form-group col-md-2">
+                        <label for="altura" class=" col-form-label text-md-right">Altura</label>
+                        <input id="altura" type="number" class="form-control  @error('altura') is-invalid @enderror"
+                            name="altura" value="" placeholder="Ingrese la altura" required onkeyup=cambiarAltura()>
+                        @error('altura')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-                </form>
+                    <div class="form-group col-md-4">
+                        <label for="ciudad" class=" col-form-label text-md-right">Ciudad</label>
+                        <input id="ciudad" type="text" class="form-control  @error('ciudad') is-invalid @enderror"
+                            name="ciudad" value="" placeholder="Ingrese la ciudad" required onkeyup=cambiarCiudad()>
+                        @error('ciudad')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="form-group col-md-4">
+                        <label for="provincia" class=" col-form-label text-md-right">Provincia</label>
+                        <input id="provincia" type="text" class="form-control  @error('provincia') is-invalid @enderror"
+                            name="provincia" value="" placeholder="Ingrese la provincia" required
+                            onkeyup=cambiarProvincia()>
+                        @error('provincia')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="pais" class=" col-form-label text-md-right">Pais</label>
+                        <input id="pais" type="text" class="form-control  @error('pais') is-invalid @enderror"
+                            name="pais" value="" placeholder="Ingrese el pais" required onkeyup=cambiarPais()>
+                        @error('pais')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="telefono" class=" col-form-label text-md-right">Teléfono</label>
+                        <input id="telefono" type="text" class="form-control  @error('telefono') is-invalid @enderror"
+                            name="telefono" value="" placeholder="Ingrese el telefono"
+                            data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask
+                            required onkeyup=cambiarTelefono()>
+                        @error('telefono')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+        </div>
+        <div class="card-footer float">
+            <div class="float-right">
+                <a href="javascript: history.go(-1)">
+                    <button type="button" class="btn btn-default"><i class="fal fa-times"></i>
+                        Cancelar</button>
+                </a>
+                <button type="submit" class="btn btn-primary "><i class="fal fa-check"></i> Guardar</button>
             </div>
+        </div>
+        </form>
+    </div>
 
 
 
@@ -288,7 +279,7 @@
 
 
     })
-    </script>    
+    </script>
     @endisset
 
     <script type="text/javascript">

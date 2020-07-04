@@ -170,7 +170,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/reporte_configuracion/{{ $gimnasio->id }}/edit"
+              <a href="{{ route('reporte_configuracion.edit',[$gimnasio->id, $gimnasio->slug()]) }}"
                 class="nav-link {{ (request()->routeIs('reporte_configuracion.edit')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('reporte_configuracion.edit')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-circle nav-icon"></i>
