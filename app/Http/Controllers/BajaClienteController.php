@@ -38,7 +38,7 @@ class BajaClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Cliente $cliente)
+    public function store(Request $request, Cliente $cliente, $slug)
     {
         if ($cliente->activo == 1){
 
@@ -64,9 +64,9 @@ class BajaClienteController extends Controller
             Inscripcion::where(['cliente_id' => $cliente->id, 'especialidad_id' => $cliente->especialidad->id, 'gimnasio_id' => $cliente->gimnasio->id])->orderBy('fecha_inscripcion', 'desc')->update(['activo' => 0]);
 
             
-            return redirect('/clientes/'.$cliente->id.'/perfil')->with('success', 'Cliente '.$cliente->nombre.' '.$cliente->apellido.' dado de baja con éxito');
+            return redirect(route('clientes.perfil',[$cliente->id, $cliente->slug()]))->with('success', 'Cliente '.$cliente->nombre.' '.$cliente->apellido.' dado de baja con éxito');
         }else{
-            return redirect('/clientes/'.$cliente->id.'/perfil')->with('error', 'No se pudo dar de baja a '.$cliente->nombre.' '.$cliente->apellido.' debido a que el mismo ya esta dado de baja');
+            return redirect(route('clientes.perfil',[$cliente->id, $cliente->slug()]))->with('error', 'No se pudo dar de baja a '.$cliente->nombre.' '.$cliente->apellido.' debido a que el mismo ya esta dado de baja');
         }
     }
 

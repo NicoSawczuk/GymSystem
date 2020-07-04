@@ -189,8 +189,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     //BajaCliente
-    Route::post('/clientes/{cliente}/baja', 'BajaClienteController@store')->name('baja.create');
-    Route::post('/clientes/{cliente}/alta', 'BajaClienteController@update')->name('baja.update');
+    Route::post('/clientes/{cliente}-{slug}/baja', 'BajaClienteController@store')->name('baja.create');
+    Route::post('/clientes/{cliente}-{slug}/alta', 'BajaClienteController@update')->name('baja.update');
 
 
     //Usuario

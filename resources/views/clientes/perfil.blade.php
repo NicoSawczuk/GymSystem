@@ -297,7 +297,7 @@
   {{-- MODAL BAJA --}}
   <div class="modal fade" id="modal-default-baja">
     <div class="modal-dialog">
-      <form method="POST" action="/clientes/{{$cliente->id}}/baja">
+      <form method="POST" action="{{ route('baja.create',[$cliente->id, $cliente->slug()]) }}">
         @csrf
         <div class="modal-content">
           <div class="modal-header">
