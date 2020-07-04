@@ -181,7 +181,6 @@
           </ul>
         </li>
         @can('users.index')
-        @isset($gimnasio)
         <li class="nav-item has-treeview {{ (request()->routeIs('usuarios.*')) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ (request()->routeIs('usuarios.*')) ? 'active bg-teal' : '' }}">
             <i class="nav-icon fad fa-tools"></i>
@@ -192,16 +191,15 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('usuarios.administrar',[$gimnasio->id,$gimnasio->slug()]) }}"
+              <a href="{{ route('usuarios.administrar') }}"
                 class="nav-link {{ (request()->routeIs('usuarios.administrar')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('usuarios.administrar')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fal fa-users-cog nav-icon"></i>
-                <p>Usuarios, roles y permisos</p>
+                <p>Administrar usuarios</p>
               </a>
             </li>
           </ul>
         </li>
-        @endisset
         @endcan
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">

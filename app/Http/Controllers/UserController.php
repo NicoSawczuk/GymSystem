@@ -16,15 +16,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($gimnasio, $slug)
+    public function index()
     {
-        $gimnasio = Gimnasio::where('id',$gimnasio)->first();
-        $usuarios = User::all();
+        $usuarios = User::all()->except(Auth::id());
         $roles = Role::all();
         $permisos = Permission::all();
 
-        return view('usuarios/administrar', compact('gimnasio','usuarios','roles','permisos'));
+        return view('usuarios/administrar', compact('usuarios','roles','permisos'));
 
+    }
+
+    public function panel(){
+        return view('usuarios.panelAdministrador');
     }
 
     /**
@@ -65,17 +68,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($usuario, $slug1, $gimnasio, $slug2)
+    public function edit($usuario, $slug1)
     {
 
         if ($usuario != Auth::id()){
             $roles = Role::all();
             $permisos = Permission::all();
             $usuario = User::where('id', $usuario)->first();
-            $gimnasio = Gimnasio::where('id', $gimnasio)->first();
-            return view('usuarios/edit', compact('gimnasio','usuario','roles','permisos'));
+            return view('usuarios/edit', compact('usuario','roles','permisos'));
         }else{
-            return redirect(route('usuarios.administrar',[$gimnasio->id,$gimnasio->slug()]));
+            return redirect(route('usuarios.administrar'));
         }
 
 
@@ -98,7 +100,7 @@ class UserController extends Controller
 
         $gimnasio = Gimnasio::where('id',$request->gimnasio)->first();
 
-        return redirect(route('usuarios.administrar',[$gimnasio->id,$gimnasio->slug()]))->with('success','Roles y permisos de '.$usuario->name.' '.$usuario->apellido.' modificados con éxito');
+        return redirect(route('usuarios.administrar'))->with('success','Roles y permisos de '.$usuario->name.' '.$usuario->apellido.' modificados con éxito');
     }
 
     /**

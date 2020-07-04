@@ -22,15 +22,15 @@ Marcar nota (Alt+D)
 
 
 - [ ] Crear panel de administrador
-- [ ] Agregar el slug a todas las urls
+- [x] Agregar el slug a todas las urls
 - [ ] Hacer pagina de resumen de cuotas y todo eso
 
 
-- [ ] Cambiar los href por href="route(...)". Tanto en las vistas como en el redirect de los controladores
+- [x] Cambiar los href por href="route(...)". Tanto en las vistas como en el redirect de los controladores
 
 - [ ] Se debe agregar el campo de detalle de la persona para indicar como es y tambien el campo de foto
 
 - [ ] Para el pago de una cuota, no se actualiza el monto pagado de la misma. ARREGLAR ESO
 
-- [ ] Controlar como se hace el alta de un cliente
+- [ ] Controlar como se hace el alta de un cliente (que ha sido dado de baja)
 

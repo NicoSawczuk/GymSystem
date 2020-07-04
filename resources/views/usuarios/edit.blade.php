@@ -30,7 +30,6 @@
                     <form method="POST" action="{{ route('usuarios.update',[$usuario->id, $usuario->slug()]) }}">
                         @csrf
                         @method('PATCH')
-                        <input type="hidden" name="gimnasio" value="{{$gimnasio->id}}">
                         <div class="form-group row">
                             <div class="form-group">
                                 <label for="permisos" class=" col-form-label text-md-right">Permisos</label>
@@ -66,7 +65,7 @@
                 </div>
                 <div class="card-footer float">
                     <div class="float-right">
-                        <a href="/usuarios/administrar/{{$gimnasio->id}}">
+                        <a href="{{ route('usuarios.administrar') }}">
                             <button type="button" class="btn btn-default"><i class="fal fa-times"></i> Cancelar</button>
                         </a>
                         <button type="submit" class="btn btn-primary "><i class="fal fa-check"></i> Guardar</button>

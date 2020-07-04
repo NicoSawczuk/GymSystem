@@ -58,7 +58,7 @@
                 <td class="text-right" style="">
                   @if ($usuario->id != Auth::id())
                   <a title="Editar roles o permisos"
-                    href="{{ route('usuarios.edit', [$usuario->id, $usuario->slug(), $gimnasio->id, $gimnasio->slug()]) }}"><i
+                    href="{{ route('usuarios.edit', [$usuario->id, $usuario->slug()]) }}"><i
                       class="fal fa-pencil-alt fa-lg"></i></a>
                   @endif
                 </td>
