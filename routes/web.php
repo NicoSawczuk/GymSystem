@@ -227,4 +227,20 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/montos_mensuales/{montoMensual}-{slug}', 'MontoMensualController@update')->name('montosMensuales.update')
     ->middleware('can:users.edit');
 
+    //Descuentos
+    Route::get('/descuentos/administrar', 'DescuentoController@index')->name('descuentos.administrar')
+    ->middleware('can:users.index');
+
+    Route::get('/descuentos/create/', 'DescuentoController@create')->name('descuentos.create')
+    ->middleware('can:users.create');
+
+    Route::post('/montos_mensuales', 'DescuentoController@store')->name('descuentos.store')
+    ->middleware('can:users.create');
+
+    Route::get('/descuentos/{descuento}-{slug}/edit/', 'DescuentoController@edit')->name('descuentos.edit')
+    ->middleware('can:users.edit');
+
+    Route::patch('/descuentos/{descuento}-{slug}', 'DescuentoController@update')->name('descuentos.update')
+    ->middleware('can:users.edit');
+
 });
