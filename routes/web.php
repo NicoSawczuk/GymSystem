@@ -210,4 +210,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/usuarios/panel', 'UserController@panel')->name('usuarios.panel')
     ->middleware('can:users.index');
 
+
+    //Montos mensuales
+    Route::get('/montos_mensuales/administrar', 'MontoMensualController@index')->name('montosMensuales.administrar')
+    ->middleware('can:users.index');
+
+    Route::get('/montos_mensuales/create/', 'MontoMensualController@create')->name('montosMensuales.create')
+    ->middleware('can:users.create');
+
+    Route::post('/montos_mensuales', 'MontoMensualController@store')->name('montosMensuales.store')
+    ->middleware('can:users.create');
+
+    Route::get('/montos_mensuales/{montoMensual}-{slug}/edit/', 'MontoMensualController@edit')->name('montosMensuales.edit')
+    ->middleware('can:users.edit');
+
+    Route::patch('/montos_mensuales/{montoMensual}-{slug}', 'MontoMensualController@update')->name('montosMensuales.update')
+    ->middleware('can:users.edit');
+
 });
