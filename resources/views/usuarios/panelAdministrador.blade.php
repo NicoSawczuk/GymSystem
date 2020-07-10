@@ -40,7 +40,7 @@
                                             </p>
                                         </div>
                                         <div class="col-sm-5 text-center">
-                                            <i class="fas fa-users-cog fa-6x"></i>
+                                            <i class="fal fa-users-cog fa-6x"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -57,17 +57,17 @@
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
                             <div class="card bg-light" style="min-width: 270px; max-width: 290px;">
                                 <div class="card-header text-muted border-bottom-0">
-                                    Titulo
+                                    Cuotas mensuales
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="row" style="min-width: 270px; max-width: 290px;">
                                         <div class="col-sm-6">
                                             <p class="text-muted text-sm">
-                                                Descripcion
+                                                Ver el listado de cuotas pagadas junto a sus detalles
                                             </p>
                                         </div>
                                         <div class="col-sm-5 text-center">
-                                            <i class="fas fa-users-cog fa-6x"></i>
+                                            <i class="fal fa-cash-register fa-6x"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -80,21 +80,49 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
                             <div class="card bg-light" style="min-width: 270px; max-width: 290px;">
                                 <div class="card-header text-muted border-bottom-0">
-                                    Titulo
+                                    Montos mensuales
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="row" style="min-width: 270px; max-width: 290px;">
                                         <div class="col-sm-6">
                                             <p class="text-muted text-sm">
-                                                Descripcion
+                                                Actualiza y carga los montos para las cuotas mensuales del sistema
                                             </p>
                                         </div>
                                         <div class="col-sm-5 text-center">
-                                            <i class="fas fa-users-cog fa-6x"></i>
+                                            <i class="fal fa-money-check-alt fa-6x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        <a href="#" class="btn btn-sm btn-primary">
+                                            Administrar <i class="fas fa-arrow-circle-right fa-lg"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-stretch">
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                            <div class="card bg-light" style="min-width: 270px; max-width: 290px;">
+                                <div class="card-header text-muted border-bottom-0">
+                                    Códigos de descuento
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="row" style="min-width: 270px; max-width: 290px;">
+                                        <div class="col-sm-6">
+                                            <p class="text-muted text-sm">
+                                                Agrega códigos de descuento para el pago de cuotas
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-5 text-center">
+                                            <i class="fal fa-percent fa-6x"></i>
                                         </div>
                                     </div>
                                 </div>
