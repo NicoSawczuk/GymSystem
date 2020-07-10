@@ -47,6 +47,10 @@ class User extends Authenticatable
         return $this->hasMany(Especialidad::class);
     }
 
+    public function cuotas(){
+        return $this->hasMany(CuotaUsuario::class);
+    }
+
     //Metodos
     public function slug(){
         return Str::slug($this->name)."-".Str::slug($this->apellido);
