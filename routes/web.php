@@ -218,7 +218,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/montos_mensuales/create/', 'MontoMensualController@create')->name('montosMensuales.create')
     ->middleware('can:users.create');
 
-    Route::post('/montos_mensuales', 'MontoMensualController@store')->name('montosMensuales.store')
+    Route::post('/montos_mensuales/store', 'MontoMensualController@store')->name('montosMensuales.store')
     ->middleware('can:users.create');
 
     Route::get('/montos_mensuales/{montoMensual}-{slug}/edit/', 'MontoMensualController@edit')->name('montosMensuales.edit')

@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="text-right">
-                                        <a href="#" class="btn btn-sm btn-primary">
+                                        <a href="{{route('montosMensuales.administrar')}}" class="btn btn-sm btn-primary">
                                             Administrar <i class="fas fa-arrow-circle-right fa-lg"></i>
                                         </a>
                                     </div>
