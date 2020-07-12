@@ -54,11 +54,10 @@
         .links>a {
             color: #636b6f;
             padding: 0 25px;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 600;
             letter-spacing: .1rem;
             text-decoration: none;
-            text-transform: uppercase;
         }
 
         .m-b-md {
@@ -72,7 +71,11 @@
         @if (Route::has('login'))
         <div class="top-right links">
             @auth
-            <a href="{{ url('/gimnasios/administrar') }}">Home</a>
+                @if (Auth::user()->can('usuarios.index'))
+                    <a href="{{ route('usuarios.panel') }}">Panel</a>
+                @else
+                    <a href="{{ route('gimnasios.administrar') }}">Ingresar</a>
+                @endif
             @else
             <a href="{{ route('login') }}">Iniciar sesión</a>
 
