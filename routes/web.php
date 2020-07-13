@@ -243,4 +243,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/descuentos/{descuento}-{slug}', 'DescuentoController@update')->name('descuentos.update')
     ->middleware('can:users.edit');
 
+    Route::get('/descuentos/{descuento}-{slug}', 'DescuentoController@destroy')->name('descuentos.destroy')
+    ->middleware('can:users.edit');
+
 });

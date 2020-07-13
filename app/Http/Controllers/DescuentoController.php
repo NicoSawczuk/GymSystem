@@ -14,7 +14,8 @@ class DescuentoController extends Controller
      */
     public function index()
     {
-        //
+        $codigos = Descuento::all();
+        return view('descuentos/administrar', compact('codigos'));
     }
 
     /**
@@ -24,7 +25,7 @@ class DescuentoController extends Controller
      */
     public function create()
     {
-        //
+        return view('descuentos/create');
     }
 
     /**
@@ -35,7 +36,23 @@ class DescuentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            'codigo' => 'required|unique:descuentos',
+            'porcentaje_descuento' => 'required|integer',
+            'fecha_expiracion' => 'required|date',
+            'detalle' => 'required',
+        ]);
+
+        $descuento = new Descuento();
+        $descuento->codigo = strtoupper($request->codigo);
+        $descuento->porcentaje_descuento = $request->porcentaje_descuento;
+        $descuento->fecha_expiracion = $request->fecha_expiracion;
+        $descuento->detalle = $request->detalle;
+
+        $descuento->save();
+
+        return redirect(route('descuentos.administrar'))->with('success', 'Código de descuento creado con éxito');
+
     }
 
     /**
@@ -57,7 +74,8 @@ class DescuentoController extends Controller
      */
     public function edit(Descuento $descuento, $slug)
     {
-        //
+        $codigo = $descuento;
+        return view('descuentos/edit', compact('codigo'));
     }
 
     /**
@@ -69,7 +87,16 @@ class DescuentoController extends Controller
      */
     public function update(Request $request, Descuento $descuento, $slug)
     {
-        //
+        $data = request()->validate([
+            'codigo' => 'required|unique:descuentos,codigo,'.$descuento->id,
+            'porcentaje_descuento' => 'required|integer',
+            'fecha_expiracion' => 'required|date',
+            'detalle' => 'required',
+        ]);
+
+        $descuento->update($data);
+
+        return redirect(route('descuentos.administrar'))->with('success', 'Código de descuento '.$descuento->codigo.' modificado con éxito');
     }
 
     /**
@@ -78,8 +105,15 @@ class DescuentoController extends Controller
      * @param  \App\Descuento  $descuento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Descuento $descuento)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $descuento = Descuento::where('id',$id)->first();
+
+        if($descuento->delete()){
+            return '1';
+        }else{
+            return '0';
+        }
     }
 }
