@@ -18,6 +18,9 @@ class CreateCiudadesTable extends Migration
 
             $table->string('nombre');
             $table->unsignedBigInteger('provincia_id');
+            $table->string('lat',100)->nullable();
+            $table->string('lon',100)->nullable();
+            $table->boolean('fav')->default(false);
             $table->foreign('provincia_id')->references('id')->on('provincias')->onDelete('cascade');
 
             $table->timestamps();

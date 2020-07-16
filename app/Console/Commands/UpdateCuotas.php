@@ -58,8 +58,9 @@ class UpdateCuotas extends Command
                 if ($cliente->estado_id != Estado::where('orden', 5)->value('id') && $cuota->inscripcion->activo != 0){
 
                     $cuota->vencido = 1;
+                    $cuota->saldado = 1;
                     $cliente->estado_id = Estado::where('orden', 4)->value('id');
-                    $cuota->monto_deuda += $cliente->especialidad->monto;
+                    //$cuota->monto_deuda += $cliente->especialidad->monto;
 
                     $cliente->save();
                     $cuota->save();
@@ -80,6 +81,23 @@ class UpdateCuotas extends Command
                     
                         Mail::to($cliente->email)->send(new CuotasUpdateMail($data));
                     }
+
+                    //Creamos una nueva cuota con los montos nuevos
+                    $cuotaNueva = new Cuota();
+
+                    $cuotaNueva->monto_cuota = $cliente->especialidad->monto + $cuota->monto_deuda;
+                    $cuotaNueva->monto_pagado = 0.00;
+                    $cuotaNueva->monto_deuda = $cliente->especialidad->monto + $cuota->monto_deuda;
+                    
+                    $cuotaNueva->saldado = 0;
+                    $cuotaNueva->vencido = 0;
+
+                    $cuotaNueva->gimnasio_id = $cliente->gimnasio->id;
+                    $cuotaNueva->cliente_id = $cliente->id;
+                    $cuotaNueva->especialidad_id = $cliente->especialidad->id;
+                    $cuotaNueva->inscripcion_id = $cliente->getUltimaInscripcion()->id;
+
+                    $cuotaNueva->save();
                 }
             }
         }
