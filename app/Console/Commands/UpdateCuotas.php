@@ -45,63 +45,66 @@ class UpdateCuotas extends Command
      */
     public function handle()
     {
-        //Obtenemos la fecha de hoy
-        $fecha = date ( 'Y-m-d');
-        //Le restamos un mes
-        $nuevafecha = strtotime ( '-1 month' , strtotime ( $fecha ) ) ;
-        $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+        try {
+            //Obtenemos la fecha de hoy
+            $fecha = date ( 'Y-m-d');
+            //Le restamos un mes
+            $nuevafecha = strtotime ( '-1 month' , strtotime ( $fecha ) ) ;
+            $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
-        if (Cuota::where('fecha_pago', $nuevafecha)->exists()){
-            $cuotas = Cuota::where(['fecha_pago'=> $nuevafecha, 'vencido' => 0])->get();
-            foreach ($cuotas as $cuota){
-                $cliente = Cliente::where('id', $cuota->cliente_id)->first();
-                if ($cliente->estado_id != Estado::where('orden', 5)->value('id') && $cuota->inscripcion->activo != 0){
+            if (Cuota::where('fecha_pago', $nuevafecha)->exists()){
+                $cuotas = Cuota::where(['fecha_pago'=> $nuevafecha, 'vencido' => 0])->get();
+                foreach ($cuotas as $cuota){
+                    $cliente = Cliente::where('id', $cuota->cliente_id)->first();
+                    if ($cliente->estado_id != Estado::where('orden', 5)->value('id') && $cuota->inscripcion->activo != 0){
 
-                    $cuota->vencido = 1;
-                    $cuota->saldado = 1;
-                    $cliente->estado_id = Estado::where('orden', 4)->value('id');
-                    //$cuota->monto_deuda += $cliente->especialidad->monto;
+                        $cuota->vencido = 1;
+                        $cuota->saldado = 1;
+                        $cliente->estado_id = Estado::where('orden', 4)->value('id');
+                        $cuota->monto_deuda += $cliente->especialidad->monto;
 
-                    $cliente->save();
-                    $cuota->save();
+                        $cliente->save();
+                        $cuota->save();
 
-                    //Enviamos el Mail
-                    if (EmailConfiguracion::where('gimnasio_id', $cliente->gimnasio->id)->exists()){
-                        $gimnasio = $cliente->gimnasio;
-                        $data = array(
-                            'remitente'          =>   $gimnasio->email_configuracion->remitente,
-                            'asunto'             =>   $gimnasio->email_configuracion->asunto,
-                            'contenido'          =>   $gimnasio->email_configuracion->contenido,
-                            'nombre_remitente'   =>   $gimnasio->nombre,
-                            'detalle_monto'      =>   $gimnasio->email_configuracion->detalle_monto,
-                            'monto_especialidad' =>   $cliente->especialidad->monto,
-                            'monto_deuda'        =>   $cliente->getDeuda() - $cliente->especialidad->monto,
-                            'monto_total'        =>   $cliente->getDeuda()
-                        );
-                    
-                        Mail::to($cliente->email)->send(new CuotasUpdateMail($data));
+                        //Enviamos el Mail
+                        if (EmailConfiguracion::where('gimnasio_id', $cliente->gimnasio->id)->exists()){
+                            $gimnasio = $cliente->gimnasio;
+                            $data = array(
+                                'remitente'          =>   $gimnasio->email_configuracion->remitente,
+                                'asunto'             =>   $gimnasio->email_configuracion->asunto,
+                                'contenido'          =>   $gimnasio->email_configuracion->contenido,
+                                'nombre_remitente'   =>   $gimnasio->nombre,
+                                'detalle_monto'      =>   $gimnasio->email_configuracion->detalle_monto,
+                                'monto_especialidad' =>   $cliente->especialidad->monto,
+                                'monto_deuda'        =>   $cliente->getDeuda() - $cliente->especialidad->monto,
+                                'monto_total'        =>   $cliente->getDeuda()
+                            );
+                        
+                            Mail::to($cliente->email)->send(new CuotasUpdateMail($data));
+                        }
+
+                        //Creamos una nueva cuota con los montos nuevos
+                        // $cuotaNueva = new Cuota();
+
+                        // $cuotaNueva->monto_cuota = $cliente->especialidad->monto + $cuota->monto_deuda;
+                        // $cuotaNueva->monto_pagado = 0.00;
+                        // $cuotaNueva->monto_deuda = $cliente->especialidad->monto + $cuota->monto_deuda;
+                        
+                        // $cuotaNueva->saldado = 0;
+                        // $cuotaNueva->vencido = 0;
+
+                        // $cuotaNueva->gimnasio_id = $cliente->gimnasio_id;
+                        // $cuotaNueva->cliente_id = $cliente->id;
+                        // $cuotaNueva->especialidad_id = $cliente->especialidad_id;
+                        // $cuotaNueva->inscripcion_id = $cliente->getUltimaInscripcion()->id;
+
+                        // $cuotaNueva->save();
                     }
-
-                    //Creamos una nueva cuota con los montos nuevos
-                    $cuotaNueva = new Cuota();
-
-                    $cuotaNueva->monto_cuota = $cliente->especialidad->monto + $cuota->monto_deuda;
-                    $cuotaNueva->monto_pagado = 0.00;
-                    $cuotaNueva->monto_deuda = $cliente->especialidad->monto + $cuota->monto_deuda;
-                    
-                    $cuotaNueva->saldado = 0;
-                    $cuotaNueva->vencido = 0;
-
-                    $cuotaNueva->gimnasio_id = $cliente->gimnasio->id;
-                    $cuotaNueva->cliente_id = $cliente->id;
-                    $cuotaNueva->especialidad_id = $cliente->especialidad->id;
-                    $cuotaNueva->inscripcion_id = $cliente->getUltimaInscripcion()->id;
-
-                    $cuotaNueva->save();
                 }
             }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
-
 
     }
 }
