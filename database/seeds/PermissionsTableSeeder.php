@@ -1,9 +1,11 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Caffeinated\Shinobi\Models\Permission;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -265,48 +267,61 @@ class PermissionsTableSeeder extends Seeder
             'special'       => 'all-access'
         ]);
 
+        $admin = User::create([
+            'name' => 'Admin',
+            'email' => 'nicolas.sawczuk98@gmail.com',
+            'password' => Hash::make('38774803'),
+            'apellido' => 'Admin',
+            'fecha_nacimiento' => '1998-06-29',
+            'altura' => 1.75,
+            'peso' => 75,
+        ]);
+        $admin->syncRoles('admin');
+        $admin->save();
+
         $encargado = Role::create([
             'name'          => 'Encargado',
             'slug'          => 'encargado',
-            'description'   => 'Es el encargado de administrar los gimnasios',
-            'special'       => 'no-access'
+            'description'   => 'Es el encargado de administrar los gimnasios'
         ]);
+        $encargado->save();
 
         //Le asignamos los permisos al encargado
-        $encargado->permissions()->sync([
-            Permission::where('slug','users.show')->value('id'),
-            Permission::where('slug','gimnasios.index')->value('id'),
-            Permission::where('slug','gimnasios.show')->value('id'),
-            Permission::where('slug','gimnasios.create')->value('id'),
-            Permission::where('slug','gimnasios.edit')->value('id'),
-            Permission::where('slug','gimnasios.destroy')->value('id'),
-            Permission::where('slug','especialidades.index')->value('id'),
-            Permission::where('slug','especialidades.show')->value('id'),
-            Permission::where('slug','especialidades.create')->value('id'),
-            Permission::where('slug','especialidades.edit')->value('id'),
-            Permission::where('slug','especialidades.destroy')->value('id'),
-            Permission::where('slug','clientes.index')->value('id'),
-            Permission::where('slug','clientes.show')->value('id'),
-            Permission::where('slug','clientes.create')->value('id'),
-            Permission::where('slug','clientes.edit')->value('id'),
-            Permission::where('slug','clientes.destroy')->value('id'),
-            Permission::where('slug','inscripciones.index')->value('id'),
-            Permission::where('slug','inscripciones.show')->value('id'),
-            Permission::where('slug','inscripciones.create')->value('id'),
-            Permission::where('slug','inscripciones.edit')->value('id'),
-            Permission::where('slug','inscripciones.destroy')->value('id'),
-            Permission::where('slug','cuotas.index')->value('id'),
-            Permission::where('slug','cuotas.show')->value('id'),
-            Permission::where('slug','cuotas.create')->value('id'),
-            Permission::where('slug','cuotas.edit')->value('id'),
-            Permission::where('slug','cuotas.destroy')->value('id'),
-            Permission::where('slug','bajas.index')->value('id'),
-            Permission::where('slug','bajas.show')->value('id'),
-            Permission::where('slug','bajas.create')->value('id'),
-            Permission::where('slug','bajas.edit')->value('id'),
-            Permission::where('slug','bajas.destroy')->value('id')
+        $encargado->givePermissionTo([
+            'users.show'
+            ,'gimnasios.index'
+            ,'gimnasios.show'
+            ,'gimnasios.create'
+            ,'gimnasios.edit'
+            ,'gimnasios.destroy'
+            ,'especialidades.index'
+            ,'especialidades.show'
+            ,'especialidades.create'
+            ,'especialidades.edit'
+            ,'especialidades.destroy'
+            ,'clientes.index'
+            ,'clientes.show'
+            ,'clientes.create'
+            ,'clientes.edit'
+            ,'clientes.destroy'
+            ,'inscripciones.index'
+            ,'inscripciones.show'
+            ,'inscripciones.create'
+            ,'inscripciones.edit'
+            ,'inscripciones.destroy'
+            ,'cuotas.index'
+            ,'cuotas.show'
+            ,'cuotas.create'
+            ,'cuotas.edit'
+            ,'cuotas.destroy'
+            ,'bajas.index'
+            ,'bajas.show'
+            ,'bajas.create'
+            ,'bajas.edit'
+            ,'bajas.destroy'
         ]);
 
+        $encargado->save();
         //Creamos Argentina
         DB::statement("Insert into `paises` (`id`,`iso`,`nombre`) values (1,'AR','Argentina');");
 
