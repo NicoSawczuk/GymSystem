@@ -2686,5 +2686,12 @@ class PermissionsTableSeeder extends Seeder
                         (2381, 'Yerba Buena', 25, '-26.8166695', '-65.3166809', NULL, NULL),
                         (2382, 'Yerba Buena (S)', 25, '-26.8166695', '-65.3166809', NULL, NULL),
                         (2383, '9 de julio', 1, '-35.4569056', '-60.9177579', NULL, NULL);");
+
+             DB::statement("INSERT INTO `estados` (`id`, `created_at`, `updated_at`, `nombre`, `descripcion`, `color`, `orden`) VALUES
+             (1, NULL, NULL, 'No inscripto', 'El cliente se encuentra cargado en el sistema pero no esta inscripto a un gimnasio', '#ffc107', 1),
+             (2, NULL, NULL, 'Inscripto', 'El cliente se encuentra inscripto a un gimnasio y especialidad pero no pagó su cuota', '#17a2b8', 2),
+             (3, NULL, NULL, 'En regla', 'El cliente ya ha pagado su cuota', '#28a745', 3),
+             (4, NULL, NULL, 'En deuda', 'Es un cliente que debe parte de su cuota', '#d81b60', 4),
+             (5, NULL, NULL, 'Dado de baja', 'Es un cliente que ha sido dado de baja', '#3c8dbc', 5);");
     }
 }
