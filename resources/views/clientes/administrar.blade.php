@@ -239,7 +239,7 @@
                   @endif
                 </td>
                 <td class="text-right" style="">
-                  @if ($cliente->estado->id === 1 or $cliente->estado->id === 5)
+                  @if ($cliente->estado->id === 1)
                   <a role="button" id="boton"
                     onclick="modal('{{$gimnasio->id}}','{{$cliente->id}}','{{$cliente->slug()}}','{{$cliente->nombre}}','{{$cliente->apellido}}','{{$cliente->getDeuda()}}')"
                     title="Realizar inscripción" href="#">

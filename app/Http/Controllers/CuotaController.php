@@ -219,8 +219,7 @@ class CuotaController extends Controller
                 if (request()->monto == $cliente->getDeuda()){
                     //Saldado
                     $cuota->saldado = 1;
-                    $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
-                    $cuota->monto_pagado += request()->monto; 
+                    $cuota->monto_deuda = request()->monto - $cliente->getDeuda(); 
                     $fecha = date ( 'Y-m-d');
                     $cuota->fecha_pago_deuda = $fecha;
                     $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
@@ -232,7 +231,6 @@ class CuotaController extends Controller
                     //No saldado
                     $cuota->saldado = 0;
                     $cuota->monto_deuda -= request()->monto;
-                    $cuota->monto_pagado += request()->monto;
                     $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
                     $cuota->save();
 
@@ -270,8 +268,7 @@ class CuotaController extends Controller
                 if (request()->monto == $cliente->getDeuda()){
                     //Saldado
                     $cuota->saldado = 1;
-                    $cuota->monto_deuda = request()->monto - $cliente->getDeuda();
-                    $cuota->monto_pagado += request()->monto; 
+                    $cuota->monto_deuda = request()->monto - $cliente->getDeuda(); 
                     $fecha = date ( 'Y-m-d');
                     $cuota->fecha_pago_deuda = $fecha;
                     $cliente->update(['estado_id'=> Estado::where('orden', 3)->value('id')]);
@@ -287,7 +284,6 @@ class CuotaController extends Controller
                     //No saldado
                     $cuota->saldado = 0;
                     $cuota->monto_deuda = $cliente->getDeuda() - request()->monto;
-                    $cuota->monto_pagado += request()->monto;
                     $cliente->update(['estado_id'=> Estado::where('orden', 4)->value('id')]);
 
                     $cuota->gimnasio_id = request()->gimnasio;
