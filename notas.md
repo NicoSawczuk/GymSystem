@@ -21,7 +21,7 @@ Marcar nota (Alt+D)
 - [ ] Preparar la pagina de planes y ver el tema de pagarlo con mercadopago
 
 
-- [ ] Crear panel de administrador
+- [x] Crear panel de administrador
 - [x] Agregar el slug a todas las urls
 - [ ] Hacer pagina de resumen de cuotas y todo eso
 
@@ -30,7 +30,7 @@ Marcar nota (Alt+D)
 
 - [ ] Se debe agregar el campo de detalle de la persona para indicar como es y tambien el campo de foto
 
-- [ ] Para el pago de una cuota, no se actualiza el monto pagado de la misma. ARREGLAR ESO
+- [x] Para el pago de una cuota, no se actualiza el monto pagado de la misma. ARREGLAR ESO
 
 - [ ] Controlar como se hace el alta de un cliente (que ha sido dado de baja)
 

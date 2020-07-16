@@ -53,7 +53,7 @@
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="/gimnasios/administrar" class="nav-link">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>Administración</p>
               </a>
             </li>
@@ -62,7 +62,7 @@
               <a href="{{route('clientes.administrar',[$gimnasio->id,$gimnasio->slug()])}}"
                 class="nav-link {{ (request()->routeIs('clientes.*')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('clientes.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>
                   Clientes
                   <span class="badge badge-secondary right">{{ $gimnasio->getClientes() }}</span>
@@ -72,7 +72,7 @@
             <li class="nav-item">
               <a href="{{route('gimnasios.estadistica', [$gimnasio->id, $gimnasio->slug()])}}" class="nav-link"
                 style="{{ (request()->routeIs('gimnasios.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>Estadística</p>
               </a>
             </li>
@@ -93,7 +93,7 @@
               <a href="{{route('especialidades.administrar',[$gimnasio->id, $gimnasio->slug()])}}"
                 class="nav-link  {{ (request()->routeIs('especialidades.administrar')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('especialidades.administrar')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>Administración</p>
               </a>
             </li>
@@ -101,7 +101,7 @@
               <a href="{{route('especialidades.administrarMisEspecialidades',[$gimnasio->id, $gimnasio->slug()])}}"
                 class="nav-link  {{ (request()->routeIs('especialidades.administrarMisEspecialidades')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('especialidades.administrarMisEspecialidades')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>Mis especialidades</p>
               </a>
             </li>
@@ -111,7 +111,7 @@
               <a href="{{route('especialidades.estadistica', [$gimnasio->id, $gimnasio->slug()])}}"
                 class="nav-link  {{ (request()->routeIs('especialidades.estadistica')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('especialidades.estadistica.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>Estadística</p>
               </a>
             </li>
@@ -132,7 +132,7 @@
               <a href="{{route('cuotas.administrar', [$gimnasio->id, $gimnasio->slug()])}}"
                 class="nav-link {{ (request()->routeIs('cuotas.administrar')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('cuotas.administrar')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>
                   Administración
                 </p>
@@ -142,7 +142,7 @@
               <a href="{{route('cuotas.administrarMisCuotas', [$gimnasio->id, $gimnasio->slug()])}}"
                 class="nav-link {{ (request()->routeIs('cuotas.administrarMisCuotas')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('cuotas.administrarMisCuotas')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>Mis cuotas</p>
               </a>
             </li>
@@ -165,7 +165,7 @@
               <a href="{{ route('email_configuracion.edit',[$gimnasio->id, $gimnasio->slug()]) }}"
                 class="nav-link {{ (request()->routeIs('email_configuracion.edit')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('email_configuracion.edit')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>Correos automáticos</p>
               </a>
             </li>
@@ -173,7 +173,7 @@
               <a href="{{ route('reporte_configuracion.edit',[$gimnasio->id, $gimnasio->slug()]) }}"
                 class="nav-link {{ (request()->routeIs('reporte_configuracion.edit')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('reporte_configuracion.edit')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
-                <i class="fal fa-circle nav-icon"></i>
+                <i class="fad fa-circle nav-icon fa-xs"></i>
                 <p>Reportes</p>
               </a>
             </li>
