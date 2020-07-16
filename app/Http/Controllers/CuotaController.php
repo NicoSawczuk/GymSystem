@@ -214,7 +214,7 @@ class CuotaController extends Controller
                 return redirect()->back()->with('error','No se pudo registrar el pago de la deuda, debido a que el monto ingresado es mayor que la deuda del cliente');
             }else{
                 //Puedo pagar cuanto sea
-                $cuota = Cuota::where('cliente_id', $cliente->id)->orderBy('fecha_pago_realizado', 'desc')->first();
+                $cuota = Cuota::where('cliente_id', $cliente->id)->orderBy('created_at', 'desc')->first();
     
                 if (request()->monto == $cliente->getDeuda()){
                     //Saldado
