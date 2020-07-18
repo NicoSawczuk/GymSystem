@@ -90,7 +90,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-5">
                                 <label for="especialidades" class=" col-form-label text-md-right">Especialidades</label>
                                 <label for="agregar_especialidades">
                                     <a role="button" type="submit" onclick="modalAddEspe()"
@@ -295,14 +295,12 @@
                 .prop('disabled', 'disabled');
             document.getElementById("ciudad").disabled = false;
             var id = $('#provincia').val();
-            console.log(id);
             $.ajax({
                 url:"/gimnasios/provincia",
                 method:"GET",
                 data:{id:id,},
                 success:function(result)
                 {
-                console.log(result);
                     result.forEach(element => {
                         $("#ciudad").append('<option value="'+element[0]+'">'+element[1]+'</option>');
                     });
@@ -344,18 +342,18 @@
               method:"POST",
               data: {_token:token, nombre:nombre, monto:monto, descripcion:descripcion},
               success:function(result){
-                if (result === '1'){
+                if (result[0] === "1"){
                     $('#modal-default-add-espe').modal('hide');
                     $('#nombreEspe').val('');
                     $('#montoEspe').val('');
                     $('#descripcionEspe').val('');
-                    Notiflix.Notify.Success('Especialidad agregada con éxito');
-                    $("#selectEspecialidad").append(new Option(String(nombre), '4'));
+                    Notiflix.Notify.Success('Especialidad '+result[1]['nombre']+' agregada con éxito');
+                    $("#selectEspecialidad").append(new Option(String(result[1]['nombre']), result[1]['id']));
                 }else{
                     var errores ="";
-                    result.forEach(element => {
-                        errores += element+'\n';
-                    });
+                    for (let i = 0; i < result.length; i++) {
+                        errores += result[i]+'\n';
+                    }
                     Notiflix.Notify.Failure(errores);
                 }
             }

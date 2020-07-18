@@ -91,8 +91,8 @@ class EspecialidadController extends Controller
                     'descripcion' => $request->get('descripcion'),
                     'user_id' => Auth::id()
                 ];
-                Especialidad::create($data);
-                return '1';
+                $espe = Especialidad::create($data);
+                return ['1', $espe];
             }
         }
     }

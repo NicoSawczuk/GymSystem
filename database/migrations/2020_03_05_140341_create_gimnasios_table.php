@@ -17,6 +17,7 @@ class CreateGimnasiosTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('nombre')->unique();
+            $table->string('email')->nullable();
             $table->string('calle');
             $table->integer('altura');
             $table->string('pais');
