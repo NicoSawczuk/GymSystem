@@ -38,15 +38,21 @@
       <div class="card card-teal card-outline">
         <div class="card-body box-profile">
           <div class="text-center">
-            @if ($cliente->sexo === 'MASCULINO')
-            <span style="font-size: 7em; color: #3c8dbc;">
-              <i class="fas fa-user-circle"></i>
-            </span>
-            @else
-            <span style="font-size: 7em; color: #e83e8c;">
-              <i class="fas fa-user-circle"></i>
-            </span>
-            @endif
+            <div id="contenedorFoto">
+              @if ($cliente->sexo === 'MASCULINO')
+              <span style="font-size: 10em; color: #3c8dbc;">
+                <i class="fas fa-user-circle"></i>
+              </span>
+              @elseif ($cliente->sexo === 'FEMENINO')
+              <span style="font-size: 10em; color: #e83e8c;">
+                <i class="fas fa-user-circle"></i>
+              </span>
+              @else
+              <span style="font-size: 10em; color: #A3A0A3;">
+                <i class="fas fa-user-circle"></i>
+              </span>
+              @endif
+            </div>
           </div>
 
           <h3 class="profile-username text-center">{{ $cliente->nombre }} {{ $cliente->apellido }}</h3>
@@ -174,6 +180,10 @@
               <dl class="row" style="margin-left: 1%">
                 <dt class="col-sm-3">Ocupación</dt>
                 <dd class="col-sm-8 text-muted">{{ $cliente->ocupacion }}</dd>
+              </dl>
+              <dl class="row" style="margin-left: 1%">
+                <dt class="col-sm-3">Detalle</dt>
+                <dd class="col-sm-8 text-muted">{{ $cliente->detalle }}</dd>
               </dl>
 
               <div class="text-muted" style="font-family: 'Open Sans', serif;">ENTRENAMIENTO</div>
@@ -590,6 +600,15 @@
     });
   });
   </script>
+  @if ($cliente->foto != null)
+  <script>
+    $('#contenedorFoto').html('');
+    var img = new Image();
+    img.src = "{{ asset('/storage/'.$cliente->foto) }}";
+    $('#contenedorFoto').html('<img src="" id="img" height="160px" width="160px" style="border-radius: 5em;">');
+    $('#img').attr("src", img.src);
+  </script>
+  @endif
 
 </body>
 @endsection

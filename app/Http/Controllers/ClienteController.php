@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
 use App\Cliente;
 use App\Cuota;
 use App\Especialidad;
@@ -85,6 +86,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request, Gimnasio $gimnasio, $slug)
     {
+
         $data = request()->validate([
             'nombre' => 'required',
             'apellido' => 'required',
@@ -96,7 +98,14 @@ class ClienteController extends Controller
             'fecha_nacimiento' => 'required|date',
             'altura' => 'required|numeric',
             'peso' => 'required|numeric',
+            'detalle' => 'required',
         ]);
+
+        if (request()->hasFile('foto')) {
+            request()->validate([
+                'foto'  => 'required|file|image|max:4000',
+            ]);
+        }
 
         $cliente = new Cliente();
         
@@ -119,6 +128,11 @@ class ClienteController extends Controller
 
         $cliente->save();
 
+        if (request()->has('foto')) {
+            $cliente->update([
+                'foto' => request()->foto->store('fotos_clientes', 'public'),
+            ]);
+        }
         return redirect(route('clientes.administrar',[$gimnasio->id,$slug]))->with('success','Cliente '.$cliente->nombre.' '.$cliente->apellido.' creado con éxito');
     }
 
@@ -153,6 +167,7 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente, $slug)
     {
+        
         $data = request()->validate([
             'nombre' => 'required',
             'apellido' => 'required',
@@ -164,9 +179,29 @@ class ClienteController extends Controller
             'fecha_nacimiento' => 'required|date',
             'altura' => 'required|numeric',
             'peso' => 'required|numeric',
+            'detalle' => 'required',
         ]);
 
+        if (request()->hasFile('foto')) {
+            request()->validate([
+                'foto'  => 'required|file|image|max:4000',
+            ]);
+        }
+
         $cliente->update($data);
+        
+        if (request()->has('foto')) {
+            if ($request->foto == 'borrar'){
+                $cliente->update([
+                    'foto' => NULL,
+                ]);
+            }else{
+                $cliente->update([
+                    'foto' => request()->foto->store('fotos_clientes', 'public'),
+                ]);
+            }
+        }
+
         return redirect(route('clientes.administrar',[$cliente->gimnasio->id,$cliente->gimnasio->slug()]))->with('success','Información del cliente '.$cliente->nombre.' '.$cliente->apellido.' modificada con éxito');
     }
 

@@ -12,7 +12,8 @@
 @section('contentHeader') Editar {{ $cliente->nombre }} {{ $cliente->apellido }} @endsection
 
 <body class="container">
-    <form method="POST" action="{{route('clientes.update',[$cliente->id,$cliente->slug()])}}">
+    <form method="POST" action="{{route('clientes.update',[$cliente->id,$cliente->slug()])}}"
+        enctype="multipart/form-data">
         @csrf
         @method('PATCH')
         <input type="hidden" name="gimnasio" value="{{ $gimnasio->id }}">
@@ -56,9 +57,9 @@
                             <div class="form-group col-md-2">
                                 <label for="sexo" class=" col-form-label text-md-right">Sexo</label>
                                 <select name="sexo" id="sexo" class="form-control @error('sexo') is-invalid @enderror">
-                                    <option value="MASCULINO">Masculino</option>
-                                    <option value="FEMENINO">Femenino</option>
-                                    <option value="OTRO">Otro</option>
+                                    <option value="MASCULINO"  {{$cliente->sexo == 'MACULINO' ? 'selected' : ''}}>Masculino</option>
+                                    <option value="FEMENINO" {{$cliente->sexo == 'FEMENINO' ? 'selected' : ''}}>Femenino</option>
+                                    <option value="OTRO" {{$cliente->sexo == 'OTRO' ? 'selected' : ''}}>Otro</option>
                                 </select>
                                 @error('sexo')
                                 <span class="invalid-feedback" role="alert">
@@ -165,6 +166,41 @@
                                 </span>
                                 @enderror
                             </div>
+                            <div class="form-group col-md-4">
+                                <label for="detalle" class=" col-form-label text-md-right">Detalle del cliente</label>
+                                <textarea id="detalle" class="form-control  @error('detalle') is-invalid @enderror"
+                                    rows="2" name="detalle" value="{{ $cliente->detalle }}"
+                                    placeholder="Ingrese una descripción física del cliente">{{ $cliente->detalle }}</textarea>
+                                @error('detalle')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="form-group text-center col-md-4">
+                                <div id="contenedorFoto">
+
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4" style="margin-top: 6px">
+                                <label for="exampleInputFile">Foto</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input @error('foto') is-invalid @enderror"
+                                            id="exampleInputFile" accept="image/*" name="foto" value="">
+                                        <label class="custom-file-label" for="exampleInputFile"></label>
+                                    </div>
+                                </div>
+                                @error('foto')
+                                <span style="width: 100%; margin-top: .25rem; font-size: 80%; color: #dc3545"
+                                    role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
 
                     </div>
@@ -190,11 +226,53 @@
       $('#fecha_nacimiento').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
       })
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+              bsCustomFileInput.init();
+            });
+    </script>
     <script>
         $(document).ready(function(){
         $('#phone-mask').mask('(0000) 15-000000');
         $('#cuil-mask').mask('00-00.000.000-0');
       })
+    </script>
+    <script>
+        document.getElementById('exampleInputFile').onchange = function (evt) {
+                var tgt = evt.target || window.event.srcElement,
+                    files = tgt.files;
+    
+                // FileReader support
+                if (FileReader && files && files.length) {
+                    var fr = new FileReader();
+                    $('#contenedorFoto').html('');
+                    fr.onload = function () {
+                        $('#contenedorFoto').html('<img name="foto" src="'+fr.result+'" id="img" height="120px" width="120px" style="border-radius: 5em;">');
+                    }
+                    fr.readAsDataURL(files[0]);
+                }
+            }
+    </script>
+
+    <script>
+        $('#sexo').change(function(){
+        if ($('#sexo').val() == 'MASCULINO'){
+            $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #3c8dbc;">'+
+                                            '<i class="fas fa-user-circle"></i>'+
+                                        '</span>');
+            $('#exampleInputFile').val('borrar');
+        }else if ($('#sexo').val() == 'FEMENINO'){
+            $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #e83e8c;">'+
+                                            '<i class="fas fa-user-circle"></i>'+
+                                        '</span>');
+            $('#exampleInputFile').val('borrar');
+        }else{
+            $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #A3A0A3;">'+
+                                            '<i class="fas fa-user-circle"></i>'+
+                                        '</span>');
+            $('#exampleInputFile').val('borrar');
+        }
+        })
     </script>
 
     <script>
@@ -215,7 +293,34 @@
         document.getElementById("fecha_nacimiento").max = new Date().toISOString().split("T")[0];
     </script>
 
-
+    @if ($cliente->foto != null)
+    <script>
+        $('#contenedorFoto').html('');
+            var img = new Image();
+            img.src = "{{ asset('/storage/'.$cliente->foto) }}";
+            $('#contenedorFoto').html('<img src="" id="img" height="120px" width="120px" style="border-radius: 5em;">');
+            $('#img').attr("src", img.src);
+    </script>
+    @else
+    <script>
+        if ($('#sexo').val() == 'MASCULINO'){
+            $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #3c8dbc;">'+
+                                            '<i class="fas fa-user-circle"></i>'+
+                                        '</span>');
+            $('#exampleInputFile').val('');
+        }else if ($('#sexo').val() == 'FEMENINO'){
+            $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #e83e8c;">'+
+                                            '<i class="fas fa-user-circle"></i>'+
+                                        '</span>');
+            $('#exampleInputFile').val('');
+        }else{
+            $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #A3A0A3;">'+
+                                            '<i class="fas fa-user-circle"></i>'+
+                                        '</span>');
+            $('#exampleInputFile').val('');
+        }
+    </script>
+    @endif
 </body>
 @endsection
 

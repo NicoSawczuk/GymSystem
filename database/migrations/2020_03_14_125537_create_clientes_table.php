@@ -26,6 +26,8 @@ class CreateClientesTable extends Migration
             $table->string('sexo');
             $table->string('ocupacion');
             $table->string('telefono')->nullable();
+            $table->string('detalle')->nullable();
+            $table->string('foto')->nullable();
             $table->boolean('activo')->default(1); //Se va a usar para saber si el usuario va o no al gym
 
 
