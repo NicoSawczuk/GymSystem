@@ -32,5 +32,5 @@ Marcar nota (Alt+D)
 
 - [x] Para el pago de una cuota, no se actualiza el monto pagado de la misma. ARREGLAR ESO
 
-- [ ] Controlar como se hace el alta de un cliente (que ha sido dado de baja)
+- [x] Controlar como se hace el alta de un cliente (que ha sido dado de baja)
 

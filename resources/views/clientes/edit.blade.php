@@ -259,18 +259,18 @@
         if ($('#sexo').val() == 'MASCULINO'){
             $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #3c8dbc;">'+
                                             '<i class="fas fa-user-circle"></i>'+
-                                        '</span>');
-            $('#exampleInputFile').val('borrar');
+                                        '</span>'+
+                                        '<input type="hidden" value="borrar" name="foto">');
         }else if ($('#sexo').val() == 'FEMENINO'){
             $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #e83e8c;">'+
                                             '<i class="fas fa-user-circle"></i>'+
-                                        '</span>');
-            $('#exampleInputFile').val('borrar');
+                                        '</span>'+
+                                        '<input type="hidden" value="borrar" name="foto">');
         }else{
             $('#contenedorFoto').html(  '<span style="font-size: 7em; color: #A3A0A3;">'+
                                             '<i class="fas fa-user-circle"></i>'+
-                                        '</span>');
-            $('#exampleInputFile').val('borrar');
+                                        '</span>'+
+                                        '<input type="hidden" value="borrar" name="foto">');
         }
         })
     </script>
