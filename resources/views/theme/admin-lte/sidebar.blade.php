@@ -73,7 +73,7 @@
               <a href="{{route('gimnasios.estadistica', [$gimnasio->id, $gimnasio->slug()])}}" class="nav-link"
                 style="{{ (request()->routeIs('gimnasios.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fad fa-circle nav-icon fa-xs"></i>
-                <p>Estadística</p>
+                <p>Gráficos</p>
               </a>
             </li>
             @endisset
@@ -112,7 +112,7 @@
                 class="nav-link  {{ (request()->routeIs('especialidades.estadistica')) ? 'active' : '' }}"
                 style="{{ (request()->routeIs('especialidades.estadistica.*')) ? 'color: #39cccc; background-color: #F0F1F2;' : '' }}">
                 <i class="fad fa-circle nav-icon fa-xs"></i>
-                <p>Estadística</p>
+                <p>Gráficos</p>
               </a>
             </li>
             @endisset

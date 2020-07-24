@@ -1,24 +1,24 @@
 @extends('theme.admin-lte.template')
 
-@section('title') Estadística @endsection
+@section('title') Gráficos sobre {{$gimnasio->nombre}} @endsection
 
 @section('body')
-    @parent
-    @section('nombreGimnasio') <strong>{{ $gimnasio->nombre }}</strong> @endsection
+@parent
+@section('nombreGimnasio') <strong>{{ $gimnasio->nombre }}</strong> @endsection
 
-    @section('usuario')
-        {{ Auth::user()->name }} {{ Auth::user()->apellido }}
-    @endsection
+@section('usuario')
+{{ Auth::user()->name }} {{ Auth::user()->apellido }}
+@endsection
 
 
-    @section('contentHeader')
-        Estadística
-    @endsection
+@section('contentHeader')
+Gráficos sobre {{$gimnasio->nombre}}
+@endsection
 
-    @section('content')   
+@section('content')
 
-    <script>
-        function actualizarChart(id){
+<script>
+    function actualizarChart(id){
             var año = $('#startyear').val();
             $.ajax({
             url:"/gimnasios/actualizar_chart",
@@ -49,7 +49,7 @@
                             },
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Cantidad de clientes',
+                                labelString: 'Cantidad de inscripciones',
                                 fontSize: 14
                             }
                         }],
@@ -89,91 +89,102 @@
             }
             })
         }
-    </script>
-    <body class="container-fluid">
-            @if ($gimnasio->clientes->count() > 0)
-            
-                <div class="card card-teal card-outline">
-                    <div class="card-header">
-                      <h3 class="card-title">
-                        <i class="fal fa-chart-bar"></i> Clientes por cada especialidad de {{$gimnasio->nombre}}
-                        </h3>
-          
-                        <div class="card-tools">
-                            <div class="float-right">
-                                <a role="button" id="popover" data-container="body" title="Ayuda" data-toggle="popover" data-placement="left" data-content="Este gráfico muestra la cantidad de clientes que tiene cada una de las especialidades que brinda el gimnasio">
-                                    <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
-                        <canvas id="especialidadesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
+</script>
 
-                <div class="card card-teal card-outline">
-                    <div class="card-header">
-                      <h3 class="card-title">
-                        <i class="fal fa-chart-line"></i> Clientes mensuales
-                        </h3>
-          
-                        <div class="card-tools">
-                            <div class="float-right">
-                                <a role="button" id="popover2" data-container="body" title="Ayuda" data-toggle="popover" data-placement="left" data-content="Este gráfico muestra los clientes que se fueron creando en cada mes de un año específico">
-                                    <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div style="margin-top: 3px">
-                        <div class="input-group float-right" style="width: 120px;margin-right: 18px;">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-calendar-week"></i></span>
-                              </div>
-                                <select class="form-control" name="startyear" id="startyear" onchange="actualizarChart('{{ $gimnasio->id }}')">
-                                    <?php
+<body class="container-fluid">
+    @if ($gimnasio->clientes->count() > 0)
+
+    <div class="card card-teal card-outline">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fal fa-chart-bar"></i> Clientes por cada especialidad de {{$gimnasio->nombre}}
+            </h3>
+
+            <div class="card-tools">
+                <div class="float-right">
+                    <a role="button" id="popover" data-container="body" title="Ayuda" data-toggle="popover"
+                        data-placement="left"
+                        data-content="Este gráfico muestra la cantidad de clientes que tiene cada una de las especialidades que brinda el gimnasio">
+                        <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
+            <canvas id="especialidadesChart"
+                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+    <div class="card card-teal card-outline">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fal fa-chart-line"></i> Clientes mensuales
+            </h3>
+
+            <div class="card-tools">
+                <div class="float-right">
+                    <a role="button" id="popover2" data-container="body" title="Ayuda" data-toggle="popover"
+                        data-placement="left"
+                        data-content="Este gráfico muestra los clientes que se fueron creando en cada mes de un año específico">
+                        <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div style="margin-top: 3px">
+            <div class="input-group float-right" style="width: 120px;margin-right: 18px;">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-calendar-week"></i></span>
+                </div>
+                <select class="form-control" name="startyear" id="startyear"
+                    onchange="actualizarChart('{{ $gimnasio->id }}')">
+                    <?php
                                     for ($year = (int)date('Y'); 2000 <= $year; $year--): ?>
-                                      <option value="<?=$year;?>"><?=$year;?></option>
-                                    <?php endfor; ?>
-                                </select>
-                        </div>
-                    </div>
-                    <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
-                        <canvas id="clientesAnualesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
+                    <option value="<?=$year;?>"><?=$year;?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+        </div>
+        <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
+            <canvas id="clientesAnualesChart"
+                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+        </div>
+        <!-- /.card-body -->
+    </div>
 
-                <div class="row">
-                    <div class="col col-md-6">
-                        <div class="card card-teal card-outline ">
-                            <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="fal fa-chart-pie"></i> Estado de los clientes
-                                </h3>
-                
-                                <div class="card-tools">
-                                    <div class="float-right">
-                                        <a role="button" id="popover3" data-container="body" title="Ayuda" data-toggle="popover" data-placement="left" data-content="Este gráfico muestra el porcentaje de los estados de los clientes del gimnasio">
-                                            <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
-                                <canvas id="estadosChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                            </div>
-                            <!-- /.card-body -->
+    <div class="row">
+        <div class="col col-md-6">
+            <div class="card card-teal card-outline ">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fal fa-chart-pie"></i> Estado de los clientes
+                    </h3>
+
+                    <div class="card-tools">
+                        <div class="float-right">
+                            <a role="button" id="popover3" data-container="body" title="Ayuda" data-toggle="popover"
+                                data-placement="left"
+                                data-content="Este gráfico muestra el porcentaje de los estados de los clientes del gimnasio">
+                                <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                            </a>
                         </div>
                     </div>
                 </div>
-            
-                <!-- /.card -->
+                <!-- /.card-header -->
+                <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
+                    <canvas id="estadosChart"
+                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /.card -->
 
     <script>
         $(function () {
@@ -182,25 +193,25 @@
             $('#popover3').popover();
         })
     </script>
-        <script>
-            var labelsEspe = [];
+    <script>
+        var labelsEspe = [];
             var dataEspe = [];
             dataEstados = []
             colors = ["#98FFB7", "#74C9E8","#A38CFF","#FFDB80","#EAFFA6","#C596FF", "#7DE8E6","#FFEC59","#E8E3FF","#B5E2FF","#D599E8", "#88EBAC","#A5EBA4","#FFE078","#7E7DFF","#81C8EB", "#D1FEED","#C4EBBE","#E1FCEE","#F3E1FD","#96FFB7", "#3DC1EB","#FFD359","#A296FF","#96FFFC","#E6E3FE", "#67EBBC","#DE96FF","#E3FFFC"];
-        </script>
+    </script>
 
-        @foreach ($especialidades as $clave => $valor)
-            <script>
-                labelsEspe.push(" {{ $clave }} ");  
+    @foreach ($especialidades as $clave => $valor)
+    <script>
+        labelsEspe.push(" {{ $clave }} ");  
                 dataEspe.push(" {{ $valor }} "); 
-            </script>           
-        @endforeach
+    </script>
+    @endforeach
 
-        @foreach ($gimnasio->getPorcentajeEstados() as $item)
-            <script>
-                dataEstados.push("{{$item}}");
-            </script>
-        @endforeach
+    @foreach ($gimnasio->getPorcentajeEstados() as $item)
+    <script>
+        dataEstados.push("{{$item}}");
+    </script>
+    @endforeach
 
     {{-- Grafica de clientes x especialidades --}}
     <script>
@@ -263,14 +274,14 @@
         options: chartOptions      
         })
     </script>
-    
+
     <script>
         $(document).ready(function(){
             actualizarChart('{{ $gimnasio->id }}');
         })
     </script>
-    
-    
+
+
     <script>
         var estadosChartCanvas = $('#estadosChart').get(0).getContext('2d')
         var estadosData        = {
@@ -300,9 +311,9 @@
 
         <p>Por favor crea uno para ver los gráficos</p>
     </div>
-@endif
-    </body>
-    @endsection
+    @endif
+</body>
+@endsection
 
 @endsection
 
