@@ -23,7 +23,11 @@
                         <h3 class="card-title"><i class="fal fa-edit"></i> Datos personales</h3>
                         <div class="card-tools">
                             <div class="float-right">
-                                <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                                <h5>
+                                    <i title="Ayuda" id="popover" class="fal fa-question-circle"
+                                        data-content="Ingrese la información del nuevo cliente que desea cargar. Por favor lea atentamente lo que le solicita cada campo">
+                                    </i>
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -71,7 +75,8 @@
                             <div class="form-group col-md-4">
                                 <label for="email" class="col-form-label text-md-right">Correo electrónico</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email">
+                                    name="email" value="{{ old('email') }}" required autocomplete="email"
+                                    placeholder="Ingrese el correo del cliente">
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -181,21 +186,22 @@
                         <div class="form-group row">
                             <div class="form-group text-center col-md-4">
                                 <div id="contenedorFoto">
-                                    
+
                                 </div>
                             </div>
                             <div class="form-group col-md-4" style="margin-top: 6px">
                                 <label for="exampleInputFile">Foto</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input @error('foto') is-invalid @enderror" id="exampleInputFile"
-                                            accept="image/*" name="foto" value="{{old('foto')}}">
+                                        <input type="file" class="custom-file-input @error('foto') is-invalid @enderror"
+                                            id="exampleInputFile" accept="image/*" name="foto" value="{{old('foto')}}">
                                         <label class="custom-file-label" for="exampleInputFile">Seleccione una
                                             foto</label>
                                     </div>
                                 </div>
                                 @error('foto')
-                                <span style="width: 100%; margin-top: .25rem; font-size: 80%; color: #dc3545" role="alert">
+                                <span style="width: 100%; margin-top: .25rem; font-size: 80%; color: #dc3545"
+                                    role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
@@ -219,6 +225,11 @@
 
     </form>
 
+    <script>
+        $(function () {
+            $('#popover').popover();
+        })
+    </script>
     <script>
         $(function () { 
       //Datemask dd/mm/yyyy

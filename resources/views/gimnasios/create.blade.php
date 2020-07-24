@@ -18,7 +18,11 @@
 
                     <div class="card-tools">
                         <div class="float-right">
-                            <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                            <h5>
+                                <i title="Ayuda" id="popover" class="fal fa-question-circle"
+                                    data-content="Ingrese la información necesaria para cargar un nuevo gimnasio al sistema. Lea atentamente los mensajes de error en el caso de que aparezcan">
+                                </i>
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -153,7 +157,7 @@
                 </div>
                 <div class="card-footer float">
                     <div class="float-right">
-                    <a href="{{route('gimnasios.administrar')}}">
+                        <a href="{{route('gimnasios.administrar')}}">
                             <button type="button" class="btn btn-default"><i class="fal fa-times"></i> Cancelar</button>
                         </a>
                         <button type="submit" class="btn btn-primary "><i class="fal fa-check"></i> Guardar</button>
@@ -234,6 +238,11 @@
             <!-- /.modal-dialog -->
         </div>
 
+        <script>
+            $(function () {
+                $('#popover').popover();
+            })
+        </script>
 
         <script>
             $(document).ready(function() {
@@ -331,8 +340,8 @@
 
         </script>
 
-<script>
-    function agregarEspecialidad(){       
+        <script>
+            function agregarEspecialidad(){       
         var token = '{{csrf_token()}}';
         var nombre = $('#nombreEspe').val();
         var monto = $('#montoEspe').val();
@@ -360,7 +369,7 @@
         })
 
     }
-</script>
+        </script>
 
 </body>
 

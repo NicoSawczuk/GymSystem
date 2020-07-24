@@ -24,7 +24,11 @@
                         <h3 class="card-title"><i class="fal fa-edit"></i> Datos personales</h3>
                         <div class="card-tools">
                             <div class="float-right">
-                                <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                                <h5>
+                                    <i title="Ayuda" id="popover" class="fal fa-question-circle"
+                                        data-content="Modifique la información de {{$cliente->nombre}} {{$cliente->apellido}}. Por favor lea atentamente lo que le solicita cada campo">
+                                    </i>
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -57,8 +61,10 @@
                             <div class="form-group col-md-2">
                                 <label for="sexo" class=" col-form-label text-md-right">Sexo</label>
                                 <select name="sexo" id="sexo" class="form-control @error('sexo') is-invalid @enderror">
-                                    <option value="MASCULINO"  {{$cliente->sexo == 'MACULINO' ? 'selected' : ''}}>Masculino</option>
-                                    <option value="FEMENINO" {{$cliente->sexo == 'FEMENINO' ? 'selected' : ''}}>Femenino</option>
+                                    <option value="MASCULINO" {{$cliente->sexo == 'MACULINO' ? 'selected' : ''}}>
+                                        Masculino</option>
+                                    <option value="FEMENINO" {{$cliente->sexo == 'FEMENINO' ? 'selected' : ''}}>Femenino
+                                    </option>
                                     <option value="OTRO" {{$cliente->sexo == 'OTRO' ? 'selected' : ''}}>Otro</option>
                                 </select>
                                 @error('sexo')
@@ -72,7 +78,8 @@
                             <div class="form-group col-md-4">
                                 <label for="email" class="col-form-label text-md-right">Correo electrónico</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ $cliente->email }}" required autocomplete="email">
+                                    name="email" value="{{ $cliente->email }}" required autocomplete="email"
+                                    placeholder="Ingrese el correo del cliente">
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -220,6 +227,11 @@
 
     </form>
 
+    <script>
+        $(function () {
+            $('#popover').popover();
+        })
+    </script>
     <script>
         $(function () { 
       //Datemask dd/mm/yyyy

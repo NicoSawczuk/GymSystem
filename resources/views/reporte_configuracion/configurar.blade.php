@@ -35,7 +35,11 @@
             </h3>
             <div class="card-tools">
                 <div class="float-right">
-                    <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                    <h5>
+                        <i title="Ayuda" id="popover" class="fal fa-question-circle"
+                            data-content="Aquí podrá parametrizar la cabecera de los reportes del sistema. A medida que ingrese información dentro de los campos requeridos verá los resultados y el formato que tendrá la cabecera al momento de generar un reporte">
+                        </i>
+                    </h5>
                 </div>
             </div>
         </div>
@@ -180,7 +184,11 @@
         </form>
     </div>
 
-
+    <script>
+        $(function () {
+            $('#popover').popover();
+        })
+    </script>
 
     @if (session('success'))
     <script>

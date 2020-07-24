@@ -22,7 +22,11 @@
           </h3>
           <div class="card-tools">
             <div class="float-right">
-              <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+              <h5>
+                <i title="Ayuda" id="popover" class="fal fa-question-circle"
+                  data-content="Esta tabla muestra las cuotas que se registraron en {{$gimnasio->nombre }}. Además, presionando en el botón de filtros puede ver resultados más específicos segun lo que desee"></i>
+                </i>
+              </h5>
             </div>
           </div>
         </div>
@@ -87,6 +91,12 @@
       <!-- /.card -->
     </div>
   </div>
+
+  <script>
+    $(function () {
+        $('#popover').popover();
+    })
+  </script>
 
   @if (isset($gimnasio->reporte_configuracion))
   <script>

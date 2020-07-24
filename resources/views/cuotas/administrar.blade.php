@@ -21,13 +21,17 @@
           </h3>
           <div class="card-tools">
             <div class="float-right">
-              <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+              <h5>
+                <i title="Ayuda" id="popover" class="fal fa-question-circle"
+                  data-content="Esta tabla muestra las cuotas que se registraron en todos los gimnasios de {{$gimnasio->user->name }} {{$gimnasio->user->apellido}}. Además, presionando en el botón de filtros puede ver resultados más específicos segun lo que desee">
+                </i>
+              </h5>
             </div>
           </div>
         </div>
         <!-- /.card-header -->
         @if (count($cuotas)>0)
-        
+
         <div class="mt-1 mr-1">
           <div class="float-right">
             <button title="Desplegar filtros" data-toggle="collapse" data-target="#demo" class="btn primary bg-light"><i
@@ -78,7 +82,7 @@
             <table id="tabla" class="table table-head-fixed text-nowrap table-striped table-bordered">
               <thead>
                 <tr>
-                  
+
                   <th>Cliente</th>
                   <th>Gimnasio</th>
                   <th>Fecha de pago</th>
@@ -98,7 +102,7 @@
                     {{ \Carbon\Carbon::create($cuota->fecha_pago)->format('d/m/Y')}}</td>
                   <td>
                     {{ $cuota->especialidad ->nombre}}
-                    
+
                   </td>
                   <td class="text-right">
                     <span class="badge badge-pill badge-warning">${{ $cuota->monto_cuota}}</span>
@@ -137,7 +141,11 @@
   </div>
 
 
-
+  <script>
+    $(function () {
+        $('#popover').popover();
+    })
+  </script>
 
   <script>
     $(function () {

@@ -20,14 +20,19 @@
 
                     <div class="card-tools">
                         <div class="float-right">
-                            <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                            <h5>
+                                <i title="Ayuda" id="popover" class="fal fa-question-circle"
+                                    data-content="Modifique la información de la especialidad {{$especialidad->nombre}}. Por favor lea atentamente lo que le solicita cada campo">
+                                </i>
+                            </h5>
                         </div>
                     </div>
                 </div>
 
 
                 <div class="card-body">
-                    <form method="POST" action="{{route('especialidades.update', [$especialidad->id, $especialidad->slug()])}}">
+                    <form method="POST"
+                        action="{{route('especialidades.update', [$especialidad->id, $especialidad->slug()])}}">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" value="{{ $gimnasio->id }}" name="gimnasio">
@@ -94,6 +99,11 @@
     });
     </script> --}}
 
+        <script>
+            $(function () {
+            $('#popover').popover();
+        })
+        </script>
 
         <script>
             $('#pais').change(function(){

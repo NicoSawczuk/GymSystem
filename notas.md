@@ -8,7 +8,7 @@ Marcar nota (Alt+D)
 - [x] Mirar en las estedísticas que muestran las epecialidades si se controla de que usuario son (solo verificar)
 - [x] Crear estadisticas que muestren cuantos clientes hacen cierta especialidad (pero global, ya que la que existe muestra por gimnasio)
 
-- [ ] Agregar la ayuda a las vistas que no la tienen
+- [x] Agregar la ayuda a las vistas que no la tienen
 
 - [x] Permitir que se agreguen especialidades desde el abm gimnasios
 - [ ] Mejorar la codificación mediante la implementación de variables para guardar consultas que se hacen varias veces en una funcion del backend

@@ -32,7 +32,11 @@
                     <h3 class="card-title text-center"><i class="fal fa-images"></i> Previsualizacion</h3>
                     <div class="card-tools">
                         <div class="float-right">
-                            <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                            <h5>
+                                <i title="Ayuda" id="popover" class="fal fa-question-circle"
+                                    data-content="Previsualización que muestra cómo será el correo electrónico recibido por el cliente al momento en el que se vence su pago mensual">
+                                </i>
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -107,7 +111,11 @@
 
                 <div class="card-tools">
                     <div class="float-right">
-                        <h5><i title="Ayuda" class="fal fa-question-circle"></i></h5>
+                        <h5>
+                            <i title="Ayuda" id="popover2" class="fal fa-question-circle"
+                                data-content="Ingrese la información solicitada para el envío automático de correos electrónicos a sus clientes. A medida que ingresa la información y el mensaje, verá los resultados en la previsualización">
+                            </i>
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -120,7 +128,7 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group row">
-                        <label for="asunto" class="col-md-1 col-form-label">Asunto</label>
+                        <label for="asunto" class="col-md-2 col-form-label">Asunto</label>
                         <div class="col-md-5">
                             <input type="text" name="asunto" class="form-control @error('asunto') is-invalid @enderror"
                                 id="asuntoInput" placeholder="Ingrese el asunto" onkeyup=cambiarAsunto()
@@ -129,7 +137,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="remitente" class="col-md-1 col-form-label">Remitente</label>
+                        <label for="remitente" class="col-md-2 col-form-label">Remitente</label>
                         <div class="col-md-3">
                             <input type="email" maxlength="128" name="remitente"
                                 class="form-control @error('remitente') is-invalid @enderror" id="remitenteInput"
@@ -142,7 +150,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="contenido" class="col-md-1 col-form-label">Contenido</label>
+                        <label for="contenido" class="col-md-2 col-form-label">Contenido</label>
                         <div class="col-md-6">
                             <textarea rows="5" name="contenido"
                                 class="form-control @error('contenido') is-invalid @enderror" id="contenidoInput"
@@ -171,6 +179,13 @@
         </div>
         </form>
     </div>
+
+    <script>
+        $(function () {
+            $('#popover').popover();
+            $('#popover2').popover();
+        })
+    </script>
 
     @if (session('success'))
     <script>
