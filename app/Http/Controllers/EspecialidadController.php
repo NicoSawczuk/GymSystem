@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Cliente;
 use App\Especialidad;
 use App\Gimnasio;
+use App\User;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -164,8 +166,14 @@ class EspecialidadController extends Controller
 
     public function estadistica(Gimnasio $gimnasio, $slug)
     {
-
-
-        return view('especialidades/estadistica');
+        $especialidades = [];
+        $usuario = User::where('id',$gimnasio->user->id)->first();
+        $gimnasios = $usuario->gimnasios;
+        foreach ($gimnasios as $gimnasio){
+            foreach ($gimnasio->especialidades as $especialidad){
+                $especialidades[$especialidad->nombre] = Cliente::where(['gimnasio_id' => $gimnasio->id, 'especialidad_id' => $especialidad->id])->count();
+            }
+        }
+        return view('especialidades/estadistica', compact('especialidades','gimnasio'));
     }
 }

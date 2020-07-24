@@ -6,7 +6,7 @@ Marcar nota (Alt+D)
 - [x] Hacer grafico que me muestre la cantidad de inscriptos de cada mes
 
 - [x] Mirar en las estedísticas que muestran las epecialidades si se controla de que usuario son (solo verificar)
-- [ ] Crear estadisticas que muestren cuantos clientes hacen cierta especialidad (pero global, ya que la que existe muestra por gimnasio)
+- [x] Crear estadisticas que muestren cuantos clientes hacen cierta especialidad (pero global, ya que la que existe muestra por gimnasio)
 
 - [ ] Agregar la ayuda a las vistas que no la tienen
 
@@ -28,7 +28,7 @@ Marcar nota (Alt+D)
 
 - [x] Cambiar los href por href="route(...)". Tanto en las vistas como en el redirect de los controladores
 
-- [ ] Se debe agregar el campo de detalle de la persona para indicar como es y tambien el campo de foto
+- [x] Se debe agregar el campo de detalle de la persona para indicar como es y tambien el campo de foto
 
 - [x] Para el pago de una cuota, no se actualiza el monto pagado de la misma. ARREGLAR ESO
 

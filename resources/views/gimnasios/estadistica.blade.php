@@ -96,7 +96,7 @@
                 <div class="card card-teal card-outline">
                     <div class="card-header">
                       <h3 class="card-title">
-                        <i class="fal fa-chart-bar"></i> Clientes por cada especialidad
+                        <i class="fal fa-chart-bar"></i> Clientes por cada especialidad de {{$gimnasio->nombre}}
                         </h3>
           
                         <div class="card-tools">
@@ -213,7 +213,7 @@
         },
         title: {
             display: true,
-            text: 'Gráfico de clientes por cada especialidad',
+            text: 'Gráfico de clientes por cada especialidad del gimnasio',
             fontSize: 16
         },
         scales: {
