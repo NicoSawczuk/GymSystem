@@ -596,7 +596,7 @@ $('.dt-buttons').css({
           var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
             var datearray1 = data[2].split("/");
             var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
-            if (desde <= newdate1 && hasta >= newdate1 && especialidades.includes(data[3])) {
+            if (hasta >= newdate1 && gimnasios.includes(data[1]) && especialidades.includes(data[3])) {
               return true;
 
             } else {

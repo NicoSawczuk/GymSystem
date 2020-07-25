@@ -32,6 +32,52 @@
         </div>
         <!-- /.card-header -->
         @if (count($cuotas)>0)
+
+        <div class="mt-1 mr-1">
+          <div class="float-right">
+            <button title="Desplegar filtros" data-toggle="collapse" data-target="#demo" class="btn primary bg-light"><i
+                class="far fa-filter"></i></button>
+          </div>
+          <div class="ml-1">
+            <div id="demo" class="collapse">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="desde" class="col-form-label text-md-right">Desde</label>
+                  <input type="date" id="desde" class="form-control" data-inputmask-alias="datetime"
+                    data-inputmask-inputformat="dd/mm/yyyy" data-mask="" im-insert="false" placeholder="dd/mm/yyyy">
+                </div>
+                <div class="col-md-2">
+                  <label for="hasta" class="col-form-label text-md-right">Hasta</label>
+                  <input type="date" id="hasta" class="form-control" data-inputmask-alias="datetime"
+                    data-inputmask-inputformat="dd/mm/yyyy" data-mask="" im-insert="false" placeholder="dd/mm/yyyy">
+                </div>
+                <div class="col-md-3">
+                  <label for="especialidades" class=" col-form-label text-md-right">Especialidades</label>
+                  <select class="select2bs4 select2-hidden-accessible" multiple=""
+                    data-placeholder="Seleccione especialidades" style="width: 100%;" aria-hidden="true"
+                    id="especialidades">
+                    @foreach (Auth::user()->especialidades as $especialidad)
+                    <option value="{{$especialidad->nombre}}">{{ $especialidad->nombre}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label for="estado" class=" col-form-label text-md-right">Estado</label>
+                  <select class="select2bs4 select2-hidden-accessible" multiple=""
+                    data-placeholder="Seleccione el estado" style="width: 100%;" aria-hidden="true" id="estado">
+                    <option value="Activa">Activa</option>
+                    <option value="Vencida">Vencida</option>
+                  </select>
+                </div>
+                <div class="col-md-1">
+                  <label for="" class="col-form-label text-md-right text-white">Filtro</label>
+                  <button id="filtrar" type="button" class="btn btn-dark">Filtrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="mt-2 card-body table-responsive p-0 table-hover text-nowrap">
 
           <div class="table-responsive">
@@ -54,8 +100,7 @@
                   <td class="text-right">
                     {{ \Carbon\Carbon::create($cuota->fecha_pago)->format('d/m/Y')}}</td>
                   <td>
-                    <span class="badge badge-pill badge-light">{{ $cuota->especialidad->nombre }}
-                    </span>
+                    {{ $cuota->especialidad->nombre }}
                   </td>
                   <td class="text-right">
                     <span class="badge badge-pill badge-warning">${{$cuota->monto_cuota}}</span>
@@ -90,11 +135,34 @@
       </div>
       <!-- /.card -->
     </div>
+    <input type="hidden" id="filtros" value="Ningún filtro aplicado.">
   </div>
 
   <script>
     $(function () {
         $('#popover').popover();
+    })
+  </script>
+
+  <script>
+    $(function () {
+    //Datemask dd/mm/yyyy
+    $('#desde').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
+    $('#hasta').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy' });
+    $('.select2bs4').select2({
+        theme: 'bootstrap4'
+    });
+    document.getElementById("desde").max = new Date().toISOString().split("T")[0];
+    document.getElementById("hasta").max = new Date().toISOString().split("T")[0];
+
+    $("#desde").change(function () {
+      var fecha = $(this).val();
+      document.getElementById("hasta").min = fecha;
+    });
+    $("#hasta").change(function () {
+      var fecha = $(this).val();
+      document.getElementById("desde").max = fecha;
+    });
     })
   </script>
 
@@ -155,7 +223,7 @@
                 //El titulo lo saco de un input oculto para poder usar esta misma configuracion para reportes distintos, entonces cambia el titulo segun el reporte.
                 var titulo = 'Listado de cuotas de '+'{{$gimnasio->nombre}}';
                 var autor_reporte = '{{$gimnasio->user->name}} {{$gimnasio->user->apellido}}';
-                var filtros = '';
+                filtros = String($('#filtros').val());
   
                 var titulo_header = "{{$gimnasio->reporte_configuracion->titulo}}"
                 var direccion_header = "{{$gimnasio->reporte_configuracion->calle}} {{$gimnasio->reporte_configuracion->altura}}, {{$gimnasio->reporte_configuracion->ciudad}} {{$gimnasio->reporte_configuracion->provincia}} {{$gimnasio->reporte_configuracion->pais}} "
@@ -203,7 +271,7 @@
                         alignment: 'left'
                       }
                     ],
-                    margin: 20
+                    margin: [20, 10, 20, 20]
                   }
                 });
   
@@ -360,6 +428,390 @@
       });
   </script>
   @endif
+
+
+  {{-- Filtros --}}
+  <script>
+    $(document).ready(function () {
+      var table = $('#tabla').DataTable();
+
+      //un boton con id filtrar
+      $('#filtrar').click(function () {
+
+
+        //aca se obtienen los valores
+        var filtro3 = [];
+        filtro3 = $('#estado').val();
+
+        var filtro4 = [];
+        filtro4 = $('#especialidades').val();
+
+        var filtro1 = $('#desde').val();
+        var filtro1Titulo = moment(filtro1).format('DD/MM/YYYY');
+        if (filtro1 != "") {
+          filtro1 = moment(filtro1).format('YYYYMMDD');
+        }
+
+        var filtro2 = $('#hasta').val();
+        var filtro2Titulo = moment(filtro2).format('DD/MM/YYYY');
+        if (filtro2 != "") {
+          filtro2 = moment(filtro2).format('YYYYMMDD');
+        }
+
+        //no olvidarme de volver a poner (pop) las filas
+        //esto es por si se realizo algun filtro asi se vuelve a cargar el datatable
+
+        $.fn.dataTable.ext.search.pop(
+          function (settings, data, dataIndex) {
+            if (1) {
+              return true;
+            }
+            return false;
+          }
+        );
+        table.draw();
+
+        if (filtro3 != "") {
+          var estado = filtro3;
+          console.log(estado);
+        }
+        if (filtro4 != "") {
+          var especialidades = filtro4;
+          console.log(especialidades);
+        }
+        if (filtro1 != "") {
+          var desde = filtro1;
+          console.log(desde);
+        }
+        if (filtro2 != "") {
+          var hasta = filtro2;
+          console.log(hasta);
+        }
+        filtros = "";
+        if (filtro1 == "" && filtro2 == "" && filtro3 == "" && filtro4 == "") {
+          console.log('filtro 0');
+          var filtros = "Ningún filtro aplicado.";
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            if (true) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        if (filtro1 != "" && filtro2 == "" && filtro3 == "" && filtro4 == "") {
+          console.log('filtro 1');
+          var filtros = "F. desde: " + filtro1Titulo+".";
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (desde <= newdate1) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+
+        else if (filtro1 != "" && filtro2 != "" && filtro3 == "" && filtro4 == "") {
+          console.log('filtro 2');
+          var filtros = "F. desde: " + filtro1Titulo+" y F. hasta: " + filtro2Titulo;
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (desde <= newdate1 && hasta >= newdate1) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+
+        else if (filtro1 != "" && filtro2 != "" && filtro3 != "" && filtro4 == "") {
+          console.log('filtro 3');
+          var filtros = "F. desde: " + filtro1Titulo+", F. hasta: " + filtro2Titulo +" y Estado: "+String(filtro3);
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (desde <= newdate1 && hasta >= newdate1 && estado.includes(data[6])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 != "" && filtro2 != "" && filtro3 != "" && filtro4 != "") {
+          console.log('filtro 4');
+          var filtros = "F. desde: " + filtro1Titulo+", F. hasta: " + filtro2Titulo +", Estado: "+String(filtro3) +" y Especialidades: "+ String(filtro4);
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (desde <= newdate1 && hasta >= newdate1 && estado.includes(data[6]) && especialidades.includes(data[2])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 == "" && filtro2 != "" && filtro3 != "" && filtro4 != "") {
+          console.log('filtro 5');
+          var filtros = "F. hasta: "+filtro2Titulo+", Gimnasios: "+String(filtro3)+" y Especialidades: "+String(filtro4); 
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (hasta >= newdate1 && estado.includes(data[6]) && especialidades.includes(data[2])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 == "" && filtro2 != "" && filtro3 == "" && filtro4 != "") {
+          console.log('filtro 6');
+          var filtros = "F. hasta: "+filtro2Titulo+" y Especialidades: "+String(filtro4);
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (hasta >= newdate1 && especialidades.includes(data[2])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 == "" && filtro2 != "" && filtro3 == "" && filtro4 == "") {
+          console.log('filtro 7');
+          var filtros = "F. hasta: "+filtro2Titulo+".";
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (hasta >= newdate1) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+
+        else if (filtro1 == "" && filtro2 == "" && filtro3 != "" && filtro4 != "") {
+          console.log('filtro 8');
+          var filtros = "Estado: "+String(filtro3)+" y Especialidades: "+String(filtro4);
+          console.log(filtros);
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            if (estado.includes(data[6]) && especialidades.includes(data[2])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 == "" && filtro2 == "" && filtro3 != "" && filtro4 == "") {
+          console.log('filtro 9');
+          var filtros = "Estado: "+String(filtro3);
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            if (estado.includes(data[6])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 != "" && filtro2 == "" && filtro3 != "" && filtro4 == "") {
+          console.log('filtro 10');
+          var filtros = "F. desde: " + filtro1Titulo+"y Estado: "+String(filtro3)+".";
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (desde <= newdate1 && estado.includes(data[6])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 == "" && filtro2 != "" && filtro3 != "" && filtro4 == "") {
+          console.log('filtro 11');
+          var filtros = "F. hasta: "+filtro2Titulo+"y Estado: "+String(filtro3)+".";
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (hasta >= newdate1 && estado.includes(data[6])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+
+        else if (filtro1 == "" && filtro2 == "" && filtro3 == "" && filtro4 != "") {
+          console.log('filtro 12');
+          var filtros = "Especialidades: "+String(filtro4)+".";
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            if (especialidades.includes(data[2])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 != "" && filtro2 == "" && filtro3 == "" && filtro4 != "") {
+          console.log('filtro 13');
+          var filtros = "F. desde: "+filtro1Titulo+" y Especialidades: "+String(filtro4);
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (desde <= newdate1 && especialidades.includes(data[2])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 != "" && filtro2 != "" && filtro3 == "" && filtro4 != "") {
+          console.log('filtro 14');
+          var filtros = "F. desde: " + filtro1Titulo+", F. hasta: " + filtro2Titulo +" y Especialidades: "+String(filtro4);
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (desde <= newdate1 && hasta >= newdate1 && especialidades.includes(data[2])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+        }
+        else if (filtro1 != "" && filtro2 == "" && filtro3 != "" && filtro4 != "") {
+          console.log('filtro 15');
+          var filtros = "F. desde: " + filtro1Titulo+", Estado: " + String(filtro3) +" y Especialidades: "+String(filtro4);
+          var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+            var datearray1 = data[1].split("/");
+            var newdate1 =   datearray1[2] + datearray1[1] + datearray1[0];
+            if (desde <= newdate1 && estado.includes(data[6]) && especialidades.includes(data[2])) {
+              return true;
+
+            } else {
+              return false;
+
+            }
+          }
+
+          $.fn.dataTable.ext.search.push(filtradoTabla)
+
+          table.draw()
+
+          
+
+        }
+        $('#filtros').val(String(filtros));
+
+      });
+    });
+  </script>
 
 </body>
 @endsection
