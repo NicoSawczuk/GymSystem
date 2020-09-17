@@ -17,7 +17,7 @@ Marcar nota (Alt+D)
 - [x] Agregar la pagina de cuotas, tanto en general como en el perfil de cada ciente
 - [x] Preparar la configuración del reporte (osea la cabecera)
 
-- [ ] Hacer reportes en las tablas que lo necesiten
+- [x] Hacer reportes en las tablas que lo necesiten
 - [ ] Preparar la pagina de planes y ver el tema de pagarlo con mercadopago
 
 

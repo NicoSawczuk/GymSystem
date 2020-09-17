@@ -342,33 +342,33 @@
 
         <script>
             function agregarEspecialidad(){       
-        var token = '{{csrf_token()}}';
-        var nombre = $('#nombreEspe').val();
-        var monto = $('#montoEspe').val();
-        var descripcion = $('#descripcionEspe').val();
-        $.ajax({
-              url:"{{ route('especialidades.ajax_create') }}",
-              method:"POST",
-              data: {_token:token, nombre:nombre, monto:monto, descripcion:descripcion},
-              success:function(result){
-                if (result[0] === "1"){
-                    $('#modal-default-add-espe').modal('hide');
-                    $('#nombreEspe').val('');
-                    $('#montoEspe').val('');
-                    $('#descripcionEspe').val('');
-                    Notiflix.Notify.Success('Especialidad '+result[1]['nombre']+' agregada con éxito');
-                    $("#selectEspecialidad").append(new Option(String(result[1]['nombre']), result[1]['id']));
-                }else{
-                    var errores ="";
-                    for (let i = 0; i < result.length; i++) {
-                        errores += result[i]+'\n';
+                var token = '{{csrf_token()}}';
+                var nombre = $('#nombreEspe').val();
+                var monto = $('#montoEspe').val();
+                var descripcion = $('#descripcionEspe').val();
+                $.ajax({
+                    url:"{{ route('especialidades.ajax_create') }}",
+                    method:"POST",
+                    data: {_token:token, nombre:nombre, monto:monto, descripcion:descripcion},
+                    success:function(result){
+                        if (result[0] === "1"){
+                            $('#modal-default-add-espe').modal('hide');
+                            $('#nombreEspe').val('');
+                            $('#montoEspe').val('');
+                            $('#descripcionEspe').val('');
+                            Notiflix.Notify.Success('Especialidad '+result[1]['nombre']+' agregada con éxito');
+                            $("#selectEspecialidad").append(new Option(String(result[1]['nombre']), result[1]['id']));
+                        }else{
+                            var errores ="";
+                            for (let i = 0; i < result.length; i++) {
+                                errores += result[i]+'\n';
+                            }
+                            Notiflix.Notify.Failure(errores);
+                        }
                     }
-                    Notiflix.Notify.Failure(errores);
-                }
-            }
-        })
+                })
 
-    }
+            }
         </script>
 
 </body>
