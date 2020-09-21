@@ -37065,6 +37065,9 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 //require('./components/Example');
 
+
+__webpack_require__(/*! ./components/Prueba */ "./resources/js/components/Prueba.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -37109,6 +37112,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Prueba.js":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Prueba.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\nico2\\Documents\\GymSystem\\gymsystem\\resources\\js\\components\\Prueba.js'");
 
 /***/ }),
 
