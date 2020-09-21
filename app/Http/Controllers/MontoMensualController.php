@@ -108,4 +108,13 @@ class MontoMensualController extends Controller
     {
         //
     }
+
+    //API
+
+    public function getMonto(Request $request){
+        $now = Carbon::now();
+        $monto = MontoMensual::where(['mes' => $now->month, 'ano' => $now->year])->get('monto');
+
+        return response()->json($monto, 200);
+    }
 }

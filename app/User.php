@@ -51,6 +51,10 @@ class User extends Authenticatable
         return $this->hasMany(CuotaUsuario::class);
     }
 
+    public function pagos(){
+        return $this->hasMany(PagoUsuario::class);
+    }
+
     //Metodos
     public function slug(){
         return Str::slug($this->name)."-".Str::slug($this->apellido);

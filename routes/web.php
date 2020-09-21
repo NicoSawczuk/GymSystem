@@ -246,5 +246,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/descuentos/{descuento}-{slug}', 'DescuentoController@destroy')->name('descuentos.destroy')
     ->middleware('can:users.edit');
 
+
+    //Pagos
+    Route::get('/pagos/realizar_pago', 'PagoUsuarioController@prueba')->name('pagos.index');
+
 });
 
