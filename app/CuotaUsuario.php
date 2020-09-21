@@ -17,4 +17,8 @@ class CuotaUsuario extends Model
     public function descuento(){
         return $this->belongsTo(Descuento::class);
     }
+
+    public function pago_usuario(){
+        return $this->hasOne(PagoUsuario::class);
+    }
 }
