@@ -248,7 +248,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Pagos
-    Route::get('/pagos/realizar_pago', 'PagoUsuarioController@prueba')->name('pagos.index');
+    Route::get('/pagos/realizar_pago', 'PagoUsuarioController@index')->name('pagos.index');
 
 });
 

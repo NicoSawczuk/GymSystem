@@ -13,5 +13,5 @@ require('./bootstrap');
  */
 
 //require('./components/Example');
-require('./components/Prueba');
+require('./pages/RealizarPago');
 
