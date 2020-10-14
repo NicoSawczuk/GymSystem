@@ -116,4 +116,14 @@ class DescuentoController extends Controller
             return '0';
         }
     }
+
+    public function checkCodigo(Request $request){
+        if (Descuento::where('codigo',$request->get('codigo'))->exists()){
+            $descuento = Descuento::where('codigo',$request->get('codigo'))->first();
+        }else{
+            $descuento = 0;
+        }
+
+        return response()->json($descuento, 200);
+    }
 }

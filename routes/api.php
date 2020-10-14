@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/pagos/monto', 'MontoMensualController@getMonto')->name('pagos.getMonto');
+
+Route::get('/codigos/check', 'DescuentoController@checkCodigo')->name('codigos.check');
