@@ -71,7 +71,7 @@ export default function CodeForm({ handleChangeMont }) {
     return (
         <>
             <form className="form-inline ">
-                <label for="codigo" class="col-form-label text-md-left text-muted">Introducir código de descuento</label>
+                <label className="col-form-label text-md-left text-muted">Introducir código de descuento</label>
                 <div className="input-group mb-8" >
                     <input className="form-control" type="text" name="codigo" value={form.codigo} placeholder="Codigo de descuento" style={
                         enterCode && codeSuccess && !loading
@@ -109,7 +109,7 @@ export default function CodeForm({ handleChangeMont }) {
                     </div>
 
                 </div>
-                <small class="form-text" style={{ color: stateColor }}>{stateInfo}</small>
+                <small className="form-text" style={{ color: stateColor }}>{stateInfo}</small>
             </form>
         </>
 

@@ -3,10 +3,14 @@ import PriceBox from './PriceBox';
 import CodeForm from './CodeForm';
 import Loading from '../components/Loading'
 import { getMonto } from '../services/MontoService'
+import ModalPayment from './ModalPayment';
 
 export default function Card() {
     const [loading, setLoading] = useState(true)
     const [monto, setMonto] = useState(0);
+    const [modal, setModal] = useState(false);
+
+    const toggle = () => setModal(!modal);
 
     useEffect(function () {
         getMonto()
@@ -32,7 +36,7 @@ export default function Card() {
                         <div className="mt-4 row justify-content-center">
                             <div className="col-md-4">
 
-                                <div className="card card-teal card-outline" style={{borderRadius: '30px'}}>
+                                <div className="card card-teal card-outline" style={{ borderRadius: '30px' }}>
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-md-3"></div>
@@ -64,6 +68,18 @@ export default function Card() {
                                                 </center>
                                             </div>
                                             <div className="col-md-2"></div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-3"></div>
+                                            <div className="col-md-6">
+                                                {monto === 0
+                                                    ?
+                                                    <button className="btn btn-primary btn-block" >Continuar</button>
+                                                    :
+                                                    (<button className="btn btn-primary btn-block" onClick={toggle}>Pagar</button>)}
+                                                <ModalPayment modal={modal} toggle={toggle} monto={monto} />
+                                            </div>
+                                            <div className="col-md-3"></div>
                                         </div>
                                     </div>
                                 </div>
