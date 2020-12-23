@@ -28,10 +28,14 @@
 
     <div id="root">
 
+        
     </div>
+    <input type="hidden" name="user_id_blade" id="user_id_blade" value="{{Auth::id()}}">
 
-
-
+    <script type="text/javascript">
+        const API_URL = '{{ env("API_URL") }}';
+        const PUBLIC_KEY = '{{ env("MP_PUBLIC_KEY_TEST") }}';
+    </script>
     <script src="{{asset('js/app.js')}}"></script>
     <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 

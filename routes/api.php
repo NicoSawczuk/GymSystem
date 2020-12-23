@@ -17,7 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+//Consultas para el pago
 Route::get('/pagos/monto', 'MontoMensualController@getMonto')->name('pagos.getMonto');
 
 Route::get('/codigos/check', 'DescuentoController@checkCodigo')->name('codigos.check');
+
+//MercadoPago
+Route::post('/pagos/finalizar_pago', 'PagoUsuarioController@finalizarPago')->name('pagos.finalizarPago');

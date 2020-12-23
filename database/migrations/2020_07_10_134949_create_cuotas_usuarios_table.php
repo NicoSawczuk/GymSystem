@@ -23,7 +23,7 @@ class CreateCuotasUsuariosTable extends Migration
             $table->longText('detalle')->nullable();
             $table->boolean('vencido')->default(0);
 
-            $table->unsignedBigInteger('descuento_id');
+            $table->unsignedBigInteger('descuento_id')->nullable();
             $table->foreign('descuento_id')->references('id')->on('descuentos');
 
             $table->unsignedBigInteger('user_id');

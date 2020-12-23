@@ -95899,6 +95899,11 @@ function Card() {
       modal = _useState6[0],
       setModal = _useState6[1];
 
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState8 = _slicedToArray(_useState7, 2),
+      code = _useState8[0],
+      setCode = _useState8[1];
+
   var toggle = function toggle() {
     return setModal(!modal);
   };
@@ -95915,6 +95920,10 @@ function Card() {
 
   var handleChangeMont = function handleChangeMont(value) {
     setMonto(monto - monto / parseInt(value));
+  };
+
+  var handleGetCode = function handleGetCode(value) {
+    setCode(value);
   };
 
   return (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Loading__WEBPACK_IMPORTED_MODULE_3__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -95947,7 +95956,8 @@ function Card() {
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-6"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CodeForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      handleChangeMont: handleChangeMont
+      handleChangeMont: handleChangeMont,
+      handleGetCode: handleGetCode
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-3"
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -96046,7 +96056,8 @@ function Card() {
     }, "Pagar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ModalPayment__WEBPACK_IMPORTED_MODULE_5__["default"], {
       modal: modal,
       toggle: toggle,
-      monto: monto
+      monto: monto,
+      code: code
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-3"
     })))))))))
@@ -96087,7 +96098,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function CodeForm(_ref) {
-  var handleChangeMont = _ref.handleChangeMont;
+  var handleChangeMont = _ref.handleChangeMont,
+      handleGetCode = _ref.handleGetCode;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -96130,6 +96142,10 @@ function CodeForm(_ref) {
     handleChangeMont(value);
   };
 
+  var sendCode = function sendCode(value) {
+    handleGetCode(value);
+  };
+
   var validarCodigo = function validarCodigo(code) {
     var codeDate = new Date(code.fecha_expiracion.slice(0, 4), parseInt(code.fecha_expiracion.slice(5, 7)) - 1, code.fecha_expiracion.slice(8, 10));
 
@@ -96141,6 +96157,7 @@ function CodeForm(_ref) {
       setInputDisable(true);
       setStateInfo('Código canjeado');
       setStateColor('#25A17E');
+      sendCode(code.codigo);
     } else if (code.usado != 0) {
       setLoading(false);
       setEnterCode(true);
@@ -96293,148 +96310,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var _static_images_logo_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../static/images/logo.png */ "./resources/js/static/images/logo.png");
-/* harmony import */ var _static_images_logo_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_static_images_logo_png__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _PaymentForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaymentForm */ "./resources/js/components/PaymentForm.js");
+/* harmony import */ var _hooks_useMercadoPago__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useMercadoPago */ "./resources/js/hooks/useMercadoPago.js");
 
 
 
+
+var user_prueba = '{"id":662275169,"nickname":"TETE7271386","password":"qatest969","site_status":"active","email":"test_user_14153567@testuser.com"}';
+var user_prueba2 = '{"id":662287016,"nickname":"TT685497","password":"qatest1184","site_status":"active","email":"test_user_36638794@testuser.com"}';
 function ModalPayment(_ref) {
   var modal = _ref.modal,
       toggle = _ref.toggle,
       className = _ref.className,
-      monto = _ref.monto;
+      monto = _ref.monto,
+      code = _ref.code;
+
+  var _useMercadoPago = Object(_hooks_useMercadoPago__WEBPACK_IMPORTED_MODULE_3__["default"])(),
+      guessPaymentMethod = _useMercadoPago.guessPaymentMethod,
+      getCardToken = _useMercadoPago.getCardToken;
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var timer = setTimeout(function () {
-      window.Mercadopago.setPublishableKey("TEST-68ad2718-9f77-4a1e-939e-167517b30160");
+      //Guardo en el form el id del user
+      var user_id_blade = document.getElementById('user_id_blade').value;
+      var user_id = document.getElementById('user_id'); //Obtenemos el id del usuario (del archivo .blade.php del pago) autenticado y lo guardamos en la variable user_id
+
+      {
+        user_id_blade ? user_id.setAttribute('value', user_id_blade) : null;
+      } //Agregamos el codigo de descuento que ingreso el usuario
+
+      {
+        code ? document.getElementById('discount_code').value = code : null;
+      } //Obtenemos la clave publica para MP y obtenemos los tipos de identificación para el formulario de MP
+
+      window.Mercadopago.setPublishableKey(PUBLIC_KEY);
       window.Mercadopago.getIdentificationTypes();
     }, 50);
     return function () {
       return clearTimeout(timer);
     };
-  }, [toggle]); //Funciones
-
-  function guessPaymentMethod() {
-    var cardnumber = document.getElementById("cardNumber").value;
-
-    if (cardnumber.length >= 6) {
-      var bin = cardnumber.substring(0, 6);
-      window.Mercadopago.getPaymentMethod({
-        "bin": bin
-      }, setPaymentMethod);
-    }
-  }
-
-  ;
-
-  function setPaymentMethod(status, response) {
-    if (status == 200) {
-      var paymentMethod = response[0];
-      document.getElementById('paymentMethodId').value = paymentMethod.id;
-      document.getElementById('cardNumber').style.backgroundImage = 'url(' + paymentMethod.thumbnail + ')';
-
-      if (paymentMethod.additional_info_needed.includes("issuer_id")) {
-        getIssuers(paymentMethod.id);
-      } else {
-        document.getElementById('issuerInput').classList.add("hidden");
-        getInstallments(paymentMethod.id, document.getElementById('amount').value);
-      }
-    } else {
-      alert("payment method info error: ".concat(response));
-    }
-  }
-
-  function getIssuers(paymentMethodId) {
-    window.Mercadopago.getIssuers(paymentMethodId, setIssuers);
-  }
-
-  function setIssuers(status, response) {
-    if (status == 200) {
-      var issuerSelect = document.getElementById('issuer');
-      response.forEach(function (issuer) {
-        var opt = document.createElement('option');
-        opt.text = issuer.name;
-        opt.value = issuer.id;
-        issuerSelect.appendChild(opt);
-      });
-
-      if (issuerSelect.options.length <= 1) {
-        document.getElementById('issuerInput').classList.add("hidden");
-      } else {
-        document.getElementById('issuerInput').classList.remove("hidden");
-      }
-
-      getInstallments(document.getElementById('paymentMethodId').value, document.getElementById('amount').value, issuerSelect.value);
-    } else {
-      alert("issuers method info error: ".concat(response));
-    }
-  }
-
-  function getInstallments(paymentMethodId, amount, issuerId) {
-    window.Mercadopago.getInstallments({
-      "payment_method_id": paymentMethodId,
-      "amount": parseFloat(amount),
-      "issuer_id": issuerId ? parseInt(issuerId) : undefined
-    }, setInstallments);
-  }
-
-  function setInstallments(status, response) {
-    if (status == 200) {
-      document.getElementById('installments').options.length = 0;
-      response[0].payer_costs.forEach(function (payerCost) {
-        var opt = document.createElement('option');
-        opt.text = payerCost.recommended_message;
-        opt.value = payerCost.installments;
-        document.getElementById('installments').appendChild(opt);
-      });
-    } else {
-      alert("installments method info error: ".concat(response));
-    }
-  } //Update offered installments when issuer changes
-
-
-  function updateInstallmentsForIssuer(event) {
-    window.Mercadopago.getInstallments({
-      "payment_method_id": document.getElementById('paymentMethodId').value,
-      "amount": parseFloat(document.getElementById('amount').value),
-      "issuer_id": parseInt(document.getElementById('issuer').value)
-    }, setInstallments);
-  } //Proceed with payment
-
-
-  function getCardToken() {
-    doSubmit = false;
-
-    if (!doSubmit) {
-      var $form = document.getElementById('paymentForm');
-      window.Mercadopago.createToken($form, setCardTokenAndPay);
-      return false;
-    }
-  }
-
-  ;
-
-  function setCardTokenAndPay(status, response) {
-    if (status == 200 || status == 201) {
-      var form = document.getElementById('paymentForm');
-      var card = document.createElement('input');
-      card.setAttribute('name', 'token');
-      card.setAttribute('type', 'hidden');
-      card.setAttribute('value', response.id);
-      form.appendChild(card);
-      doSubmit = true;
-      form.submit(); //Submit form data to your backend
-    } else {
-      alert("Verify filled data!\n" + JSON.stringify(response, null, 4));
-    }
-  }
-
-  ;
+  }, [toggle]);
 
   var handleChangeCardNumber = function handleChangeCardNumber(event) {
     guessPaymentMethod();
   };
 
   var handleSubmit = function handleSubmit(event) {
+    event.preventDefault();
     getCardToken();
   };
 
@@ -96445,7 +96367,42 @@ function ModalPayment(_ref) {
       style: {
         maxWidth: '800px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PaymentForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      monto: monto,
+      code: code,
+      handleChangeCardNumber: handleChangeCardNumber,
+      handleSubmit: handleSubmit
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-secondary",
+      onClick: toggle
+    }, "Cancelar"))))
+  );
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/PaymentForm.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/PaymentForm.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PaymentForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _static_images_logo_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../static/images/logo.png */ "./resources/js/static/images/logo.png");
+/* harmony import */ var _static_images_logo_png__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_static_images_logo_png__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function PaymentForm(_ref) {
+  var monto = _ref.monto,
+      code = _ref.code,
+      handleChangeCardNumber = _ref.handleChangeCardNumber,
+      handleSubmit = _ref.handleSubmit;
+  return (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
       className: "payment-form dark"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container_payment"
@@ -96462,13 +96419,23 @@ function ModalPayment(_ref) {
     }, "$", monto))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "payment-details"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      action: "/process_payment",
       method: "post",
       id: "paymentForm",
       onSubmit: handleSubmit
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       className: "title"
     }, "Detalles del cliente"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      "class": "row"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      "class": "form-group col"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      "for": "email"
+    }, "E-Mail"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      id: "email",
+      name: "email",
+      type: "email",
+      "class": "form-control"
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "row"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "form-group col-sm-5"
@@ -96596,6 +96563,10 @@ function ModalPayment(_ref) {
       className: "form-group col-sm-12"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "hidden",
+      name: "user_id",
+      id: "user_id"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "hidden",
       name: "transactionAmount",
       id: "amount",
       value: "10"
@@ -96605,8 +96576,9 @@ function ModalPayment(_ref) {
       id: "paymentMethodId"
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "hidden",
-      name: "description",
-      id: "description"
+      name: "discount_code",
+      id: "discount_code",
+      value: code
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
       className: "btn btn-primary btn-block"
@@ -96614,11 +96586,8 @@ function ModalPayment(_ref) {
       className: "footer_logo"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       id: "horizontal_logo",
-      src: _static_images_logo_png__WEBPACK_IMPORTED_MODULE_2___default.a
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-secondary",
-      onClick: toggle
-    }, "Cancelar"))))
+      src: _static_images_logo_png__WEBPACK_IMPORTED_MODULE_1___default.a
+    }))))
   );
 }
 
@@ -96669,6 +96638,159 @@ function PriceBox(_ref) {
 
 /***/ }),
 
+/***/ "./resources/js/hooks/useMercadoPago.js":
+/*!**********************************************!*\
+  !*** ./resources/js/hooks/useMercadoPago.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return useMonto; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_MontoService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/MontoService */ "./resources/js/services/MontoService.js");
+/* harmony import */ var _services_PagoService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/PagoService */ "./resources/js/services/PagoService.js");
+
+
+
+function useMonto() {
+  //Funciones
+  function guessPaymentMethod() {
+    var cardnumber = document.getElementById("cardNumber").value;
+
+    if (cardnumber.length >= 6) {
+      var bin = cardnumber.substring(0, 6);
+      window.Mercadopago.getPaymentMethod({
+        "bin": bin
+      }, setPaymentMethod);
+    }
+  }
+
+  ;
+
+  function setPaymentMethod(status, response) {
+    if (status == 200) {
+      var paymentMethod = response[0];
+      document.getElementById('paymentMethodId').value = paymentMethod.id;
+      document.getElementById('cardNumber').style.backgroundImage = 'url(' + paymentMethod.thumbnail + ')';
+
+      if (paymentMethod.additional_info_needed.includes("issuer_id")) {
+        getIssuers(paymentMethod.id);
+      } else {
+        document.getElementById('issuerInput').classList.add("hidden");
+        getInstallments(paymentMethod.id, document.getElementById('amount').value);
+      }
+    } else {
+      alert("payment method info error: ".concat(response));
+    }
+  }
+
+  function getIssuers(paymentMethodId) {
+    window.Mercadopago.getIssuers(paymentMethodId, setIssuers);
+  }
+
+  function setIssuers(status, response) {
+    if (status == 200) {
+      var issuerSelect = document.getElementById('issuer');
+      response.forEach(function (issuer) {
+        var opt = document.createElement('option');
+        opt.text = issuer.name;
+        opt.value = issuer.id;
+        issuerSelect.appendChild(opt);
+      });
+
+      if (issuerSelect.options.length <= 1) {
+        document.getElementById('issuerInput').classList.add("hidden");
+      } else {
+        document.getElementById('issuerInput').classList.remove("hidden");
+      }
+
+      getInstallments(document.getElementById('paymentMethodId').value, document.getElementById('amount').value, issuerSelect.value);
+    } else {
+      alert("issuers method info error: ".concat(response));
+    }
+  }
+
+  function getInstallments(paymentMethodId, amount, issuerId) {
+    window.Mercadopago.getInstallments({
+      "payment_method_id": paymentMethodId,
+      "amount": parseFloat(amount),
+      "issuer_id": issuerId ? parseInt(issuerId) : undefined
+    }, setInstallments);
+  }
+
+  function setInstallments(status, response) {
+    if (status == 200) {
+      document.getElementById('installments').options.length = 0;
+      response[0].payer_costs.forEach(function (payerCost) {
+        var opt = document.createElement('option');
+        opt.text = payerCost.recommended_message;
+        opt.value = payerCost.installments;
+        document.getElementById('installments').appendChild(opt);
+      });
+    } else {
+      alert("installments method info error: ".concat(response));
+    }
+  } //Proceed with payment
+
+
+  var doSubmit = false;
+
+  function getCardToken() {
+    if (!doSubmit) {
+      var $form = document.getElementById('paymentForm');
+      window.Mercadopago.createToken($form, setCardTokenAndPay);
+      return false;
+    }
+  }
+
+  ;
+
+  function setCardTokenAndPay(status, response) {
+    if (status == 200 || status == 201) {
+      var form = document.getElementById('paymentForm');
+      var card = document.createElement('input');
+      document.getElementById('paymentForm').action = "".concat(API_URL, "/pagos/finalizar_pago");
+      card.setAttribute('name', 'token');
+      card.setAttribute('type', 'hidden');
+      card.setAttribute('value', response.id);
+      form.appendChild(card);
+      doSubmit = true;
+      var pago = {
+        token: form.token.value,
+        installments: parseInt(form.installments.value),
+        transaction_amount: parseFloat(form.transactionAmount.value),
+        description: "Point Mini a maquininha que dá o dinheiro de suas vendas na hora",
+        payment_method_id: form.paymentMethodId.value,
+        payer: {
+          email: form.email.value,
+          identification: {
+            number: parseInt(form.docNumber.value),
+            type: form.docType.value
+          }
+        }
+      };
+      console.log(pago);
+      Object(_services_PagoService__WEBPACK_IMPORTED_MODULE_2__["postPago"])(pago).then(function (_ref) {
+        var result = _ref.result;
+        console.log(result);
+      }); //form.submit(); //Submit form data to your backend
+    } else {
+      alert("Verify filled data!\n" + JSON.stringify(response, null, 4));
+    }
+  }
+
+  ;
+  return {
+    guessPaymentMethod: guessPaymentMethod,
+    getCardToken: getCardToken
+  };
+}
+
+/***/ }),
+
 /***/ "./resources/js/pages/RealizarPago.js":
 /*!********************************************!*\
   !*** ./resources/js/pages/RealizarPago.js ***!
@@ -96710,15 +96832,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkCode", function() { return checkCode; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings */ "./resources/js/services/settings.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 
 
 function checkCode(_x) {
@@ -96733,9 +96853,9 @@ function _checkCode() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_2___default()({
+            return axios__WEBPACK_IMPORTED_MODULE_1___default()({
               method: 'get',
-              url: "".concat(_settings__WEBPACK_IMPORTED_MODULE_1__["API_URL"], "/codigos/check"),
+              url: "".concat(API_URL, "/codigos/check"),
               params: {
                 codigo: form.codigo
               }
@@ -96780,15 +96900,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMonto", function() { return getMonto; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings */ "./resources/js/services/settings.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 
 
 function getMonto() {
@@ -96803,9 +96921,9 @@ function _getMonto() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_2___default()({
+            return axios__WEBPACK_IMPORTED_MODULE_1___default()({
               method: 'get',
-              url: "".concat(_settings__WEBPACK_IMPORTED_MODULE_1__["API_URL"], "/pagos/monto")
+              url: "".concat(API_URL, "/pagos/monto")
             });
 
           case 2:
@@ -96826,17 +96944,63 @@ function _getMonto() {
 
 /***/ }),
 
-/***/ "./resources/js/services/settings.js":
-/*!*******************************************!*\
-  !*** ./resources/js/services/settings.js ***!
-  \*******************************************/
-/*! exports provided: API_URL */
+/***/ "./resources/js/services/PagoService.js":
+/*!**********************************************!*\
+  !*** ./resources/js/services/PagoService.js ***!
+  \**********************************************/
+/*! exports provided: postPago */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_URL", function() { return API_URL; });
-var API_URL = 'http://192.168.100.65:8000/api';
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postPago", function() { return postPago; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+function postPago(_x) {
+  return _postPago.apply(this, arguments);
+}
+
+function _postPago() {
+  _postPago = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(pago) {
+    var res;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_1___default()({
+              method: 'post',
+              url: "https://api.mercadopago.com/v1/payments",
+              headers: {
+                'Authorization': "Bearer ".concat(PUBLIC_KEY)
+              },
+              data: pago
+            });
+
+          case 2:
+            res = _context.sent;
+            return _context.abrupt("return", {
+              result: res
+            });
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _postPago.apply(this, arguments);
+}
 
 /***/ }),
 
@@ -96869,8 +97033,8 @@ module.exports = "/images/logo.png?5f342bd1a96e033599f56225d1ac551d";
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\nico2\Documents\GymSystem\gymsystem\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\nico2\Documents\GymSystem\gymsystem\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\gymsystem\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\gymsystem\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -1,4 +1,4 @@
-import { API_URL } from './settings'
+
 import axios from 'axios'
 
 export async function getMonto(){

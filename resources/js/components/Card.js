@@ -9,6 +9,7 @@ export default function Card() {
     const [loading, setLoading] = useState(true)
     const [monto, setMonto] = useState(0);
     const [modal, setModal] = useState(false);
+    const [code, setCode] = useState('');
 
     const toggle = () => setModal(!modal);
 
@@ -26,6 +27,10 @@ export default function Card() {
 
     const handleChangeMont = (value) => {
         setMonto(monto - monto / parseInt(value))
+    }
+
+    const handleGetCode = (value) => {
+        setCode(value)
     }
 
     return (
@@ -48,7 +53,7 @@ export default function Card() {
                                         <div className="row mt-2">
                                             <div className="col-md-3"></div>
                                             <div className="col-md-6">
-                                                <CodeForm handleChangeMont={handleChangeMont} />
+                                                <CodeForm handleChangeMont={handleChangeMont} handleGetCode={handleGetCode}/>
                                             </div>
                                             <div className="col-md-3"></div>
                                         </div>
@@ -77,7 +82,7 @@ export default function Card() {
                                                     <button className="btn btn-primary btn-block" >Continuar</button>
                                                     :
                                                     (<button className="btn btn-primary btn-block" onClick={toggle}>Pagar</button>)}
-                                                <ModalPayment modal={modal} toggle={toggle} monto={monto} />
+                                                <ModalPayment modal={modal} toggle={toggle} monto={monto} code={code} />
                                             </div>
                                             <div className="col-md-3"></div>
                                         </div>

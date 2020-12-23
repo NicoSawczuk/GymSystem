@@ -1,1 +1,2 @@
-export const API_URL = 'http://192.168.100.65:8000/api'
+
+export const API_URL = env.API_URL

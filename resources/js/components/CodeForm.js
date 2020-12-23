@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { checkCode } from '../services/CodeService'
 
-export default function CodeForm({ handleChangeMont }) {
+export default function CodeForm({ handleChangeMont, handleGetCode }) {
     const [loading, setLoading] = useState(false)
     const [codeSuccess, setCodeSuccess] = useState(false)
     const [enterCode, setEnterCode] = useState(false)
@@ -15,6 +15,11 @@ export default function CodeForm({ handleChangeMont }) {
         handleChangeMont(value)
     }
 
+    const sendCode = (value) => {
+        handleGetCode(value)
+    }
+
+
     const validarCodigo = (code) => {
         const codeDate = new Date(code.fecha_expiracion.slice(0, 4), parseInt(code.fecha_expiracion.slice(5, 7)) - 1, code.fecha_expiracion.slice(8, 10))
         if (code.usado === 0 && new Date() <= codeDate) {
@@ -25,6 +30,7 @@ export default function CodeForm({ handleChangeMont }) {
             setInputDisable(true)
             setStateInfo('Código canjeado')
             setStateColor('#25A17E')
+            sendCode(code.codigo)
         } else if (code.usado != 0) {
             setLoading(false)
             setEnterCode(true)
