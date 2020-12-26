@@ -25,7 +25,10 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "@babel/core": "^7.8.7",
+        "@babel/preset-env": "^7.8.7",
         "@chenfengyuan/datepicker": "^1.0.9",
+        "mercadopago": "^1.5.2",
         "notiflix": "^2.1.2",
         "react-bootstrap": "^1.3.0",
         "react-router": "^5.2.0",
